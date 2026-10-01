@@ -91,4 +91,18 @@ export const copy = {
   trackingTotalWritingReps: (n: number) => `Tổng số lần viết: ${n}`,
   trackingTotalSpeakingMinutes: (n: number) => `Tổng phút luyện nói: ${n}`,
   trackingWritingMastery: (pct: number) => `Mức thành thục tập viết trung bình: ${pct}%`,
+
+  // Sao lưu (T-008)
+  backupTitle: 'Sao lưu',
+  backupDownloadButton: 'Tải bản sao lưu',
+  backupRestoreTitle: 'Khôi phục từ bản sao lưu',
+  backupFileLabel: 'Chọn file sao lưu (.json)',
+  backupPreviewSubmit: 'Xem trước',
+  backupPreviewTitle: 'Xem trước bản sao lưu',
+  backupOverwriteWarning: 'Xác nhận sẽ GHI ĐÈ lộ trình hiện tại của bạn bằng nội dung trong file này.',
+  backupPreviewPlan: (slug: string, start: string) => `Template: ${slug} — bắt đầu ${start}`,
+  backupPreviewCounts: (n: number) => `${n} task`,
+  backupConfirmSubmit: 'Xác nhận khôi phục',
+  backupCancelLink: 'Hủy',
+  backupErrorsTitle: 'Không thể đọc bản sao lưu:',
 } as const;
