@@ -1,5 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
+import { loadPublishedTemplateOutline } from '@/lib/template';
+import { AppError } from '@/lib/errors';
 import { copy } from '@/lib/copy';
 import { CreatePlanForm } from './create-plan-form';
 
@@ -16,10 +18,13 @@ export default async function CreatePlanPage() {
   const { data: existingPlan } = await supabase.from('plans').select('id').limit(1).maybeSingle();
   if (existingPlan) redirect('/today');
 
+  const outline = await loadPublishedTemplateOutline();
+  if (!outline) throw new AppError('Chưa có template nào được xuất bản', 'no_template', 500);
+
   return (
     <main className="mx-auto flex max-w-screen-sm flex-col gap-4 p-4">
       <h1 className="text-xl font-semibold text-ink">{copy.createPlanTitle}</h1>
-      <CreatePlanForm />
+      <CreatePlanForm outline={outline} />
     </main>
   );
 }

@@ -27,6 +27,8 @@ export const copy = {
   createPlanTimezoneLabel: 'Múi giờ',
   createPlanSubmit: 'Tạo lộ trình',
   createPlanHoursDisclaimer: 'Số giờ ở trên là ước tính của tác giả, chưa kiểm chứng — dùng để tự lên lịch, không phải cam kết.',
+  createPlanDoneUpToLabel: 'Mình đã học XONG đến hết task…',
+  createPlanDoneUpToNone: 'Chưa bắt đầu (bắt đầu từ task đầu tiên)',
 
   // Hôm nay
   todayTitle: 'Hôm nay',
@@ -34,4 +36,18 @@ export const copy = {
   todayEmptyState: 'Không còn task nào đang chờ — bạn đã hoàn thành lộ trình!',
   todayFinishLabel: (date: string) => `Ngày dự kiến hoàn thành: ${date}`,
   todayRequiredHoursLabel: (hours: number) => `Cần khoảng ${hours} giờ/ngày để xong trong 365 ngày`,
+
+  // Cập nhật tiến độ (đã học đến đâu)
+  updateProgressTitle: 'Cập nhật tiến độ',
+  updateProgressSelectLabel: 'Mình đã học XONG đến hết task…',
+  updateProgressPreviewSubmit: 'Xem trước',
+  updateProgressNextTaskLabel: (name: string) => `Task tiếp theo của bạn sẽ là: ${name}`,
+  updateProgressAllDoneLabel: 'Bạn đã xong toàn bộ lộ trình!',
+  updateProgressConfirmCount: (count: number) => `Sẽ đánh dấu ${count} task là Xong.`,
+  updateProgressConfirmRange: (first: string, last: string) => `Từ "${first}" đến "${last}".`,
+  updateProgressConfirmNone: 'Không có task nào cần đổi — có thể bạn đã đánh dấu xong tới đây rồi.',
+  updateProgressConfirmSubmit: 'Xác nhận',
+  updateProgressChooseAgain: 'Chọn lại',
+  updateProgressResult: (count: number) => `Đã đánh dấu ${count} task là Xong.`,
+  updateProgressLink: 'Cập nhật tiến độ (đã học đến đâu)',
 } as const;

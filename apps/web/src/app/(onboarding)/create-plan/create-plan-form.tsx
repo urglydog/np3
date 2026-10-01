@@ -3,11 +3,18 @@
 import { useActionState } from 'react';
 import { createPlan, type CreatePlanState } from './actions';
 import { copy } from '@/lib/copy';
+import type { TemplateOutline } from '@/lib/template';
 
 const initialState: CreatePlanState = { error: null };
 
-export function CreatePlanForm() {
+export function CreatePlanForm({ outline }: { outline: TemplateOutline }) {
   const [state, formAction, pending] = useActionState(createPlan, initialState);
+  const tasksByPhase = new Map<string, typeof outline.tasks>();
+  for (const t of outline.tasks) {
+    const list = tasksByPhase.get(t.phaseCode) ?? [];
+    list.push(t);
+    tasksByPhase.set(t.phaseCode, list);
+  }
 
   return (
     <form action={formAction} className="flex flex-col gap-4">
@@ -58,6 +65,26 @@ export function CreatePlanForm() {
 
       <input type="hidden" name="timezone" value="Asia/Ho_Chi_Minh" />
       <p className="text-xs text-ink-faint">{copy.createPlanTimezoneLabel}: Asia/Ho_Chi_Minh</p>
+
+      <label className="flex flex-col gap-1 text-sm text-ink">
+        {copy.createPlanDoneUpToLabel}
+        <select
+          name="doneUpToTaskCode"
+          defaultValue=""
+          className="rounded-md border border-line bg-surface px-3 py-2 text-ink"
+        >
+          <option value="">{copy.createPlanDoneUpToNone}</option>
+          {outline.phases.map((phase) => (
+            <optgroup key={phase.code} label={phase.title}>
+              {(tasksByPhase.get(phase.code) ?? []).map((t) => (
+                <option key={t.id} value={t.code}>
+                  {t.name}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+      </label>
 
       <p className="text-xs text-ink-faint">{copy.createPlanHoursDisclaimer}</p>
 

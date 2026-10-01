@@ -11,6 +11,10 @@ const createPlanSchema = z.object({
   hoursPerDay: z.coerce.number().gt(0).lte(16),
   daysPerWeek: z.coerce.number().int().min(1).max(7),
   timezone: z.string().min(1),
+  doneUpToTaskCode: z
+    .string()
+    .optional()
+    .transform((v) => (v && v.length > 0 ? v : null)),
 });
 
 export type CreatePlanState = { error: string | null };
@@ -23,11 +27,12 @@ export async function createPlan(_prevState: CreatePlanState, formData: FormData
       hoursPerDay: formData.get('hoursPerDay'),
       daysPerWeek: formData.get('daysPerWeek'),
       timezone: formData.get('timezone'),
+      doneUpToTaskCode: formData.get('doneUpToTaskCode'),
     });
     if (!parsed.success) {
       throw new AppError(parsed.error.issues[0]?.message ?? 'Dữ liệu không hợp lệ', 'invalid_input', 400);
     }
-    const { includeOptional, startDate, hoursPerDay, daysPerWeek, timezone } = parsed.data;
+    const { includeOptional, startDate, hoursPerDay, daysPerWeek, timezone, doneUpToTaskCode } = parsed.data;
 
     const supabase = await createClient();
     const {
@@ -52,6 +57,7 @@ export async function createPlan(_prevState: CreatePlanState, formData: FormData
       p_days_per_week: daysPerWeek,
       p_include_optional: includeOptional,
       p_timezone: timezone,
+      p_done_up_to_code: doneUpToTaskCode,
     });
     if (rpcError) throw new AppError(rpcError.message, 'create_plan_failed', 400);
   } catch (err) {
