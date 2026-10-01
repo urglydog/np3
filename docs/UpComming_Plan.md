@@ -4,8 +4,9 @@
 > Mỗi task cần user confirm trước khi bắt đầu (CLAUDE.md mục 1). Khi xong, cập nhật trạng thái ở đây và báo theo khung 1a.
 
 ## Đang làm
-- [ ] **T-000 Scaffold cấu trúc dự án** (theo `MASTER_PROMPT.md`)
+- [x] **T-000 Scaffold cấu trúc dự án** (theo `MASTER_PROMPT.md`)
   - Xong khi: `npm install` OK; `npm run lint`, `npm run typecheck` sạch; `npm run test:core` ra 1381/13/23/21; web chạy được, `/api/health` trả 200; worker khởi động và tắt sạch; (nếu có Docker) `supabase db reset` nạp đủ 113 task.
+  - Đã đạt đủ (có Docker): lint/typecheck/test:core sạch, 1381/13/23/21; seed đủ 4 phase/113 task/10 tài nguyên/193 liên kết, 566h tổng/425h bắt buộc; RLS test đạt (RLS OK) trên Supabase local thật; web + worker chạy và tắt sạch. Nhánh `feat/scaffold`.
 
 ## Kế tiếp (theo thứ tự, chưa duyệt)
 - [ ] **T-001 P0a: thử push trên desktop (localhost)** — đăng ký, gửi thử bằng `web-push`, bấm thông báo mở đúng trang, 404/410 vô hiệu hóa đăng ký.
