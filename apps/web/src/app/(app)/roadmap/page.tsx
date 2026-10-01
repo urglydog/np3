@@ -2,11 +2,12 @@ import { redirect } from 'next/navigation';
 import { currentTaskId, groupTasksByPhase } from '@roadmap/core';
 import { loadCurrentPlanSchedule } from '@/lib/plan';
 import { loadPublishedTemplateOutline } from '@/lib/template';
-import { buildRoadmapRows } from '@/lib/roadmap';
+import { buildRoadmapRows, type TrackingRow } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
 import { AppError } from '@/lib/errors';
 import { TaskRow } from '@/components/task-row';
 import { TaskActions } from '@/components/task-actions';
+import { TrackingForm } from '@/components/tracking-form';
 import { breakAction } from './actions';
 
 export const dynamic = 'force-dynamic';
@@ -14,9 +15,9 @@ export const dynamic = 'force-dynamic';
 export default async function RoadmapPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; ok?: string; conflict?: string; clamped?: string; noop?: string }>;
+  searchParams: Promise<{ error?: string; ok?: string; conflict?: string; clamped?: string; noop?: string; trackingOk?: string }>;
 }) {
-  const { error, ok, conflict, clamped, noop } = await searchParams;
+  const { error, ok, conflict, clamped, noop, trackingOk } = await searchParams;
 
   const plan = await loadCurrentPlanSchedule();
   if (!plan) redirect('/create-plan');
@@ -24,7 +25,13 @@ export default async function RoadmapPage({
   const outline = await loadPublishedTemplateOutline();
   if (!outline) throw new AppError('Chưa có template nào được xuất bản', 'no_template', 500);
 
-  const rows = buildRoadmapRows(outline.tasks, plan.schedule.tasks, plan.pinnedStartById);
+  const trackingById = new Map<string, TrackingRow>(
+    [...plan.taskInfoById.entries()].map(([id, info]) => [
+      id,
+      { writingReps: info.writingReps, kanaAccuracy: info.kanaAccuracy, speakingMinutes: info.speakingMinutes },
+    ])
+  );
+  const rows = buildRoadmapRows(outline.tasks, plan.schedule.tasks, plan.pinnedStartById, trackingById);
   const currentId = currentTaskId(plan.schedule.tasks);
   const groups = groupTasksByPhase(outline.phases, rows);
 
@@ -39,6 +46,7 @@ export default async function RoadmapPage({
       {error ? (
         <p className="rounded-md border border-red-600 p-3 text-sm text-red-600">{decodeURIComponent(error)}</p>
       ) : null}
+      {trackingOk === '1' ? <p className="text-sm text-ink">{copy.trackingActionSuccess}</p> : null}
       {ok === '1' ? (
         <div className="flex flex-col gap-1 rounded-md border border-line p-3 text-sm text-ink">
           <p>{noop === '1' ? copy.scheduleNoTaskAffected : copy.scheduleActionSuccess}</p>
@@ -92,7 +100,24 @@ export default async function RoadmapPage({
               <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-ink">{g.title}</summary>
               <ul className="flex flex-col gap-2 p-3 pt-0">
                 {g.tasks.map((row) => (
-                  <TaskRow key={row.id} row={row} isCurrent={row.id === currentId} actions={<TaskActions row={row} />} />
+                  <TaskRow
+                    key={row.id}
+                    row={row}
+                    isCurrent={row.id === currentId}
+                    actions={
+                      <>
+                        <TaskActions row={row} />
+                        <TrackingForm
+                          taskId={row.id}
+                          writingTarget={row.writingTarget}
+                          writingReps={row.writingReps}
+                          kanaAccuracy={row.kanaAccuracy}
+                          speakingMinutes={row.speakingMinutes}
+                          redirectTo="/roadmap"
+                        />
+                      </>
+                    }
+                  />
                 ))}
               </ul>
             </details>

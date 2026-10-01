@@ -13,6 +13,16 @@ export interface RoadmapRow {
   start: string | null;
   due: string | null;
   pinnedStart: string | null;
+  writingTarget: number;
+  writingReps: number;
+  kanaAccuracy: number | null;
+  speakingMinutes: number;
+}
+
+export interface TrackingRow {
+  writingReps: number;
+  kanaAccuracy: number | null;
+  speakingMinutes: number;
 }
 
 /**
@@ -23,7 +33,8 @@ export interface RoadmapRow {
 export function buildRoadmapRows(
   outlineTasks: TemplateTaskOutline[],
   scheduleTasks: ScheduledTask[],
-  pinnedStartById: Map<string, string | null> = new Map()
+  pinnedStartById: Map<string, string | null> = new Map(),
+  trackingById: Map<string, TrackingRow> = new Map()
 ): RoadmapRow[] {
   const scheduleById = new Map(scheduleTasks.map((t) => [t.id, t]));
   const outlineIds = new Set(outlineTasks.map((t) => t.id));
@@ -43,6 +54,7 @@ export function buildRoadmapRows(
 
   return outlineTasks.map((t) => {
     const s = scheduleById.get(t.id)!;
+    const tracking = trackingById.get(t.id);
     return {
       id: t.id,
       code: t.code,
@@ -55,6 +67,10 @@ export function buildRoadmapRows(
       start: s.start,
       due: s.due,
       pinnedStart: pinnedStartById.get(t.id) ?? null,
+      writingTarget: t.writingTarget,
+      writingReps: tracking?.writingReps ?? 0,
+      kanaAccuracy: tracking?.kanaAccuracy ?? null,
+      speakingMinutes: tracking?.speakingMinutes ?? 0,
     };
   });
 }

@@ -1,9 +1,19 @@
-import { computeSchedule, toTaskInputs, todayInTimeZone, type ScheduleResult } from '@roadmap/core';
+import { computeSchedule, toTaskInputs, todayInTimeZone, writingMastery, type ScheduleResult } from '@roadmap/core';
 import { createClient } from '@/lib/supabase/server';
 
 export interface PlanTaskInfo {
   name: string;
   milestone: string | null;
+  writingTarget: number;
+  writingReps: number;
+  kanaAccuracy: number | null;
+  speakingMinutes: number;
+}
+
+export interface TrackingStats {
+  totalWritingReps: number;
+  totalSpeakingMinutes: number;
+  writingMastery: number;
 }
 
 export interface PlanSchedule {
@@ -13,6 +23,7 @@ export interface PlanSchedule {
   schedule: ScheduleResult;
   taskInfoById: Map<string, PlanTaskInfo>;
   pinnedStartById: Map<string, string | null>;
+  trackingStats: TrackingStats;
 }
 
 /**
@@ -35,13 +46,13 @@ export async function loadCurrentPlanSchedule(): Promise<PlanSchedule | null> {
 
   const { data: templateTasks } = await supabase
     .from('template_tasks')
-    .select('id, name, milestone, est_hours, optional, sort')
+    .select('id, name, milestone, est_hours, optional, sort, writing_target')
     .eq('template_id', plan.template_id)
     .order('sort');
 
   const { data: planTaskStates } = await supabase
     .from('plan_task_state')
-    .select('task_id, status, pinned_start')
+    .select('task_id, status, pinned_start, writing_reps, kana_accuracy, speaking_minutes')
     .eq('plan_id', plan.id);
 
   const inputs = toTaskInputs(
@@ -56,12 +67,41 @@ export async function loadCurrentPlanSchedule(): Promise<PlanSchedule | null> {
     today
   );
 
+  const trackingByTaskId = new Map((planTaskStates ?? []).map((s) => [s.task_id, s]));
   const taskInfoById = new Map<string, PlanTaskInfo>(
-    (templateTasks ?? []).map((t) => [t.id, { name: t.name, milestone: t.milestone }])
+    (templateTasks ?? []).map((t) => {
+      const tracking = trackingByTaskId.get(t.id);
+      return [
+        t.id,
+        {
+          name: t.name,
+          milestone: t.milestone,
+          writingTarget: t.writing_target,
+          writingReps: tracking?.writing_reps ?? 0,
+          kanaAccuracy: tracking?.kana_accuracy ?? null,
+          speakingMinutes: tracking?.speaking_minutes ?? 0,
+        },
+      ];
+    })
   );
-  const pinnedStartById = new Map<string, string | null>(
-    (planTaskStates ?? []).map((s) => [s.task_id, s.pinned_start])
+  const pinnedStartById = new Map<string, string | null>((planTaskStates ?? []).map((s) => [s.task_id, s.pinned_start]));
+
+  const totalWritingReps = (planTaskStates ?? []).reduce((sum, s) => sum + (s.writing_reps ?? 0), 0);
+  const totalSpeakingMinutes = (planTaskStates ?? []).reduce((sum, s) => sum + (s.speaking_minutes ?? 0), 0);
+  const mastery = writingMastery(
+    (templateTasks ?? []).map((t) => ({
+      writingTarget: t.writing_target,
+      writingReps: trackingByTaskId.get(t.id)?.writing_reps ?? 0,
+    }))
   );
 
-  return { planId: plan.id, timezone: plan.timezone, today, schedule, taskInfoById, pinnedStartById };
+  return {
+    planId: plan.id,
+    timezone: plan.timezone,
+    today,
+    schedule,
+    taskInfoById,
+    pinnedStartById,
+    trackingStats: { totalWritingReps, totalSpeakingMinutes, writingMastery: mastery },
+  };
 }

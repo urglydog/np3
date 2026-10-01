@@ -80,4 +80,15 @@ export const copy = {
   scheduleConflictWarning: 'Ngày ghim sớm hơn lịch tự tính nên có thể trùng với task trước.',
   scheduleClampedWarning: 'Ngày ghim đã ở quá khứ nên bị đưa về ngày bắt đầu hiệu lực (hôm nay).',
   scheduleNoTaskAffected: 'Không có task nào sau ngày này cần dời — không đổi gì.',
+
+  // Ghi nhận hằng ngày (T-004c)
+  trackingWritingRepsLabel: (target: number) => `Số lần viết (chỉ tiêu ${target})`,
+  trackingKanaAccuracyLabel: 'Độ chính xác Kana (%)',
+  trackingSpeakingMinutesLabel: 'Phút luyện nói',
+  trackingSubmit: 'Lưu ghi nhận',
+  trackingActionSuccess: 'Đã lưu ghi nhận.',
+  trackingStatsTitle: 'Thống kê',
+  trackingTotalWritingReps: (n: number) => `Tổng số lần viết: ${n}`,
+  trackingTotalSpeakingMinutes: (n: number) => `Tổng phút luyện nói: ${n}`,
+  trackingWritingMastery: (pct: number) => `Mức thành thục tập viết trung bình: ${pct}%`,
 } as const;

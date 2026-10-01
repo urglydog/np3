@@ -14,8 +14,8 @@ const eq = (label: string, got: unknown, want: unknown) => {
 };
 
 const outline: TemplateTaskOutline[] = [
-  { id: 'A', code: 'A', name: 'Task A', sort: 1, phaseCode: 'p1', estHours: 1, optional: false },
-  { id: 'B', code: 'B', name: 'Task B', sort: 2, phaseCode: 'p1', estHours: 2, optional: true },
+  { id: 'A', code: 'A', name: 'Task A', sort: 1, phaseCode: 'p1', estHours: 1, optional: false, writingTarget: 100 },
+  { id: 'B', code: 'B', name: 'Task B', sort: 2, phaseCode: 'p1', estHours: 2, optional: true, writingTarget: 0 },
 ];
 const S = (id: string, status: ScheduledTask['status']): ScheduledTask => ({
   id,

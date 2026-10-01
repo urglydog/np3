@@ -1,10 +1,13 @@
 'use server';
 
+import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { todayInTimeZone } from '@roadmap/core';
 import { createClient } from '@/lib/supabase/server';
-import { AppError } from '@/lib/errors';
+import { AppError, toUserMessage } from '@/lib/errors';
+import { parseTrackingForm } from '@/lib/tracking-forms';
+import { recordTracking } from '@/lib/tracking-mutations';
 
 const markDoneSchema = z.object({ taskId: z.string().uuid() });
 
@@ -30,4 +33,32 @@ export async function markTaskDone(formData: FormData): Promise<void> {
   if (error) throw new AppError(error.message, 'update_failed', 400);
 
   revalidatePath('/today');
+}
+
+/** Dùng chung cho /today (task hiện tại) và /roadmap (mọi task, mọi trạng thái). */
+export async function recordTrackingAction(formData: FormData): Promise<void> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect('/login');
+
+  const redirectToRaw = formData.get('redirectTo');
+  const redirectTo = redirectToRaw === '/roadmap' ? '/roadmap' : '/today';
+  const taskIdRaw = formData.get('taskId');
+  const taskId = typeof taskIdRaw === 'string' ? taskIdRaw : '';
+
+  let url: string;
+  try {
+    const parsed = parseTrackingForm(formData);
+    if (!parsed.ok) throw new AppError(parsed.error, 'invalid_input', 400);
+    await recordTracking(supabase, parsed.value.taskId, parsed.value.writingReps, parsed.value.kanaAccuracy, parsed.value.speakingMinutes);
+    url = `${redirectTo}?trackingOk=1#task-${taskId}`;
+  } catch (err) {
+    const params = new URLSearchParams({ error: toUserMessage(err) });
+    url = `${redirectTo}?${params.toString()}${taskId ? `#task-${taskId}` : ''}`;
+  }
+  revalidatePath('/today');
+  revalidatePath('/roadmap');
+  redirect(url);
 }
