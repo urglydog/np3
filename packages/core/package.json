@@ -7,7 +7,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "test": "tsx tests/schedule.test.mts && tsx tests/budget.test.mts && tsx tests/reminders.test.mts && tsx tests/adjustments.test.mts",
+    "test": "tsx tests/schedule.test.mts && tsx tests/budget.test.mts && tsx tests/reminders.test.mts && tsx tests/adjustments.test.mts && tsx tests/plan-mapping.test.mts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },
