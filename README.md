@@ -59,3 +59,6 @@ Supabase Studio: http://127.0.0.1:54323 sau khi `db:start`.
   `docs/UpComming_Plan.md`).
 - Icon PWA trong `apps/web/public/icons/` là khối màu tạm, sinh bằng `apps/web/scripts/gen-icons.mjs`
   — cần thay bằng icon thiết kế thật trước khi dùng thật.
+- Đăng ký tài khoản ở local **không cần xác nhận email** (`enable_confirmations = false` trong
+  `supabase/config.toml`) để tiện tự test. **Phải bật lại trước khi deploy production**, nếu không
+  bất kỳ ai cũng tạo được tài khoản bằng email giả.

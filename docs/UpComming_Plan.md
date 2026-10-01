@@ -10,9 +10,9 @@
 
 ## Kế tiếp (theo thứ tự, chưa duyệt)
 - [ ] **T-001 P0a: thử push trên desktop (localhost)** — đăng ký, gửi thử bằng `web-push`, bấm thông báo mở đúng trang, 404/410 vô hiệu hóa đăng ký.
-- [ ] **T-002 Xác minh Supabase local** — chạy seed + điều chỉnh và chạy `rls_test.sql` trên Supabase local; ghi lại cách chạy vào README.
-- [ ] **T-003 Đăng nhập + tạo plan từ template N3** — email/mật khẩu (Supabase Auth local); hộp thoại chọn: bản gốc 425 giờ hay kèm phần bổ sung; nhập ngày bắt đầu, giờ/ngày, ngày/tuần, múi giờ.
-- [ ] **T-004 Màn Hôm nay** — task đang làm/tiếp theo, nút Xong, nhập số lần viết/phút luyện nói; ngày dự kiến hoàn thành và "giờ/ngày cần để xong trong 365 ngày".
+- [x] **T-002 Xác minh Supabase local** — chạy seed + `rls_test.sql` (gồm cả RPC `create_plan`) trên Supabase local, in `RLS OK`; cách chạy đã ghi vào README.
+- [x] **T-003 Đăng nhập + tạo plan từ template N3** — email/mật khẩu (Supabase Auth local, xác nhận email tắt ở local); `/create-plan` chọn bản gốc 425h hay kèm bổ sung 566h, ngày bắt đầu, giờ/ngày, ngày/tuần, múi giờ mặc định `Asia/Ho_Chi_Minh`. Tạo plan qua RPC `create_plan` (1 transaction, SECURITY INVOKER, v1 mỗi user 1 plan). `proxy.ts` bảo vệ nhóm `(app)`, `(app)/layout.tsx` chuyển hướng sang `/create-plan` nếu chưa có plan.
+- [x] **T-004 Màn Hôm nay** — task đang làm/tiếp theo (tính bằng `computeSchedule` từ `@roadmap/core`, không lưu ngày vào DB), nút Xong (lưu `status='done'`, `done_on` theo múi giờ plan), ngày dự kiến hoàn thành, "giờ/ngày cần để xong trong 365 ngày". Chưa làm: nhập số lần viết/phút luyện nói (để sau, chưa có trong phạm vi lượt này).
 - [ ] **T-005 Màn Lộ trình** — 113 task gập theo Phase, trạng thái, Start/Due tính từ `packages/core`.
 - [ ] **T-006 Thao tác lịch** — Xong, Bỏ qua, Hoãn, Ghim ngày, Nghỉ N ngày; lưu `status`/`pinned_start`; cảnh báo `conflict`.
 - [ ] **T-007 Màn Sắp tới + Cần mua** — từ `needByDates`/`planPurchases`; trạng thái tài nguyên; ngân sách theo tháng.
@@ -28,7 +28,7 @@
 - [!] **Tùy biến bằng Gemini (P6), thu phí, mục tiêu khác (P7)** — chỉ sau khi có người dùng thật (P5).
 
 ## Câu hỏi đang mở (user chốt)
-1. Đăng nhập: email/mật khẩu trước (giả định hiện tại) hay Google ngay?
+1. ~~Đăng nhập: email/mật khẩu trước hay Google ngay?~~ → đã chốt: email/mật khẩu (T-003).
 2. Plan cá nhân dùng bản gốc 425 giờ hay kèm phần bổ sung (566 giờ)?
 3. Điện thoại hằng ngày là iPhone hay Android?
 4. Tên sản phẩm?
