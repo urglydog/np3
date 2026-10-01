@@ -10,7 +10,7 @@
 - **Cài dependency mới** ngoài danh sách ở mục 9: BẮT BUỘC confirm (nêu lý do, giấy phép nếu biết).
 - **Lệnh có thể xóa dữ liệu** (`supabase db reset`, `rm -rf`, `DROP`): confirm, trừ khi là DB local dev và task đã yêu cầu rõ.
 - **Commit & push:** theo mục 8a (đủ điều kiện thì không hỏi lại từng lần).
-- **`.env*`:** TUYỆT ĐỐI KHÔNG tạo/sửa/đọc `.env`, `.env.local`... Chỉ được sửa `.env.example` (không chứa giá trị thật). Cần biến mới → thêm vào `.env.example` và báo user tự điền.
+- **`.env*`:** TUYỆT ĐỐI KHÔNG tạo/sửa/đọc `.env`, `.env.local`... bằng BẤT KỲ cách nào, kể cả qua Bash (`cat`, `echo`, `tee`, `sed`, `cp`, heredoc, redirect `>`/`>>`, `git show`) và kể cả chỉ để tự test cục bộ, không commit. Chỉ được sửa `.env.example` (không chứa giá trị thật). Cần biến mới → thêm vào `.env.example` và báo user tự điền. Cần biến môi trường để tự chạy/test một lệnh → truyền thẳng trên dòng lệnh (`VAR=giá_trị lệnh...`), không ghi ra file; nếu không truyền được theo cách đó thì dừng lại và xin user tự tạo file.
 - **Thay đổi nhỏ trong task đang làm:** không cần confirm.
 - **Khi có lỗi:** KHÔNG xin lỗi, KHÔNG giải thích dài dòng → tạo systemic change (test, lint rule, ràng buộc) để không tái phát.
 - **Workflow:** Plan → đợi user gõ OK/Approve → implement → lint + typecheck + test (xem 8a) → commit (xem 8a) → báo cáo cuối task (1a).
@@ -24,6 +24,7 @@ Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói tro
 4. **Test ở đâu, test như nào** — màn hình/endpoint/lệnh cụ thể đã chạy.
 5. **Expected là gì** — kết quả đúng phải trông như thế nào để user tự đối chiếu.
 6. **Đã cập nhật plan như nào** — nếu có sửa `docs/UpComming_Plan.md`, nói rõ đã thêm/xoá/đổi mục nào.
+7. **Lệch luật / chạm phạm vi nhạy cảm** — liệt kê MỌI lệnh Bash đã chạm file nhạy cảm (`.env*`, khóa, secret) hoặc cấu hình ngoài phạm vi task (vd git config, settings.json), và MỌI lần lệch luật trong CLAUDE.md, kể cả khi đã tự phát hiện và xử lý xong trong cùng lượt. Không có thì ghi "Không có".
 
 ## 2. NGUYÊN TẮC KHÔNG PHÁ VỠ
 - Không ảnh hưởng chức năng đang hoạt động tốt.
@@ -85,7 +86,7 @@ Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói tro
 - **Worker:** Node + TypeScript + `web-push`
 - **AI:** Gemini, chỉ gọi từ server
 - **Test core:** tsx runners (giữ nguyên). Thêm Vitest/Playwright cần confirm.
-- **Dependency được dùng ngay:** next, react, react-dom, typescript, tailwindcss, postcss, autoprefixer, @supabase/supabase-js, @supabase/ssr, @tanstack/react-query, lucide-react, zod, web-push, supabase (CLI), tsx, eslint, @eslint/js, typescript-eslint, eslint-config-next, @types/*. Còn lại: confirm. Dùng bản ổn định mới nhất lúc cài, không tự nâng major về sau.
+- **Dependency được dùng ngay:** next, react, react-dom, typescript, tailwindcss, postcss, autoprefixer, @tailwindcss/postcss, @supabase/supabase-js, @supabase/ssr, @tanstack/react-query, lucide-react, zod, web-push, supabase (CLI), tsx, eslint, @eslint/js, typescript-eslint, eslint-config-next, @types/*. Còn lại: confirm. Dùng bản ổn định mới nhất lúc cài, không tự nâng major về sau.
 
 ## 10. LỖI PHỔ BIẾN CẦN NHỚ
 - ESLint: biến không dùng đặt tên `_x`; `catch {}`.
@@ -95,6 +96,7 @@ Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói tro
 - Service worker: không cache API; sửa `sw.js` thì kiểm tra bản mới có kích hoạt.
 - RLS: dùng `(select auth.uid())`; kiểm thử bằng hai người dùng.
 - iOS: push chỉ hoạt động trong PWA đã cài, từ iOS 16.4; dữ liệu trong tab Safari và trong app đã cài là hai nơi riêng.
+- Môi trường máy dev hiện tại: Next.js 16, Tailwind v4 (token khai báo bằng `@theme` trong CSS, không dùng `tailwind.config.js` kiểu v3); đặt `agentRules: false` trong `next.config.ts` (Next 16 mặc định tự sinh `AGENTS.md`/`CLAUDE.md` mỗi lần `next dev`, phải tắt); cổng 3000 hay bị công cụ khác trên máy chiếm nên web cố định chạy ở cổng 3100; npm workspaces có thể tạo `node_modules` lồng ngay trong `apps/*`/`packages/*` khi version một gói lệch giữa các package — đó là hành vi bình thường của npm, không phải lỗi.
 
 ## 11. CHECKLIST ĐẦU PHIÊN
 - Đọc kỹ file RULES này.
