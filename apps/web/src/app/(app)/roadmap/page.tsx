@@ -1,46 +1,13 @@
 import { redirect } from 'next/navigation';
-import { currentTaskId, groupTasksByPhase, type Status } from '@roadmap/core';
+import { currentTaskId, groupTasksByPhase } from '@roadmap/core';
 import { loadCurrentPlanSchedule } from '@/lib/plan';
 import { loadPublishedTemplateOutline } from '@/lib/template';
-import { buildRoadmapRows, type RoadmapRow } from '@/lib/roadmap';
+import { buildRoadmapRows } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
 import { AppError } from '@/lib/errors';
+import { TaskRow } from '@/components/task-row';
 
 export const dynamic = 'force-dynamic';
-
-const statusLabel: Record<Status, string> = {
-  todo: copy.roadmapStatusTodo,
-  in_progress: copy.roadmapStatusInProgress,
-  done: copy.roadmapStatusDone,
-  skipped: copy.roadmapStatusSkipped,
-};
-
-function TaskRow({ row, isCurrent }: { row: RoadmapRow; isCurrent: boolean }) {
-  const hasDates = row.status === 'todo' || row.status === 'in_progress';
-  const dimmed = row.status === 'skipped';
-  return (
-    <li
-      id={`task-${row.id}`}
-      className={`flex flex-col gap-1 rounded-md border p-3 ${
-        isCurrent ? 'border-accent' : 'border-line'
-      } ${dimmed ? 'opacity-60' : ''}`}
-    >
-      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-        <span className="text-sm font-medium text-ink">
-          {row.name}
-          {row.optional ? <span className="ml-1 text-xs text-ink-faint">{copy.roadmapOptionalTag}</span> : null}
-        </span>
-        <span className="text-xs text-ink-muted">{statusLabel[row.status]}</span>
-      </div>
-      <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-ink-faint">
-        <span>{copy.roadmapEstHoursLabel(row.estHours)}</span>
-        <span>
-          {hasDates ? `${row.start ?? copy.roadmapNoDates} → ${row.due ?? copy.roadmapNoDates}` : copy.roadmapNoDates}
-        </span>
-      </div>
-    </li>
-  );
-}
 
 export default async function RoadmapPage() {
   const plan = await loadCurrentPlanSchedule();
