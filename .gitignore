@@ -9,3 +9,11 @@ coverage
 .DS_Store
 .claude/settings.local.json
 *.tsbuildinfo
+dist-worker/
+out/
+logs/
+*.log
+npm-debug.log*
+*.pem
+*.key
+.idea/
