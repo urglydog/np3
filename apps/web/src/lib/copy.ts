@@ -63,4 +63,21 @@ export const copy = {
   roadmapOptionalTag: '(tùy chọn)',
   roadmapNoDates: '—',
   roadmapEstHoursLabel: (hours: number) => `${hours} giờ`,
+
+  // Thao tác lịch (T-006)
+  scheduleSkipButton: 'Bỏ qua',
+  scheduleUnskipButton: 'Bỏ "bỏ qua"',
+  scheduleDelayLabel: 'Hoãn (số ngày)',
+  scheduleDelaySubmit: 'Hoãn',
+  schedulePinLabel: 'Ghim ngày bắt đầu',
+  schedulePinSubmit: 'Ghim',
+  scheduleUnpinSubmit: 'Xóa ghim',
+  scheduleBreakTitle: 'Nghỉ N ngày',
+  scheduleBreakFromLabel: 'Từ ngày',
+  scheduleBreakDaysLabel: 'Số ngày nghỉ',
+  scheduleBreakSubmit: 'Áp dụng nghỉ',
+  scheduleActionSuccess: 'Đã cập nhật.',
+  scheduleConflictWarning: 'Ngày ghim sớm hơn lịch tự tính nên có thể trùng với task trước.',
+  scheduleClampedWarning: 'Ngày ghim đã ở quá khứ nên bị đưa về ngày bắt đầu hiệu lực (hôm nay).',
+  scheduleNoTaskAffected: 'Không có task nào sau ngày này cần dời — không đổi gì.',
 } as const;

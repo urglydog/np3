@@ -12,6 +12,7 @@ export interface RoadmapRow {
   status: Status;
   start: string | null;
   due: string | null;
+  pinnedStart: string | null;
 }
 
 /**
@@ -19,7 +20,11 @@ export interface RoadmapRow {
  * sẵn bằng @roadmap/core) theo id. Không tính lại lịch ở đây — chỉ nối dữ liệu để hiển thị.
  * Ném lỗi (không âm thầm bỏ qua) nếu outline và lịch lệch nhau, vì đó là dấu hiệu bug ở nơi đọc dữ liệu.
  */
-export function buildRoadmapRows(outlineTasks: TemplateTaskOutline[], scheduleTasks: ScheduledTask[]): RoadmapRow[] {
+export function buildRoadmapRows(
+  outlineTasks: TemplateTaskOutline[],
+  scheduleTasks: ScheduledTask[],
+  pinnedStartById: Map<string, string | null> = new Map()
+): RoadmapRow[] {
   const scheduleById = new Map(scheduleTasks.map((t) => [t.id, t]));
   const outlineIds = new Set(outlineTasks.map((t) => t.id));
 
@@ -49,6 +54,7 @@ export function buildRoadmapRows(outlineTasks: TemplateTaskOutline[], scheduleTa
       status: s.status,
       start: s.start,
       due: s.due,
+      pinnedStart: pinnedStartById.get(t.id) ?? null,
     };
   });
 }
