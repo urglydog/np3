@@ -1,0 +1,2054 @@
+{
+ "slug": "jlpt-n3-it",
+ "version": "4.2",
+ "locale": "vi",
+ "title": "Lộ trình tự học tiếng Nhật N3 & Song ngữ IT",
+ "hours_disclaimer": "Số giờ là ước tính của tác giả khi tự học, chưa kiểm chứng. Các nguồn bên ngoài ước tính N3 từ số 0 trong khoảng 450-1.700 giờ tùy nền tảng.",
+ "phases": [
+  {
+   "code": "phase-1",
+   "title": "Phase 1",
+   "goal": "Hiragana/Katakana (Từng hàng & Biến âm & Âm ghép) + Katakana IT + Kanji Look 100 chữ + Ôn tổng hợp",
+   "sort": 1
+  },
+  {
+   "code": "phase-2a",
+   "title": "Phase 2A",
+   "goal": "Minna no Nihongo I (Bài 1 -> 25) Unit by Unit + Ôn tổng hợp",
+   "sort": 2
+  },
+  {
+   "code": "phase-2b",
+   "title": "Phase 2B",
+   "goal": "Minna no Nihongo II (Bài 26 -> 50) & Shadowing + Ôn tổng hợp",
+   "sort": 3
+  },
+  {
+   "code": "phase-3",
+   "title": "Phase 3",
+   "goal": "Bứt tốc N3: Kanji Look còn lại, Soumatome, Shinkanzen, Song ngữ IT, Phỏng vấn IT, Đề thi JLPT N3",
+   "sort": 4
+  }
+ ],
+ "tasks": [
+  {
+   "code": "PH1-H01",
+   "phase": "phase-1",
+   "milestone": "Hiragana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng A (あ い う え お)",
+   "deliverable": "あ い う え お (5 chữ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 1,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-H02",
+   "phase": "phase-1",
+   "milestone": "Hiragana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ka (か き く け こ)",
+   "deliverable": "か き く け こ (5 chữ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 2,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-H03",
+   "phase": "phase-1",
+   "milestone": "Hiragana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Sa (さ し す せ そ)",
+   "deliverable": "さ し す せ そ (5 chữ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 3,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-H04",
+   "phase": "phase-1",
+   "milestone": "Hiragana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ta (た ち つ て と)",
+   "deliverable": "た ち つ て と (5 chữ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 4,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-H05",
+   "phase": "phase-1",
+   "milestone": "Hiragana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Na (な に ぬ ね の)",
+   "deliverable": "な に ぬ ね の (5 chữ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 5,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-H06",
+   "phase": "phase-1",
+   "milestone": "Hiragana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ha (は ひ ふ へ ほ)",
+   "deliverable": "は ひ ふ へ ほ (5 chữ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 6,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-H07",
+   "phase": "phase-1",
+   "milestone": "Hiragana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ma (ま み む め も)",
+   "deliverable": "ま み む め も (5 chữ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 7,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-H08",
+   "phase": "phase-1",
+   "milestone": "Hiragana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ya (や ゆ よ)",
+   "deliverable": "や ゆ よ (3 chữ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 60,
+   "sort": 8,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-H09",
+   "phase": "phase-1",
+   "milestone": "Hiragana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ra & Wa, Wo, N",
+   "deliverable": "ら り る れ ろ & わ を ん (8 chữ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 160,
+   "sort": 9,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HD01",
+   "phase": "phase-1",
+   "milestone": "Hiragana Biến Âm",
+   "name": "Biến âm Hàng Ga (か ➔ が ぎ ぐ げ ご)",
+   "deliverable": "が ぎ ぐ げ ご (Ga, Gi, Gu, Ge, Go)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 100,
+   "sort": 10,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HD02",
+   "phase": "phase-1",
+   "milestone": "Hiragana Biến Âm",
+   "name": "Biến âm Hàng Za (さ ➔ ざ じ ず ぜ ぞ)",
+   "deliverable": "ざ じ ず ぜ ぞ (Za, Ji/Gi, Zu, Ze, Zo)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 100,
+   "sort": 11,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HD03",
+   "phase": "phase-1",
+   "milestone": "Hiragana Biến Âm",
+   "name": "Biến âm Hàng Da (た ➔ だ ぢ づ で ど)",
+   "deliverable": "だ ぢ づ で ど (Da, Ji/Di, Zu/Du, De, Do)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 100,
+   "sort": 12,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HD04",
+   "phase": "phase-1",
+   "milestone": "Hiragana Biến Âm",
+   "name": "Biến âm Hàng Ba (は ➔ ば び ぶ べ ぼ)",
+   "deliverable": "ば び ぶ べ ぼ (Ba, Bi, Bu, Be, Bo)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 100,
+   "sort": 13,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HD05",
+   "phase": "phase-1",
+   "milestone": "Hiragana Biến Âm",
+   "name": "Bán đục Hàng Pa (は ➔ ぱ ぴ ぷ ぺ ぽ)",
+   "deliverable": "ぱ ぴ ぷ ぺ ぽ (Pa, Pi, Pu, Pe, Po)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 100,
+   "sort": 14,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HG01",
+   "phase": "phase-1",
+   "milestone": "Hiragana Âm Ghép",
+   "name": "Âm ghép Hàng Kya & Gya",
+   "deliverable": "きゃ きゅ きょ & ぎゃ ぎゅ ぎょ",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 80,
+   "sort": 15,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HG02",
+   "phase": "phase-1",
+   "milestone": "Hiragana Âm Ghép",
+   "name": "Âm ghép Hàng Sha, Ja & Cha",
+   "deliverable": "しゃ しゅ しょ, じゃ じゅ じょ, ちゃ ちゅ ちょ",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 100,
+   "sort": 16,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HG03",
+   "phase": "phase-1",
+   "milestone": "Hiragana Âm Ghép",
+   "name": "Âm ghép Hàng Nya, Hya, Bya, Pya",
+   "deliverable": "にゃ にゅ にょ, ひゃ ひゅ ひょ, びゃ/ぴゃ",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 100,
+   "sort": 17,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HG04",
+   "phase": "phase-1",
+   "milestone": "Hiragana Âm Ghép",
+   "name": "Âm ghép Hàng Mya & Rya",
+   "deliverable": "みゃ みゅ みょ & りゃ りゅ りょ",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 80,
+   "sort": 18,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-HG05",
+   "phase": "phase-1",
+   "milestone": "Hiragana Quy Tắc",
+   "name": "Trường âm (Chouon) & Âm ngắt (Sokkuto - っ)",
+   "deliverable": "Viết & đọc đúng từ chứa âm ngắt っ & trường âm",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 19,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-K01",
+   "phase": "phase-1",
+   "milestone": "Katakana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng A (ア イ ウ エ オ)",
+   "deliverable": "ア イ ウ エ オ (5 chữ cứng)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 20,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-K02",
+   "phase": "phase-1",
+   "milestone": "Katakana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ka (カ キ ク ケ コ)",
+   "deliverable": "カ キ ク ケ コ (5 chữ cứng)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 21,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-K03",
+   "phase": "phase-1",
+   "milestone": "Katakana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Sa (サ シ ス セ ソ)",
+   "deliverable": "サ シ ス セ ソ (Chú ý phân biệt シ/ツ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 22,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-K04",
+   "phase": "phase-1",
+   "milestone": "Katakana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ta (タ チ ツ テ ト)",
+   "deliverable": "タ チ ツ テ ト (Chú ý phân biệt ツ/シ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 23,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-K05",
+   "phase": "phase-1",
+   "milestone": "Katakana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Na (ナ ニ ヌ ネ ノ)",
+   "deliverable": "ナ ニ ヌ ネ ノ (Chú ý phân biệt ン/ソ)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 24,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-K06",
+   "phase": "phase-1",
+   "milestone": "Katakana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ha (ハ ヒ フ ヘ ホ)",
+   "deliverable": "ハ ヒ フ ヘ ホ (5 chữ cứng)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 25,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-K07",
+   "phase": "phase-1",
+   "milestone": "Katakana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ma (マ ミ ム メ モ)",
+   "deliverable": "マ ミ ム メ モ (5 chữ cứng)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 26,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-K08",
+   "phase": "phase-1",
+   "milestone": "Katakana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ya (ヤ ユ ヨ)",
+   "deliverable": "ヤ ユ ヨ (3 chữ cứng)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1,
+   "writing_target": 60,
+   "sort": 27,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-K09",
+   "phase": "phase-1",
+   "milestone": "Katakana Cơ Bản",
+   "name": "Nét viết & phát âm Hàng Ra & ワ ヲ ン",
+   "deliverable": "ラ リ ル レ ロ & ワ ヲ ン (8 chữ cứng)",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 160,
+   "sort": 28,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-KD01",
+   "phase": "phase-1",
+   "milestone": "Katakana Biến Âm",
+   "name": "Biến âm & Bán đục Katakana (ガ, ザ, ダ, バ, パ)",
+   "deliverable": "ガ ギ グ ゲ ゴ / ザ ジ ズ ゼ ゾ / バ ビ ブ ベ ボ / パ ピ ...",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 120,
+   "sort": 29,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-KG01",
+   "phase": "phase-1",
+   "milestone": "Katakana Âm Ghép",
+   "name": "Âm ghép & Âm mở rộng (キャ, シャ, チャ, ファ, ティ...)",
+   "deliverable": "キャ シャ チャ & ファ フィ フェ フォ ティ ディ",
+   "tool_note": "Kana App & 2 Cuốn vở tập viết",
+   "est_hours": 1.5,
+   "writing_target": 100,
+   "sort": 30,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-KIT01",
+   "phase": "phase-1",
+   "milestone": "Katakana IT Terms",
+   "name": "Từ mượn IT Katakana: Phần mềm & Hệ thống",
+   "deliverable": "サーバー (Server), クラウド (Cloud), アプリ (App), データ",
+   "tool_note": "Kana App & Vở ghi chép IT",
+   "est_hours": 1.5,
+   "writing_target": 80,
+   "sort": 31,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-KIT02",
+   "phase": "phase-1",
+   "milestone": "Katakana IT Terms",
+   "name": "Từ mượn IT Katakana: Lập trình & DevOps",
+   "deliverable": "コード (Code), テスト (Test), リリース (Release), ログ",
+   "tool_note": "Kana App & Vở ghi chép IT",
+   "est_hours": 1.5,
+   "writing_target": 80,
+   "sort": 32,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-KIT03",
+   "phase": "phase-1",
+   "milestone": "Katakana IT Terms",
+   "name": "Từ mượn IT Katakana: Web, Mạng & Bảo mật",
+   "deliverable": "ウェブ (Web), ネットワーク (Network), セキュリティ (Security), ブラウザ (Browser), パスワード (Password)",
+   "tool_note": "Kana App & Vở ghi chép IT",
+   "est_hours": 1.5,
+   "writing_target": 80,
+   "sort": 33,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-KIT04",
+   "phase": "phase-1",
+   "milestone": "Katakana IT Terms",
+   "name": "Từ mượn IT Katakana: Dữ liệu, Lỗi & Triển khai",
+   "deliverable": "データベース (Database), バグ (Bug), エラー (Error), バージョン (Version), デプロイ (Deploy)",
+   "tool_note": "Kana App & Vở ghi chép IT",
+   "est_hours": 1.5,
+   "writing_target": 80,
+   "sort": 34,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH1-KJ01",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 1 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 1 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 35,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-KJ02",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 2 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 2 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 36,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-KJ03",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 3 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 3 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 37,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-KJ04",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 4 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 4 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 38,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-KJ05",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 5 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 5 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 39,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-KJ06",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 6 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 6 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 40,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-KJ07",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 7 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 7 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 41,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-KJ08",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 8 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 8 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 42,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-KJ09",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 9 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 9 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 43,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-KJ10",
+   "phase": "phase-1",
+   "milestone": "Kanji Look Sơ Cấp",
+   "name": "Kanji Look and Learn - Bài 10 (10 chữ)",
+   "deliverable": "Thuộc 10 chữ Kanji Bài 10 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 2,
+   "writing_target": 100,
+   "sort": 44,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH1-REV01",
+   "phase": "phase-1",
+   "milestone": "Ôn Tổng Hợp Phase 1",
+   "name": "Ôn tổng hợp Hiragana + Katakana + Kanji Bài 1-10",
+   "deliverable": "Đọc/viết lại toàn bộ Hiragana & Katakana không nhìn bảng; Kana App đạt từ 90%",
+   "tool_note": "Kana App & Vở tập viết",
+   "est_hours": 4,
+   "writing_target": 0,
+   "sort": 45,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-01",
+    "RES-02"
+   ]
+  },
+  {
+   "code": "PH2A-M01",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 1 (Unit Full)",
+   "deliverable": "Từ vựng Bài 1 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 46,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M02",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 2 (Unit Full)",
+   "deliverable": "Từ vựng Bài 2 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 47,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M03",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 3 (Unit Full)",
+   "deliverable": "Từ vựng Bài 3 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 48,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M04",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 4 (Unit Full)",
+   "deliverable": "Từ vựng Bài 4 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 49,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M05",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 5 (Unit Full)",
+   "deliverable": "Từ vựng Bài 5 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 50,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M06",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 6 (Unit Full)",
+   "deliverable": "Từ vựng Bài 6 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 51,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M07",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 7 (Unit Full)",
+   "deliverable": "Từ vựng Bài 7 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 52,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M08",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 8 (Unit Full)",
+   "deliverable": "Từ vựng Bài 8 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 53,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M09",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 9 (Unit Full)",
+   "deliverable": "Từ vựng Bài 9 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 54,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M10",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 10 (Unit Full)",
+   "deliverable": "Từ vựng Bài 10 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 55,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M11",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 11 (Unit Full)",
+   "deliverable": "Từ vựng Bài 11 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 56,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M12",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 12 (Unit Full)",
+   "deliverable": "Từ vựng Bài 12 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 57,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M13",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 13 (Unit Full)",
+   "deliverable": "Từ vựng Bài 13 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 58,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M14",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 14 (Unit Full)",
+   "deliverable": "Từ vựng Bài 14 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 59,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M15",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 15 (Unit Full)",
+   "deliverable": "Từ vựng Bài 15 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 60,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M16",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 16 (Unit Full)",
+   "deliverable": "Từ vựng Bài 16 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 61,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M17",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 17 (Unit Full)",
+   "deliverable": "Từ vựng Bài 17 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 62,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M18",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 18 (Unit Full)",
+   "deliverable": "Từ vựng Bài 18 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 63,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M19",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 19 (Unit Full)",
+   "deliverable": "Từ vựng Bài 19 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 64,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M20",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 20 (Unit Full)",
+   "deliverable": "Từ vựng Bài 20 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 65,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M21",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 21 (Unit Full)",
+   "deliverable": "Từ vựng Bài 21 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 66,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M22",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 22 (Unit Full)",
+   "deliverable": "Từ vựng Bài 22 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 67,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M23",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 23 (Unit Full)",
+   "deliverable": "Từ vựng Bài 23 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 68,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M24",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 24 (Unit Full)",
+   "deliverable": "Từ vựng Bài 24 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 69,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-M25",
+   "phase": "phase-2a",
+   "milestone": "Minna I Sơ Cấp",
+   "name": "Minna no Nihongo I - Bài 25 (Unit Full)",
+   "deliverable": "Từ vựng Bài 25 + Ngữ pháp + Mẫu câu + Thực hành Pingo AI",
+   "tool_note": "Sách Minna I + Pingo AI",
+   "est_hours": 4.5,
+   "writing_target": 50,
+   "sort": 70,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-04",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2A-REV01",
+   "phase": "phase-2a",
+   "milestone": "Ôn Tổng Hợp Minna I",
+   "name": "Ôn tổng hợp Minna I (Bài 1 -> 25)",
+   "deliverable": "Làm lại bài tập cuối mỗi bài, ôn từ vựng & ngữ pháp Bài 1-25",
+   "tool_note": "Sách Minna I",
+   "est_hours": 6,
+   "writing_target": 0,
+   "sort": 71,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-04"
+   ]
+  },
+  {
+   "code": "PH2B-M26",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 26 (Unit Full)",
+   "deliverable": "Từ vựng Bài 26 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 72,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M27",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 27 (Unit Full)",
+   "deliverable": "Từ vựng Bài 27 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 73,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M28",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 28 (Unit Full)",
+   "deliverable": "Từ vựng Bài 28 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 74,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M29",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 29 (Unit Full)",
+   "deliverable": "Từ vựng Bài 29 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 75,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M30",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 30 (Unit Full)",
+   "deliverable": "Từ vựng Bài 30 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 76,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M31",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 31 (Unit Full)",
+   "deliverable": "Từ vựng Bài 31 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 77,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M32",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 32 (Unit Full)",
+   "deliverable": "Từ vựng Bài 32 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 78,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M33",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 33 (Unit Full)",
+   "deliverable": "Từ vựng Bài 33 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 79,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M34",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 34 (Unit Full)",
+   "deliverable": "Từ vựng Bài 34 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 80,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M35",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 35 (Unit Full)",
+   "deliverable": "Từ vựng Bài 35 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 81,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M36",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 36 (Unit Full)",
+   "deliverable": "Từ vựng Bài 36 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 82,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M37",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 37 (Unit Full)",
+   "deliverable": "Từ vựng Bài 37 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 83,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M38",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 38 (Unit Full)",
+   "deliverable": "Từ vựng Bài 38 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 84,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M39",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 39 (Unit Full)",
+   "deliverable": "Từ vựng Bài 39 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 85,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M40",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 40 (Unit Full)",
+   "deliverable": "Từ vựng Bài 40 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 86,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M41",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 41 (Unit Full)",
+   "deliverable": "Từ vựng Bài 41 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 87,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M42",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 42 (Unit Full)",
+   "deliverable": "Từ vựng Bài 42 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 88,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M43",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 43 (Unit Full)",
+   "deliverable": "Từ vựng Bài 43 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 89,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M44",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 44 (Unit Full)",
+   "deliverable": "Từ vựng Bài 44 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 90,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M45",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 45 (Unit Full)",
+   "deliverable": "Từ vựng Bài 45 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 91,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M46",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 46 (Unit Full)",
+   "deliverable": "Từ vựng Bài 46 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 92,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M47",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 47 (Unit Full)",
+   "deliverable": "Từ vựng Bài 47 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 93,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M48",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 48 (Unit Full)",
+   "deliverable": "Từ vựng Bài 48 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 94,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M49",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 49 (Unit Full)",
+   "deliverable": "Từ vựng Bài 49 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 95,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-M50",
+   "phase": "phase-2b",
+   "milestone": "Minna II Trung Cấp",
+   "name": "Minna no Nihongo II - Bài 50 (Unit Full)",
+   "deliverable": "Từ vựng Bài 50 + Ngữ pháp Kính ngữ/Khiêm nhường + Pingo AI",
+   "tool_note": "Sách Minna II + Pingo AI",
+   "est_hours": 5,
+   "writing_target": 50,
+   "sort": 96,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-05",
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH2B-SH01",
+   "phase": "phase-2b",
+   "milestone": "Luyện Shadowing",
+   "name": "Shadowing Sơ - Trung Cấp (Bài 1 -> 10)",
+   "deliverable": "Luyện nhại giọng phản xạ chuẩn 10 bài thoại",
+   "tool_note": "Sách Shadowing + File Audio",
+   "est_hours": 10,
+   "writing_target": 0,
+   "sort": 97,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-06"
+   ]
+  },
+  {
+   "code": "PH2B-REV01",
+   "phase": "phase-2b",
+   "milestone": "Ôn Tổng Hợp Minna II",
+   "name": "Ôn tổng hợp Minna II (Bài 26 -> 50)",
+   "deliverable": "Làm lại bài tập cuối mỗi bài, ôn từ vựng & ngữ pháp Bài 26-50",
+   "tool_note": "Sách Minna II",
+   "est_hours": 6,
+   "writing_target": 0,
+   "sort": 98,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-05"
+   ]
+  },
+  {
+   "code": "PH3-KJ11",
+   "phase": "phase-3",
+   "milestone": "Kanji Look (Bổ Sung N5-N4)",
+   "name": "Kanji Look and Learn - Bài 11 -> 20 (~100 chữ)",
+   "deliverable": "Thuộc ~100 chữ Kanji Bài 11-20 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 20,
+   "writing_target": 500,
+   "sort": 99,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH3-KJ21",
+   "phase": "phase-3",
+   "milestone": "Kanji Look (Bổ Sung N5-N4)",
+   "name": "Kanji Look and Learn - Bài 21 -> 30 (~100 chữ)",
+   "deliverable": "Thuộc ~100 chữ Kanji Bài 21-30 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 20,
+   "writing_target": 500,
+   "sort": 100,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH3-KJ31",
+   "phase": "phase-3",
+   "milestone": "Kanji Look (Bổ Sung N5-N4)",
+   "name": "Kanji Look and Learn - Bài 31 -> 40 (~100 chữ)",
+   "deliverable": "Thuộc ~100 chữ Kanji Bài 31-40 (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 20,
+   "writing_target": 500,
+   "sort": 101,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH3-KJ41",
+   "phase": "phase-3",
+   "milestone": "Kanji Look (Bổ Sung N5-N4)",
+   "name": "Kanji Look and Learn - Bài 41 -> hết (~112 chữ)",
+   "deliverable": "Thuộc ~112 chữ Kanji còn lại của sách (Nét + Bộ thủ + Âm On/Kun)",
+   "tool_note": "Sách Kanji Look & Vở tập viết Kanji",
+   "est_hours": 22,
+   "writing_target": 500,
+   "sort": 102,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-03"
+   ]
+  },
+  {
+   "code": "PH3-SM01",
+   "phase": "phase-3",
+   "milestone": "Soumatome N3",
+   "name": "Soumatome N3 Từ Vựng & Kanji (4 Tuần)",
+   "deliverable": "Thuộc 800 từ vựng N3 & 300 Kanji N3",
+   "tool_note": "Sách Soumatome N3",
+   "est_hours": 25,
+   "writing_target": 200,
+   "sort": 103,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-07"
+   ]
+  },
+  {
+   "code": "PH3-SK01",
+   "phase": "phase-3",
+   "milestone": "Shinkanzen N3",
+   "name": "Shinkanzen Master N3 Ngữ Pháp",
+   "deliverable": "Nắm vững 110 cấu trúc ngữ pháp N3",
+   "tool_note": "Sách Shinkanzen N3 Grammar",
+   "est_hours": 20,
+   "writing_target": 0,
+   "sort": 104,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-08"
+   ]
+  },
+  {
+   "code": "PH3-SK02",
+   "phase": "phase-3",
+   "milestone": "Shinkanzen N3",
+   "name": "Shinkanzen Master N3 Đọc Hiểu (Dokkai)",
+   "deliverable": "Luyện kỹ năng đọc đoạn văn ngắn & trung bình N3",
+   "tool_note": "Sách Shinkanzen Dokkai",
+   "est_hours": 20,
+   "writing_target": 0,
+   "sort": 105,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-08"
+   ]
+  },
+  {
+   "code": "PH3-SK03",
+   "phase": "phase-3",
+   "milestone": "Shinkanzen N3",
+   "name": "Shinkanzen Master N3 Nghe Hiểu (Choukai)",
+   "deliverable": "Luyện phản xạ nghe hội thoại N3",
+   "tool_note": "Sách Shinkanzen Choukai",
+   "est_hours": 15,
+   "writing_target": 0,
+   "sort": 106,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-08"
+   ]
+  },
+  {
+   "code": "PH3-IT01",
+   "phase": "phase-3",
+   "milestone": "Song Ngữ IT",
+   "name": "Thuật ngữ IT dạng Kanji thường gặp (開発, 設計, 障害, 保守, 要件...)",
+   "deliverable": "Thuộc 40 thuật ngữ IT dạng Kanji (đọc + nghĩa + 1 câu ví dụ)",
+   "tool_note": "Mazii & sheet Vocab_Kana_Bank",
+   "est_hours": 10,
+   "writing_target": 0,
+   "sort": 107,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-10"
+   ]
+  },
+  {
+   "code": "PH3-IT02",
+   "phase": "phase-3",
+   "milestone": "Song Ngữ IT",
+   "name": "Email công việc & báo cáo tiến độ bằng tiếng Nhật",
+   "deliverable": "Viết 10 email mẫu: chào hỏi, báo cáo, xin xác nhận, xin lỗi",
+   "tool_note": "Pingo AI (hoặc chatbot AI miễn phí)",
+   "est_hours": 8,
+   "writing_target": 0,
+   "sort": 108,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH3-IT03",
+   "phase": "phase-3",
+   "milestone": "Song Ngữ IT",
+   "name": "Daily standup (朝会): hôm qua - hôm nay - vướng mắc",
+   "deliverable": "Nói trôi chảy bản báo cáo 1 phút cho 10 tình huống khác nhau",
+   "tool_note": "Pingo AI (hoặc chatbot AI miễn phí)",
+   "est_hours": 6,
+   "writing_target": 0,
+   "sort": 109,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH3-IT04",
+   "phase": "phase-3",
+   "milestone": "Song Ngữ IT",
+   "name": "Mô tả lỗi (bug) & xin hỗ trợ đồng nghiệp",
+   "deliverable": "Nói/viết: hiện tượng lỗi, nguyên nhân dự đoán, cách xử lý - 10 tình huống",
+   "tool_note": "Pingo AI (hoặc chatbot AI miễn phí)",
+   "est_hours": 8,
+   "writing_target": 0,
+   "sort": 110,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH3-IT05",
+   "phase": "phase-3",
+   "milestone": "Song Ngữ IT",
+   "name": "Tự giới thiệu (自己紹介) & mô tả kinh nghiệm dự án (職務経歴)",
+   "deliverable": "Viết & học thuộc bài giới thiệu 1 phút + mô tả 3 dự án",
+   "tool_note": "Pingo AI (hoặc chatbot AI miễn phí)",
+   "est_hours": 8,
+   "writing_target": 0,
+   "sort": 111,
+   "origin": "v4.2-added",
+   "optional": true,
+   "resources": [
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH3-PGO01",
+   "phase": "phase-3",
+   "milestone": "Pingo AI IT",
+   "name": "Roleplay Phỏng Vấn IT & Phản Xạ Công Việc",
+   "deliverable": "Thực hành 20 kịch bản phỏng vấn IT bằng tiếng Nhật với Pingo AI",
+   "tool_note": "App Pingo AI",
+   "est_hours": 20,
+   "writing_target": 0,
+   "sort": 112,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": [
+    "RES-09"
+   ]
+  },
+  {
+   "code": "PH3-TEST01",
+   "phase": "phase-3",
+   "milestone": "Thi Thử JLPT",
+   "name": "Bộ Đề Thi Thử JLPT N3 (3 Đề Khảo Sát)",
+   "deliverable": "Đạt tối thiểu 100/180 điểm thi thử JLPT N3",
+   "tool_note": "Bộ đề JLPT N3 mốc các năm",
+   "est_hours": 15,
+   "writing_target": 0,
+   "sort": 113,
+   "origin": "v4.1",
+   "optional": false,
+   "resources": []
+  }
+ ],
+ "resources": [
+  {
+   "code": "RES-01",
+   "phase_note": "Phase 1",
+   "kind": "Sách / Vở",
+   "title": "2 Cuốn Vở Tập Viết Bảng Chữ Cái MCBooks",
+   "purpose": "Tập viết nét chuẩn Hiragana & Katakana",
+   "price_vnd": 80000,
+   "tier": "core",
+   "note": null,
+   "lead_time_days": 5,
+   "is_affiliate": false,
+   "buy_url": null
+  },
+  {
+   "code": "RES-02",
+   "phase_note": "Phase 1",
+   "kind": "Ứng dụng Mobile",
+   "title": "Kana App (iOS / Android)",
+   "purpose": "Nhận diện mặt chữ & Flashcard trắc nghiệm phản xạ",
+   "price_vnd": 0,
+   "tier": "core",
+   "note": "Miễn phí",
+   "lead_time_days": 0,
+   "is_affiliate": false,
+   "buy_url": null
+  },
+  {
+   "code": "RES-03",
+   "phase_note": "Phase 1",
+   "kind": "Sách",
+   "title": "Kanji Look and Learn (Sơ cấp 512 chữ)",
+   "purpose": "Học bộ thủ, hình ảnh liên tưởng & nét viết Kanji",
+   "price_vnd": 120000,
+   "tier": "core",
+   "note": null,
+   "lead_time_days": 5,
+   "is_affiliate": false,
+   "buy_url": null
+  },
+  {
+   "code": "RES-04",
+   "phase_note": "Phase 2A",
+   "kind": "Sách",
+   "title": "Bộ Minna no Nihongo I (Sách chính & Bản dịch)",
+   "purpose": "Học 25 bài sơ cấp N5 (Từ vựng, Ngữ pháp, Bài tập)",
+   "price_vnd": 180000,
+   "tier": "core",
+   "note": null,
+   "lead_time_days": 5,
+   "is_affiliate": false,
+   "buy_url": null
+  },
+  {
+   "code": "RES-05",
+   "phase_note": "Phase 2B",
+   "kind": "Sách",
+   "title": "Bộ Minna no Nihongo II (Sách chính & Bản dịch)",
+   "purpose": "Học 25 bài trung cấp N4",
+   "price_vnd": 190000,
+   "tier": "core",
+   "note": null,
+   "lead_time_days": 5,
+   "is_affiliate": false,
+   "buy_url": null
+  },
+  {
+   "code": "RES-06",
+   "phase_note": "Phase 2B",
+   "kind": "Sách & Audio",
+   "title": "Shadowing Sơ - Trung Cấp (N5 - N4)",
+   "purpose": "Luyện nhại giọng, phát âm chuẩn ngữ điệu Nhật",
+   "price_vnd": 95000,
+   "tier": "core",
+   "note": null,
+   "lead_time_days": 5,
+   "is_affiliate": false,
+   "buy_url": null
+  },
+  {
+   "code": "RES-07",
+   "phase_note": "Phase 3",
+   "kind": "Sách",
+   "title": "Soumatome N3 Từ Vựng & Kanji",
+   "purpose": "Nạp 800 từ vựng N3 & 300 Kanji N3 trọng tâm",
+   "price_vnd": 110000,
+   "tier": "core",
+   "note": null,
+   "lead_time_days": 5,
+   "is_affiliate": false,
+   "buy_url": null
+  },
+  {
+   "code": "RES-08",
+   "phase_note": "Phase 3",
+   "kind": "Sách",
+   "title": "Shinkanzen Master N3 (Ngữ pháp, Dokkai, Choukai)",
+   "purpose": "Bộ 3 cuốn bứt tốc kỹ năng thi JLPT N3",
+   "price_vnd": 320000,
+   "tier": "core",
+   "note": null,
+   "lead_time_days": 5,
+   "is_affiliate": false,
+   "buy_url": null
+  },
+  {
+   "code": "RES-09",
+   "phase_note": "Phase 1-3",
+   "kind": "Ứng dụng AI",
+   "title": "Pingo AI (Gói 1 Năm)",
+   "purpose": "Thực hành phản xạ nói & Roleplay phỏng vấn IT",
+   "price_vnd": 1588000,
+   "tier": "optional",
+   "note": "Công cụ luyện nói. Có thể thay bằng chatbot AI miễn phí hoặc bạn trao đổi ngôn ngữ.",
+   "lead_time_days": 5,
+   "is_affiliate": false,
+   "buy_url": null
+  },
+  {
+   "code": "RES-10",
+   "phase_note": "Phase 1-3",
+   "kind": "Từ điển App",
+   "title": "Mazii / Jisho Dictionary",
+   "purpose": "Tra cứu từ vựng, Kanji và câu mẫu IT",
+   "price_vnd": 0,
+   "tier": "core",
+   "note": "Miễn phí",
+   "lead_time_days": 0,
+   "is_affiliate": false,
+   "buy_url": null
+  }
+ ]
+}

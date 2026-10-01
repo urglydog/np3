@@ -1,0 +1,3681 @@
+{
+ "source": "Tính bằng công thức trong file Lo_Trinh_N3_Song_Ngu_IT_v4.2_Ban_Mau.xlsx (LibreOffice recalc). Trường today = ngày hệ thống lúc tính.",
+ "scenarios": [
+  {
+   "name": "default-all-todo",
+   "today": "2026-10-01",
+   "settings": {
+    "startDate": "2026-10-01",
+    "hoursPerDay": 2,
+    "daysPerWeek": 6
+   },
+   "tasks": [
+    {
+     "id": "PH1-H01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-01",
+     "due": "2026-10-01",
+     "cum": 1.5
+    },
+    {
+     "id": "PH1-H02",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-01",
+     "due": "2026-10-02",
+     "cum": 3
+    },
+    {
+     "id": "PH1-H03",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-02",
+     "due": "2026-10-03",
+     "cum": 4.5
+    },
+    {
+     "id": "PH1-H04",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-03",
+     "due": "2026-10-04",
+     "cum": 6
+    },
+    {
+     "id": "PH1-H05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-04",
+     "due": "2026-10-05",
+     "cum": 7.5
+    },
+    {
+     "id": "PH1-H06",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-05",
+     "due": "2026-10-06",
+     "cum": 9
+    },
+    {
+     "id": "PH1-H07",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-06",
+     "due": "2026-10-07",
+     "cum": 10.5
+    },
+    {
+     "id": "PH1-H08",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-07",
+     "due": "2026-10-07",
+     "cum": 11.5
+    },
+    {
+     "id": "PH1-H09",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-07",
+     "due": "2026-10-08",
+     "cum": 13
+    },
+    {
+     "id": "PH1-HD01",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-08",
+     "due": "2026-10-09",
+     "cum": 14
+    },
+    {
+     "id": "PH1-HD02",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-09",
+     "due": "2026-10-09",
+     "cum": 15
+    },
+    {
+     "id": "PH1-HD03",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-09",
+     "due": "2026-10-10",
+     "cum": 16
+    },
+    {
+     "id": "PH1-HD04",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-10",
+     "due": "2026-10-10",
+     "cum": 17
+    },
+    {
+     "id": "PH1-HD05",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-10",
+     "due": "2026-10-11",
+     "cum": 18
+    },
+    {
+     "id": "PH1-HG01",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-11",
+     "due": "2026-10-12",
+     "cum": 19
+    },
+    {
+     "id": "PH1-HG02",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-12",
+     "due": "2026-10-12",
+     "cum": 20
+    },
+    {
+     "id": "PH1-HG03",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-12",
+     "due": "2026-10-13",
+     "cum": 21
+    },
+    {
+     "id": "PH1-HG04",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-13",
+     "due": "2026-10-13",
+     "cum": 22
+    },
+    {
+     "id": "PH1-HG05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-13",
+     "due": "2026-10-14",
+     "cum": 23.5
+    },
+    {
+     "id": "PH1-K01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-14",
+     "due": "2026-10-15",
+     "cum": 25
+    },
+    {
+     "id": "PH1-K02",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-15",
+     "due": "2026-10-16",
+     "cum": 26.5
+    },
+    {
+     "id": "PH1-K03",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-16",
+     "due": "2026-10-17",
+     "cum": 28
+    },
+    {
+     "id": "PH1-K04",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-17",
+     "due": "2026-10-18",
+     "cum": 29.5
+    },
+    {
+     "id": "PH1-K05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-18",
+     "due": "2026-10-19",
+     "cum": 31
+    },
+    {
+     "id": "PH1-K06",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-19",
+     "due": "2026-10-19",
+     "cum": 32.5
+    },
+    {
+     "id": "PH1-K07",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-19",
+     "due": "2026-10-20",
+     "cum": 34
+    },
+    {
+     "id": "PH1-K08",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-20",
+     "due": "2026-10-21",
+     "cum": 35
+    },
+    {
+     "id": "PH1-K09",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-21",
+     "due": "2026-10-22",
+     "cum": 36.5
+    },
+    {
+     "id": "PH1-KD01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-22",
+     "due": "2026-10-23",
+     "cum": 38
+    },
+    {
+     "id": "PH1-KG01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-23",
+     "due": "2026-10-24",
+     "cum": 39.5
+    },
+    {
+     "id": "PH1-KIT01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-24",
+     "due": "2026-10-24",
+     "cum": 41
+    },
+    {
+     "id": "PH1-KIT02",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-24",
+     "due": "2026-10-25",
+     "cum": 42.5
+    },
+    {
+     "id": "PH1-KIT03",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-25",
+     "due": "2026-10-26",
+     "cum": 44
+    },
+    {
+     "id": "PH1-KIT04",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-26",
+     "due": "2026-10-27",
+     "cum": 45.5
+    },
+    {
+     "id": "PH1-KJ01",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-10-27",
+     "due": "2026-10-28",
+     "cum": 47.5
+    },
+    {
+     "id": "PH1-KJ02",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-10-28",
+     "due": "2026-10-29",
+     "cum": 49.5
+    },
+    {
+     "id": "PH1-KJ03",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-10-29",
+     "due": "2026-10-31",
+     "cum": 51.5
+    },
+    {
+     "id": "PH1-KJ04",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-10-31",
+     "due": "2026-11-01",
+     "cum": 53.5
+    },
+    {
+     "id": "PH1-KJ05",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-01",
+     "due": "2026-11-02",
+     "cum": 55.5
+    },
+    {
+     "id": "PH1-KJ06",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-02",
+     "due": "2026-11-03",
+     "cum": 57.5
+    },
+    {
+     "id": "PH1-KJ07",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-03",
+     "due": "2026-11-04",
+     "cum": 59.5
+    },
+    {
+     "id": "PH1-KJ08",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-04",
+     "due": "2026-11-05",
+     "cum": 61.5
+    },
+    {
+     "id": "PH1-KJ09",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-05",
+     "due": "2026-11-07",
+     "cum": 63.5
+    },
+    {
+     "id": "PH1-KJ10",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-07",
+     "due": "2026-11-08",
+     "cum": 65.5
+    },
+    {
+     "id": "PH1-REV01",
+     "status": "Todo",
+     "est": 4,
+     "start": "2026-11-08",
+     "due": "2026-11-10",
+     "cum": 69.5
+    },
+    {
+     "id": "PH2A-M01",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-10",
+     "due": "2026-11-13",
+     "cum": 74
+    },
+    {
+     "id": "PH2A-M02",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-13",
+     "due": "2026-11-15",
+     "cum": 78.5
+    },
+    {
+     "id": "PH2A-M03",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-15",
+     "due": "2026-11-18",
+     "cum": 83
+    },
+    {
+     "id": "PH2A-M04",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-18",
+     "due": "2026-11-21",
+     "cum": 87.5
+    },
+    {
+     "id": "PH2A-M05",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-21",
+     "due": "2026-11-23",
+     "cum": 92
+    },
+    {
+     "id": "PH2A-M06",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-23",
+     "due": "2026-11-26",
+     "cum": 96.5
+    },
+    {
+     "id": "PH2A-M07",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-26",
+     "due": "2026-11-28",
+     "cum": 101
+    },
+    {
+     "id": "PH2A-M08",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-28",
+     "due": "2026-12-01",
+     "cum": 105.5
+    },
+    {
+     "id": "PH2A-M09",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-01",
+     "due": "2026-12-04",
+     "cum": 110
+    },
+    {
+     "id": "PH2A-M10",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-04",
+     "due": "2026-12-06",
+     "cum": 114.5
+    },
+    {
+     "id": "PH2A-M11",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-06",
+     "due": "2026-12-09",
+     "cum": 119
+    },
+    {
+     "id": "PH2A-M12",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-09",
+     "due": "2026-12-12",
+     "cum": 123.5
+    },
+    {
+     "id": "PH2A-M13",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-12",
+     "due": "2026-12-14",
+     "cum": 128
+    },
+    {
+     "id": "PH2A-M14",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-14",
+     "due": "2026-12-17",
+     "cum": 132.5
+    },
+    {
+     "id": "PH2A-M15",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-17",
+     "due": "2026-12-19",
+     "cum": 137
+    },
+    {
+     "id": "PH2A-M16",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-19",
+     "due": "2026-12-22",
+     "cum": 141.5
+    },
+    {
+     "id": "PH2A-M17",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-22",
+     "due": "2026-12-25",
+     "cum": 146
+    },
+    {
+     "id": "PH2A-M18",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-25",
+     "due": "2026-12-27",
+     "cum": 150.5
+    },
+    {
+     "id": "PH2A-M19",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-27",
+     "due": "2026-12-30",
+     "cum": 155
+    },
+    {
+     "id": "PH2A-M20",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-30",
+     "due": "2027-01-02",
+     "cum": 159.5
+    },
+    {
+     "id": "PH2A-M21",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-02",
+     "due": "2027-01-04",
+     "cum": 164
+    },
+    {
+     "id": "PH2A-M22",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-04",
+     "due": "2027-01-07",
+     "cum": 168.5
+    },
+    {
+     "id": "PH2A-M23",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-07",
+     "due": "2027-01-09",
+     "cum": 173
+    },
+    {
+     "id": "PH2A-M24",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-09",
+     "due": "2027-01-12",
+     "cum": 177.5
+    },
+    {
+     "id": "PH2A-M25",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-12",
+     "due": "2027-01-15",
+     "cum": 182
+    },
+    {
+     "id": "PH2A-REV01",
+     "status": "Todo",
+     "est": 6,
+     "start": "2027-01-15",
+     "due": "2027-01-18",
+     "cum": 188
+    },
+    {
+     "id": "PH2B-M26",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-01-18",
+     "due": "2027-01-21",
+     "cum": 193
+    },
+    {
+     "id": "PH2B-M27",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-01-21",
+     "due": "2027-01-24",
+     "cum": 198
+    },
+    {
+     "id": "PH2B-M28",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-01-24",
+     "due": "2027-01-27",
+     "cum": 203
+    },
+    {
+     "id": "PH2B-M29",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-01-27",
+     "due": "2027-01-30",
+     "cum": 208
+    },
+    {
+     "id": "PH2B-M30",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-01-30",
+     "due": "2027-02-02",
+     "cum": 213
+    },
+    {
+     "id": "PH2B-M31",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-02",
+     "due": "2027-02-05",
+     "cum": 218
+    },
+    {
+     "id": "PH2B-M32",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-05",
+     "due": "2027-02-08",
+     "cum": 223
+    },
+    {
+     "id": "PH2B-M33",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-08",
+     "due": "2027-02-10",
+     "cum": 228
+    },
+    {
+     "id": "PH2B-M34",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-11",
+     "due": "2027-02-13",
+     "cum": 233
+    },
+    {
+     "id": "PH2B-M35",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-13",
+     "due": "2027-02-16",
+     "cum": 238
+    },
+    {
+     "id": "PH2B-M36",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-16",
+     "due": "2027-02-19",
+     "cum": 243
+    },
+    {
+     "id": "PH2B-M37",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-19",
+     "due": "2027-02-22",
+     "cum": 248
+    },
+    {
+     "id": "PH2B-M38",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-22",
+     "due": "2027-02-25",
+     "cum": 253
+    },
+    {
+     "id": "PH2B-M39",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-25",
+     "due": "2027-02-28",
+     "cum": 258
+    },
+    {
+     "id": "PH2B-M40",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-02-28",
+     "due": "2027-03-03",
+     "cum": 263
+    },
+    {
+     "id": "PH2B-M41",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-03",
+     "due": "2027-03-06",
+     "cum": 268
+    },
+    {
+     "id": "PH2B-M42",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-06",
+     "due": "2027-03-09",
+     "cum": 273
+    },
+    {
+     "id": "PH2B-M43",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-09",
+     "due": "2027-03-12",
+     "cum": 278
+    },
+    {
+     "id": "PH2B-M44",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-12",
+     "due": "2027-03-15",
+     "cum": 283
+    },
+    {
+     "id": "PH2B-M45",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-15",
+     "due": "2027-03-17",
+     "cum": 288
+    },
+    {
+     "id": "PH2B-M46",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-18",
+     "due": "2027-03-20",
+     "cum": 293
+    },
+    {
+     "id": "PH2B-M47",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-20",
+     "due": "2027-03-23",
+     "cum": 298
+    },
+    {
+     "id": "PH2B-M48",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-23",
+     "due": "2027-03-26",
+     "cum": 303
+    },
+    {
+     "id": "PH2B-M49",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-26",
+     "due": "2027-03-29",
+     "cum": 308
+    },
+    {
+     "id": "PH2B-M50",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-29",
+     "due": "2027-04-01",
+     "cum": 313
+    },
+    {
+     "id": "PH2B-SH01",
+     "status": "Todo",
+     "est": 10,
+     "start": "2027-04-01",
+     "due": "2027-04-07",
+     "cum": 323
+    },
+    {
+     "id": "PH2B-REV01",
+     "status": "Todo",
+     "est": 6,
+     "start": "2027-04-07",
+     "due": "2027-04-10",
+     "cum": 329
+    },
+    {
+     "id": "PH3-KJ11",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-04-10",
+     "due": "2027-04-22",
+     "cum": 349
+    },
+    {
+     "id": "PH3-KJ21",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-04-22",
+     "due": "2027-05-04",
+     "cum": 369
+    },
+    {
+     "id": "PH3-KJ31",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-05-04",
+     "due": "2027-05-15",
+     "cum": 389
+    },
+    {
+     "id": "PH3-KJ41",
+     "status": "Todo",
+     "est": 22,
+     "start": "2027-05-15",
+     "due": "2027-05-28",
+     "cum": 411
+    },
+    {
+     "id": "PH3-SM01",
+     "status": "Todo",
+     "est": 25,
+     "start": "2027-05-28",
+     "due": "2027-06-12",
+     "cum": 436
+    },
+    {
+     "id": "PH3-SK01",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-06-12",
+     "due": "2027-06-23",
+     "cum": 456
+    },
+    {
+     "id": "PH3-SK02",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-06-24",
+     "due": "2027-07-05",
+     "cum": 476
+    },
+    {
+     "id": "PH3-SK03",
+     "status": "Todo",
+     "est": 15,
+     "start": "2027-07-05",
+     "due": "2027-07-14",
+     "cum": 491
+    },
+    {
+     "id": "PH3-IT01",
+     "status": "Todo",
+     "est": 10,
+     "start": "2027-07-14",
+     "due": "2027-07-20",
+     "cum": 501
+    },
+    {
+     "id": "PH3-IT02",
+     "status": "Todo",
+     "est": 8,
+     "start": "2027-07-20",
+     "due": "2027-07-24",
+     "cum": 509
+    },
+    {
+     "id": "PH3-IT03",
+     "status": "Todo",
+     "est": 6,
+     "start": "2027-07-24",
+     "due": "2027-07-28",
+     "cum": 515
+    },
+    {
+     "id": "PH3-IT04",
+     "status": "Todo",
+     "est": 8,
+     "start": "2027-07-28",
+     "due": "2027-08-02",
+     "cum": 523
+    },
+    {
+     "id": "PH3-IT05",
+     "status": "Todo",
+     "est": 8,
+     "start": "2027-08-02",
+     "due": "2027-08-06",
+     "cum": 531
+    },
+    {
+     "id": "PH3-PGO01",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-08-06",
+     "due": "2027-08-18",
+     "cum": 551
+    },
+    {
+     "id": "PH3-TEST01",
+     "status": "Todo",
+     "est": 15,
+     "start": "2027-08-18",
+     "due": "2027-08-27",
+     "cum": 566
+    }
+   ],
+   "expected": {
+    "finish": "2027-08-27",
+    "remainingHours": 566
+   }
+  },
+  {
+   "name": "mid-course-16-done-old-start",
+   "today": "2026-10-01",
+   "settings": {
+    "startDate": "2026-09-11",
+    "hoursPerDay": 1,
+    "daysPerWeek": 7
+   },
+   "tasks": [
+    {
+     "id": "PH1-H01",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H02",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H03",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H04",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H05",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H06",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H07",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H08",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H09",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD01",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD02",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD03",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD04",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD05",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HG01",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HG02",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HG03",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-01",
+     "due": "2026-10-01",
+     "cum": 1
+    },
+    {
+     "id": "PH1-HG04",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-02",
+     "due": "2026-10-02",
+     "cum": 2
+    },
+    {
+     "id": "PH1-HG05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-03",
+     "due": "2026-10-04",
+     "cum": 3.5
+    },
+    {
+     "id": "PH1-K01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-04",
+     "due": "2026-10-05",
+     "cum": 5
+    },
+    {
+     "id": "PH1-K02",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-06",
+     "due": "2026-10-07",
+     "cum": 6.5
+    },
+    {
+     "id": "PH1-K03",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-07",
+     "due": "2026-10-08",
+     "cum": 8
+    },
+    {
+     "id": "PH1-K04",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-09",
+     "due": "2026-10-10",
+     "cum": 9.5
+    },
+    {
+     "id": "PH1-K05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-10",
+     "due": "2026-10-11",
+     "cum": 11
+    },
+    {
+     "id": "PH1-K06",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-12",
+     "due": "2026-10-13",
+     "cum": 12.5
+    },
+    {
+     "id": "PH1-K07",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-13",
+     "due": "2026-10-14",
+     "cum": 14
+    },
+    {
+     "id": "PH1-K08",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-15",
+     "due": "2026-10-15",
+     "cum": 15
+    },
+    {
+     "id": "PH1-K09",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-16",
+     "due": "2026-10-17",
+     "cum": 16.5
+    },
+    {
+     "id": "PH1-KD01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-17",
+     "due": "2026-10-18",
+     "cum": 18
+    },
+    {
+     "id": "PH1-KG01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-19",
+     "due": "2026-10-20",
+     "cum": 19.5
+    },
+    {
+     "id": "PH1-KIT01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-20",
+     "due": "2026-10-21",
+     "cum": 21
+    },
+    {
+     "id": "PH1-KIT02",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-22",
+     "due": "2026-10-23",
+     "cum": 22.5
+    },
+    {
+     "id": "PH1-KIT03",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-23",
+     "due": "2026-10-24",
+     "cum": 24
+    },
+    {
+     "id": "PH1-KIT04",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-25",
+     "due": "2026-10-26",
+     "cum": 25.5
+    },
+    {
+     "id": "PH1-KJ01",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-10-26",
+     "due": "2026-10-28",
+     "cum": 27.5
+    },
+    {
+     "id": "PH1-KJ02",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-10-28",
+     "due": "2026-10-30",
+     "cum": 29.5
+    },
+    {
+     "id": "PH1-KJ03",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-10-30",
+     "due": "2026-11-01",
+     "cum": 31.5
+    },
+    {
+     "id": "PH1-KJ04",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-01",
+     "due": "2026-11-03",
+     "cum": 33.5
+    },
+    {
+     "id": "PH1-KJ05",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-03",
+     "due": "2026-11-05",
+     "cum": 35.5
+    },
+    {
+     "id": "PH1-KJ06",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-05",
+     "due": "2026-11-07",
+     "cum": 37.5
+    },
+    {
+     "id": "PH1-KJ07",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-07",
+     "due": "2026-11-09",
+     "cum": 39.5
+    },
+    {
+     "id": "PH1-KJ08",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-09",
+     "due": "2026-11-11",
+     "cum": 41.5
+    },
+    {
+     "id": "PH1-KJ09",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-11",
+     "due": "2026-11-13",
+     "cum": 43.5
+    },
+    {
+     "id": "PH1-KJ10",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-13",
+     "due": "2026-11-15",
+     "cum": 45.5
+    },
+    {
+     "id": "PH1-REV01",
+     "status": "Todo",
+     "est": 4,
+     "start": "2026-11-15",
+     "due": "2026-11-19",
+     "cum": 49.5
+    },
+    {
+     "id": "PH2A-M01",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-19",
+     "due": "2026-11-23",
+     "cum": 54
+    },
+    {
+     "id": "PH2A-M02",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-24",
+     "due": "2026-11-28",
+     "cum": 58.5
+    },
+    {
+     "id": "PH2A-M03",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-11-28",
+     "due": "2026-12-02",
+     "cum": 63
+    },
+    {
+     "id": "PH2A-M04",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-03",
+     "due": "2026-12-07",
+     "cum": 67.5
+    },
+    {
+     "id": "PH2A-M05",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-07",
+     "due": "2026-12-11",
+     "cum": 72
+    },
+    {
+     "id": "PH2A-M06",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-12",
+     "due": "2026-12-16",
+     "cum": 76.5
+    },
+    {
+     "id": "PH2A-M07",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-16",
+     "due": "2026-12-20",
+     "cum": 81
+    },
+    {
+     "id": "PH2A-M08",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-21",
+     "due": "2026-12-25",
+     "cum": 85.5
+    },
+    {
+     "id": "PH2A-M09",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-25",
+     "due": "2026-12-29",
+     "cum": 90
+    },
+    {
+     "id": "PH2A-M10",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-30",
+     "due": "2027-01-03",
+     "cum": 94.5
+    },
+    {
+     "id": "PH2A-M11",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-03",
+     "due": "2027-01-07",
+     "cum": 99
+    },
+    {
+     "id": "PH2A-M12",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-08",
+     "due": "2027-01-12",
+     "cum": 103.5
+    },
+    {
+     "id": "PH2A-M13",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-12",
+     "due": "2027-01-16",
+     "cum": 108
+    },
+    {
+     "id": "PH2A-M14",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-17",
+     "due": "2027-01-21",
+     "cum": 112.5
+    },
+    {
+     "id": "PH2A-M15",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-21",
+     "due": "2027-01-25",
+     "cum": 117
+    },
+    {
+     "id": "PH2A-M16",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-26",
+     "due": "2027-01-30",
+     "cum": 121.5
+    },
+    {
+     "id": "PH2A-M17",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-30",
+     "due": "2027-02-03",
+     "cum": 126
+    },
+    {
+     "id": "PH2A-M18",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-04",
+     "due": "2027-02-08",
+     "cum": 130.5
+    },
+    {
+     "id": "PH2A-M19",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-08",
+     "due": "2027-02-12",
+     "cum": 135
+    },
+    {
+     "id": "PH2A-M20",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-13",
+     "due": "2027-02-17",
+     "cum": 139.5
+    },
+    {
+     "id": "PH2A-M21",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-17",
+     "due": "2027-02-21",
+     "cum": 144
+    },
+    {
+     "id": "PH2A-M22",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-22",
+     "due": "2027-02-26",
+     "cum": 148.5
+    },
+    {
+     "id": "PH2A-M23",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-26",
+     "due": "2027-03-02",
+     "cum": 153
+    },
+    {
+     "id": "PH2A-M24",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-03",
+     "due": "2027-03-07",
+     "cum": 157.5
+    },
+    {
+     "id": "PH2A-M25",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-07",
+     "due": "2027-03-11",
+     "cum": 162
+    },
+    {
+     "id": "PH2A-REV01",
+     "status": "Todo",
+     "est": 6,
+     "start": "2027-03-12",
+     "due": "2027-03-17",
+     "cum": 168
+    },
+    {
+     "id": "PH2B-M26",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-18",
+     "due": "2027-03-22",
+     "cum": 173
+    },
+    {
+     "id": "PH2B-M27",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-23",
+     "due": "2027-03-27",
+     "cum": 178
+    },
+    {
+     "id": "PH2B-M28",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-03-28",
+     "due": "2027-04-01",
+     "cum": 183
+    },
+    {
+     "id": "PH2B-M29",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-04-02",
+     "due": "2027-04-06",
+     "cum": 188
+    },
+    {
+     "id": "PH2B-M30",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-04-07",
+     "due": "2027-04-11",
+     "cum": 193
+    },
+    {
+     "id": "PH2B-M31",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-04-12",
+     "due": "2027-04-16",
+     "cum": 198
+    },
+    {
+     "id": "PH2B-M32",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-04-17",
+     "due": "2027-04-21",
+     "cum": 203
+    },
+    {
+     "id": "PH2B-M33",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-04-22",
+     "due": "2027-04-26",
+     "cum": 208
+    },
+    {
+     "id": "PH2B-M34",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-04-27",
+     "due": "2027-05-01",
+     "cum": 213
+    },
+    {
+     "id": "PH2B-M35",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-02",
+     "due": "2027-05-06",
+     "cum": 218
+    },
+    {
+     "id": "PH2B-M36",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-07",
+     "due": "2027-05-11",
+     "cum": 223
+    },
+    {
+     "id": "PH2B-M37",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-12",
+     "due": "2027-05-16",
+     "cum": 228
+    },
+    {
+     "id": "PH2B-M38",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-17",
+     "due": "2027-05-21",
+     "cum": 233
+    },
+    {
+     "id": "PH2B-M39",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-22",
+     "due": "2027-05-26",
+     "cum": 238
+    },
+    {
+     "id": "PH2B-M40",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-27",
+     "due": "2027-05-31",
+     "cum": 243
+    },
+    {
+     "id": "PH2B-M41",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-01",
+     "due": "2027-06-05",
+     "cum": 248
+    },
+    {
+     "id": "PH2B-M42",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-06",
+     "due": "2027-06-10",
+     "cum": 253
+    },
+    {
+     "id": "PH2B-M43",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-11",
+     "due": "2027-06-15",
+     "cum": 258
+    },
+    {
+     "id": "PH2B-M44",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-16",
+     "due": "2027-06-20",
+     "cum": 263
+    },
+    {
+     "id": "PH2B-M45",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-21",
+     "due": "2027-06-25",
+     "cum": 268
+    },
+    {
+     "id": "PH2B-M46",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-26",
+     "due": "2027-06-30",
+     "cum": 273
+    },
+    {
+     "id": "PH2B-M47",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-01",
+     "due": "2027-07-05",
+     "cum": 278
+    },
+    {
+     "id": "PH2B-M48",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-06",
+     "due": "2027-07-10",
+     "cum": 283
+    },
+    {
+     "id": "PH2B-M49",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-11",
+     "due": "2027-07-15",
+     "cum": 288
+    },
+    {
+     "id": "PH2B-M50",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-16",
+     "due": "2027-07-20",
+     "cum": 293
+    },
+    {
+     "id": "PH2B-SH01",
+     "status": "Todo",
+     "est": 10,
+     "start": "2027-07-21",
+     "due": "2027-07-30",
+     "cum": 303
+    },
+    {
+     "id": "PH2B-REV01",
+     "status": "Todo",
+     "est": 6,
+     "start": "2027-07-31",
+     "due": "2027-08-05",
+     "cum": 309
+    },
+    {
+     "id": "PH3-KJ11",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-08-06",
+     "due": "2027-08-25",
+     "cum": 329
+    },
+    {
+     "id": "PH3-KJ21",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-08-26",
+     "due": "2027-09-14",
+     "cum": 349
+    },
+    {
+     "id": "PH3-KJ31",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-09-15",
+     "due": "2027-10-04",
+     "cum": 369
+    },
+    {
+     "id": "PH3-KJ41",
+     "status": "Todo",
+     "est": 22,
+     "start": "2027-10-05",
+     "due": "2027-10-26",
+     "cum": 391
+    },
+    {
+     "id": "PH3-SM01",
+     "status": "Todo",
+     "est": 25,
+     "start": "2027-10-27",
+     "due": "2027-11-20",
+     "cum": 416
+    },
+    {
+     "id": "PH3-SK01",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-11-21",
+     "due": "2027-12-10",
+     "cum": 436
+    },
+    {
+     "id": "PH3-SK02",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-12-11",
+     "due": "2027-12-30",
+     "cum": 456
+    },
+    {
+     "id": "PH3-SK03",
+     "status": "Todo",
+     "est": 15,
+     "start": "2027-12-31",
+     "due": "2028-01-14",
+     "cum": 471
+    },
+    {
+     "id": "PH3-IT01",
+     "status": "Todo",
+     "est": 10,
+     "start": "2028-01-15",
+     "due": "2028-01-24",
+     "cum": 481
+    },
+    {
+     "id": "PH3-IT02",
+     "status": "Todo",
+     "est": 8,
+     "start": "2028-01-25",
+     "due": "2028-02-01",
+     "cum": 489
+    },
+    {
+     "id": "PH3-IT03",
+     "status": "Todo",
+     "est": 6,
+     "start": "2028-02-02",
+     "due": "2028-02-07",
+     "cum": 495
+    },
+    {
+     "id": "PH3-IT04",
+     "status": "Todo",
+     "est": 8,
+     "start": "2028-02-08",
+     "due": "2028-02-15",
+     "cum": 503
+    },
+    {
+     "id": "PH3-IT05",
+     "status": "Todo",
+     "est": 8,
+     "start": "2028-02-16",
+     "due": "2028-02-23",
+     "cum": 511
+    },
+    {
+     "id": "PH3-PGO01",
+     "status": "Todo",
+     "est": 20,
+     "start": "2028-02-24",
+     "due": "2028-03-14",
+     "cum": 531
+    },
+    {
+     "id": "PH3-TEST01",
+     "status": "Todo",
+     "est": 15,
+     "start": "2028-03-15",
+     "due": "2028-03-29",
+     "cum": 546
+    }
+   ],
+   "expected": {
+    "finish": "2028-03-29",
+    "remainingHours": 546
+   }
+  },
+  {
+   "name": "future-start-done-and-skipped",
+   "today": "2026-10-01",
+   "settings": {
+    "startDate": "2026-11-15",
+    "hoursPerDay": 1.5,
+    "daysPerWeek": 5
+   },
+   "tasks": [
+    {
+     "id": "PH1-H01",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H02",
+     "status": "Skipped",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H03",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-15",
+     "due": "2026-11-16",
+     "cum": 1.5
+    },
+    {
+     "id": "PH1-H04",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-16",
+     "due": "2026-11-17",
+     "cum": 3
+    },
+    {
+     "id": "PH1-H05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-17",
+     "due": "2026-11-19",
+     "cum": 4.5
+    },
+    {
+     "id": "PH1-H06",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-19",
+     "due": "2026-11-20",
+     "cum": 6
+    },
+    {
+     "id": "PH1-H07",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-20",
+     "due": "2026-11-21",
+     "cum": 7.5
+    },
+    {
+     "id": "PH1-H08",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-11-22",
+     "due": "2026-11-22",
+     "cum": 8.5
+    },
+    {
+     "id": "PH1-H09",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-22",
+     "due": "2026-11-24",
+     "cum": 10
+    },
+    {
+     "id": "PH1-HD01",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-11-24",
+     "due": "2026-11-25",
+     "cum": 11
+    },
+    {
+     "id": "PH1-HD02",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-11-25",
+     "due": "2026-11-26",
+     "cum": 12
+    },
+    {
+     "id": "PH1-HD03",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-11-26",
+     "due": "2026-11-27",
+     "cum": 13
+    },
+    {
+     "id": "PH1-HD04",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-11-27",
+     "due": "2026-11-28",
+     "cum": 14
+    },
+    {
+     "id": "PH1-HD05",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-11-28",
+     "due": "2026-11-28",
+     "cum": 15
+    },
+    {
+     "id": "PH1-HG01",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-11-29",
+     "due": "2026-11-29",
+     "cum": 16
+    },
+    {
+     "id": "PH1-HG02",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-11-29",
+     "due": "2026-11-30",
+     "cum": 17
+    },
+    {
+     "id": "PH1-HG03",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-11-30",
+     "due": "2026-12-01",
+     "cum": 18
+    },
+    {
+     "id": "PH1-HG04",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-12-01",
+     "due": "2026-12-02",
+     "cum": 19
+    },
+    {
+     "id": "PH1-HG05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-02",
+     "due": "2026-12-04",
+     "cum": 20.5
+    },
+    {
+     "id": "PH1-K01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-04",
+     "due": "2026-12-05",
+     "cum": 22
+    },
+    {
+     "id": "PH1-K02",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-05",
+     "due": "2026-12-06",
+     "cum": 23.5
+    },
+    {
+     "id": "PH1-K03",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-06",
+     "due": "2026-12-08",
+     "cum": 25
+    },
+    {
+     "id": "PH1-K04",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-08",
+     "due": "2026-12-09",
+     "cum": 26.5
+    },
+    {
+     "id": "PH1-K05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-09",
+     "due": "2026-12-11",
+     "cum": 28
+    },
+    {
+     "id": "PH1-K06",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-11",
+     "due": "2026-12-12",
+     "cum": 29.5
+    },
+    {
+     "id": "PH1-K07",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-12",
+     "due": "2026-12-13",
+     "cum": 31
+    },
+    {
+     "id": "PH1-K08",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-12-13",
+     "due": "2026-12-14",
+     "cum": 32
+    },
+    {
+     "id": "PH1-K09",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-14",
+     "due": "2026-12-16",
+     "cum": 33.5
+    },
+    {
+     "id": "PH1-KD01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-16",
+     "due": "2026-12-17",
+     "cum": 35
+    },
+    {
+     "id": "PH1-KG01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-17",
+     "due": "2026-12-19",
+     "cum": 36.5
+    },
+    {
+     "id": "PH1-KIT01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-19",
+     "due": "2026-12-20",
+     "cum": 38
+    },
+    {
+     "id": "PH1-KIT02",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-20",
+     "due": "2026-12-21",
+     "cum": 39.5
+    },
+    {
+     "id": "PH1-KIT03",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-21",
+     "due": "2026-12-23",
+     "cum": 41
+    },
+    {
+     "id": "PH1-KIT04",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-12-23",
+     "due": "2026-12-24",
+     "cum": 42.5
+    },
+    {
+     "id": "PH1-KJ01",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-24",
+     "due": "2026-12-26",
+     "cum": 44.5
+    },
+    {
+     "id": "PH1-KJ02",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-26",
+     "due": "2026-12-28",
+     "cum": 46.5
+    },
+    {
+     "id": "PH1-KJ03",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-28",
+     "due": "2026-12-30",
+     "cum": 48.5
+    },
+    {
+     "id": "PH1-KJ04",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-30",
+     "due": "2027-01-01",
+     "cum": 50.5
+    },
+    {
+     "id": "PH1-KJ05",
+     "status": "Todo",
+     "est": 2,
+     "start": "2027-01-01",
+     "due": "2027-01-02",
+     "cum": 52.5
+    },
+    {
+     "id": "PH1-KJ06",
+     "status": "Todo",
+     "est": 2,
+     "start": "2027-01-03",
+     "due": "2027-01-04",
+     "cum": 54.5
+    },
+    {
+     "id": "PH1-KJ07",
+     "status": "Todo",
+     "est": 2,
+     "start": "2027-01-04",
+     "due": "2027-01-06",
+     "cum": 56.5
+    },
+    {
+     "id": "PH1-KJ08",
+     "status": "Todo",
+     "est": 2,
+     "start": "2027-01-06",
+     "due": "2027-01-08",
+     "cum": 58.5
+    },
+    {
+     "id": "PH1-KJ09",
+     "status": "Todo",
+     "est": 2,
+     "start": "2027-01-08",
+     "due": "2027-01-10",
+     "cum": 60.5
+    },
+    {
+     "id": "PH1-KJ10",
+     "status": "Todo",
+     "est": 2,
+     "start": "2027-01-10",
+     "due": "2027-01-12",
+     "cum": 62.5
+    },
+    {
+     "id": "PH1-REV01",
+     "status": "Todo",
+     "est": 4,
+     "start": "2027-01-12",
+     "due": "2027-01-16",
+     "cum": 66.5
+    },
+    {
+     "id": "PH2A-M01",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-16",
+     "due": "2027-01-20",
+     "cum": 71
+    },
+    {
+     "id": "PH2A-M02",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-20",
+     "due": "2027-01-24",
+     "cum": 75.5
+    },
+    {
+     "id": "PH2A-M03",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-24",
+     "due": "2027-01-28",
+     "cum": 80
+    },
+    {
+     "id": "PH2A-M04",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-28",
+     "due": "2027-02-01",
+     "cum": 84.5
+    },
+    {
+     "id": "PH2A-M05",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-01",
+     "due": "2027-02-06",
+     "cum": 89
+    },
+    {
+     "id": "PH2A-M06",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-06",
+     "due": "2027-02-10",
+     "cum": 93.5
+    },
+    {
+     "id": "PH2A-M07",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-10",
+     "due": "2027-02-14",
+     "cum": 98
+    },
+    {
+     "id": "PH2A-M08",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-14",
+     "due": "2027-02-18",
+     "cum": 102.5
+    },
+    {
+     "id": "PH2A-M09",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-18",
+     "due": "2027-02-22",
+     "cum": 107
+    },
+    {
+     "id": "PH2A-M10",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-22",
+     "due": "2027-02-27",
+     "cum": 111.5
+    },
+    {
+     "id": "PH2A-M11",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-27",
+     "due": "2027-03-03",
+     "cum": 116
+    },
+    {
+     "id": "PH2A-M12",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-03",
+     "due": "2027-03-07",
+     "cum": 120.5
+    },
+    {
+     "id": "PH2A-M13",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-07",
+     "due": "2027-03-11",
+     "cum": 125
+    },
+    {
+     "id": "PH2A-M14",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-11",
+     "due": "2027-03-15",
+     "cum": 129.5
+    },
+    {
+     "id": "PH2A-M15",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-15",
+     "due": "2027-03-20",
+     "cum": 134
+    },
+    {
+     "id": "PH2A-M16",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-20",
+     "due": "2027-03-24",
+     "cum": 138.5
+    },
+    {
+     "id": "PH2A-M17",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-24",
+     "due": "2027-03-28",
+     "cum": 143
+    },
+    {
+     "id": "PH2A-M18",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-28",
+     "due": "2027-04-01",
+     "cum": 147.5
+    },
+    {
+     "id": "PH2A-M19",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-01",
+     "due": "2027-04-05",
+     "cum": 152
+    },
+    {
+     "id": "PH2A-M20",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-05",
+     "due": "2027-04-10",
+     "cum": 156.5
+    },
+    {
+     "id": "PH2A-M21",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-10",
+     "due": "2027-04-14",
+     "cum": 161
+    },
+    {
+     "id": "PH2A-M22",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-14",
+     "due": "2027-04-18",
+     "cum": 165.5
+    },
+    {
+     "id": "PH2A-M23",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-18",
+     "due": "2027-04-22",
+     "cum": 170
+    },
+    {
+     "id": "PH2A-M24",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-22",
+     "due": "2027-04-26",
+     "cum": 174.5
+    },
+    {
+     "id": "PH2A-M25",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-26",
+     "due": "2027-05-01",
+     "cum": 179
+    },
+    {
+     "id": "PH2A-REV01",
+     "status": "Todo",
+     "est": 6,
+     "start": "2027-05-01",
+     "due": "2027-05-06",
+     "cum": 185
+    },
+    {
+     "id": "PH2B-M26",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-06",
+     "due": "2027-05-11",
+     "cum": 190
+    },
+    {
+     "id": "PH2B-M27",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-11",
+     "due": "2027-05-15",
+     "cum": 195
+    },
+    {
+     "id": "PH2B-M28",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-16",
+     "due": "2027-05-20",
+     "cum": 200
+    },
+    {
+     "id": "PH2B-M29",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-20",
+     "due": "2027-05-25",
+     "cum": 205
+    },
+    {
+     "id": "PH2B-M30",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-25",
+     "due": "2027-05-29",
+     "cum": 210
+    },
+    {
+     "id": "PH2B-M31",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-05-30",
+     "due": "2027-06-03",
+     "cum": 215
+    },
+    {
+     "id": "PH2B-M32",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-03",
+     "due": "2027-06-08",
+     "cum": 220
+    },
+    {
+     "id": "PH2B-M33",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-08",
+     "due": "2027-06-12",
+     "cum": 225
+    },
+    {
+     "id": "PH2B-M34",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-13",
+     "due": "2027-06-17",
+     "cum": 230
+    },
+    {
+     "id": "PH2B-M35",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-17",
+     "due": "2027-06-22",
+     "cum": 235
+    },
+    {
+     "id": "PH2B-M36",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-22",
+     "due": "2027-06-26",
+     "cum": 240
+    },
+    {
+     "id": "PH2B-M37",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-06-27",
+     "due": "2027-07-01",
+     "cum": 245
+    },
+    {
+     "id": "PH2B-M38",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-01",
+     "due": "2027-07-06",
+     "cum": 250
+    },
+    {
+     "id": "PH2B-M39",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-06",
+     "due": "2027-07-10",
+     "cum": 255
+    },
+    {
+     "id": "PH2B-M40",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-11",
+     "due": "2027-07-15",
+     "cum": 260
+    },
+    {
+     "id": "PH2B-M41",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-15",
+     "due": "2027-07-20",
+     "cum": 265
+    },
+    {
+     "id": "PH2B-M42",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-20",
+     "due": "2027-07-24",
+     "cum": 270
+    },
+    {
+     "id": "PH2B-M43",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-25",
+     "due": "2027-07-29",
+     "cum": 275
+    },
+    {
+     "id": "PH2B-M44",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-07-29",
+     "due": "2027-08-03",
+     "cum": 280
+    },
+    {
+     "id": "PH2B-M45",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-08-03",
+     "due": "2027-08-07",
+     "cum": 285
+    },
+    {
+     "id": "PH2B-M46",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-08-08",
+     "due": "2027-08-12",
+     "cum": 290
+    },
+    {
+     "id": "PH2B-M47",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-08-12",
+     "due": "2027-08-17",
+     "cum": 295
+    },
+    {
+     "id": "PH2B-M48",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-08-17",
+     "due": "2027-08-21",
+     "cum": 300
+    },
+    {
+     "id": "PH2B-M49",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-08-22",
+     "due": "2027-08-26",
+     "cum": 305
+    },
+    {
+     "id": "PH2B-M50",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-08-26",
+     "due": "2027-08-31",
+     "cum": 310
+    },
+    {
+     "id": "PH2B-SH01",
+     "status": "Todo",
+     "est": 10,
+     "start": "2027-08-31",
+     "due": "2027-09-09",
+     "cum": 320
+    },
+    {
+     "id": "PH2B-REV01",
+     "status": "Todo",
+     "est": 6,
+     "start": "2027-09-09",
+     "due": "2027-09-15",
+     "cum": 326
+    },
+    {
+     "id": "PH3-KJ11",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-09-15",
+     "due": "2027-10-03",
+     "cum": 346
+    },
+    {
+     "id": "PH3-KJ21",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-10-03",
+     "due": "2027-10-22",
+     "cum": 366
+    },
+    {
+     "id": "PH3-KJ31",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-10-22",
+     "due": "2027-11-10",
+     "cum": 386
+    },
+    {
+     "id": "PH3-KJ41",
+     "status": "Todo",
+     "est": 22,
+     "start": "2027-11-10",
+     "due": "2027-11-30",
+     "cum": 408
+    },
+    {
+     "id": "PH3-SM01",
+     "status": "Todo",
+     "est": 25,
+     "start": "2027-11-30",
+     "due": "2027-12-24",
+     "cum": 433
+    },
+    {
+     "id": "PH3-SK01",
+     "status": "Todo",
+     "est": 20,
+     "start": "2027-12-24",
+     "due": "2028-01-11",
+     "cum": 453
+    },
+    {
+     "id": "PH3-SK02",
+     "status": "Todo",
+     "est": 20,
+     "start": "2028-01-11",
+     "due": "2028-01-30",
+     "cum": 473
+    },
+    {
+     "id": "PH3-SK03",
+     "status": "Todo",
+     "est": 15,
+     "start": "2028-01-30",
+     "due": "2028-02-13",
+     "cum": 488
+    },
+    {
+     "id": "PH3-IT01",
+     "status": "Todo",
+     "est": 10,
+     "start": "2028-02-13",
+     "due": "2028-02-22",
+     "cum": 498
+    },
+    {
+     "id": "PH3-IT02",
+     "status": "Todo",
+     "est": 8,
+     "start": "2028-02-22",
+     "due": "2028-03-01",
+     "cum": 506
+    },
+    {
+     "id": "PH3-IT03",
+     "status": "Todo",
+     "est": 6,
+     "start": "2028-03-01",
+     "due": "2028-03-06",
+     "cum": 512
+    },
+    {
+     "id": "PH3-IT04",
+     "status": "Todo",
+     "est": 8,
+     "start": "2028-03-06",
+     "due": "2028-03-14",
+     "cum": 520
+    },
+    {
+     "id": "PH3-IT05",
+     "status": "Todo",
+     "est": 8,
+     "start": "2028-03-14",
+     "due": "2028-03-21",
+     "cum": 528
+    },
+    {
+     "id": "PH3-PGO01",
+     "status": "Todo",
+     "est": 20,
+     "start": "2028-03-21",
+     "due": "2028-04-09",
+     "cum": 548
+    },
+    {
+     "id": "PH3-TEST01",
+     "status": "Todo",
+     "est": 15,
+     "start": "2028-04-09",
+     "due": "2028-04-23",
+     "cum": 563
+    }
+   ],
+   "expected": {
+    "finish": "2028-04-23",
+    "remainingHours": 563
+   }
+  },
+  {
+   "name": "personal-v4.1-only-half-hour",
+   "today": "2026-10-01",
+   "settings": {
+    "startDate": "2026-09-11",
+    "hoursPerDay": 0.5,
+    "daysPerWeek": 7
+   },
+   "tasks": [
+    {
+     "id": "PH1-H01",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H02",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H03",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H04",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H05",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H06",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H07",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H08",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-H09",
+     "status": "Done",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD01",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD02",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD03",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD04",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HD05",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HG01",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HG02",
+     "status": "Done",
+     "est": 1,
+     "start": null,
+     "due": null,
+     "cum": 0
+    },
+    {
+     "id": "PH1-HG03",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-01",
+     "due": "2026-10-02",
+     "cum": 1
+    },
+    {
+     "id": "PH1-HG04",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-03",
+     "due": "2026-10-04",
+     "cum": 2
+    },
+    {
+     "id": "PH1-HG05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-05",
+     "due": "2026-10-07",
+     "cum": 3.5
+    },
+    {
+     "id": "PH1-K01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-08",
+     "due": "2026-10-10",
+     "cum": 5
+    },
+    {
+     "id": "PH1-K02",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-11",
+     "due": "2026-10-13",
+     "cum": 6.5
+    },
+    {
+     "id": "PH1-K03",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-14",
+     "due": "2026-10-16",
+     "cum": 8
+    },
+    {
+     "id": "PH1-K04",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-17",
+     "due": "2026-10-19",
+     "cum": 9.5
+    },
+    {
+     "id": "PH1-K05",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-20",
+     "due": "2026-10-22",
+     "cum": 11
+    },
+    {
+     "id": "PH1-K06",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-23",
+     "due": "2026-10-25",
+     "cum": 12.5
+    },
+    {
+     "id": "PH1-K07",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-26",
+     "due": "2026-10-28",
+     "cum": 14
+    },
+    {
+     "id": "PH1-K08",
+     "status": "Todo",
+     "est": 1,
+     "start": "2026-10-29",
+     "due": "2026-10-30",
+     "cum": 15
+    },
+    {
+     "id": "PH1-K09",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-10-31",
+     "due": "2026-11-02",
+     "cum": 16.5
+    },
+    {
+     "id": "PH1-KD01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-03",
+     "due": "2026-11-05",
+     "cum": 18
+    },
+    {
+     "id": "PH1-KG01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-06",
+     "due": "2026-11-08",
+     "cum": 19.5
+    },
+    {
+     "id": "PH1-KIT01",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-09",
+     "due": "2026-11-11",
+     "cum": 21
+    },
+    {
+     "id": "PH1-KIT02",
+     "status": "Todo",
+     "est": 1.5,
+     "start": "2026-11-12",
+     "due": "2026-11-14",
+     "cum": 22.5
+    },
+    {
+     "id": "PH1-KIT03",
+     "status": "Skipped",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 22.5
+    },
+    {
+     "id": "PH1-KIT04",
+     "status": "Skipped",
+     "est": 1.5,
+     "start": null,
+     "due": null,
+     "cum": 22.5
+    },
+    {
+     "id": "PH1-KJ01",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-15",
+     "due": "2026-11-18",
+     "cum": 24.5
+    },
+    {
+     "id": "PH1-KJ02",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-19",
+     "due": "2026-11-22",
+     "cum": 26.5
+    },
+    {
+     "id": "PH1-KJ03",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-23",
+     "due": "2026-11-26",
+     "cum": 28.5
+    },
+    {
+     "id": "PH1-KJ04",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-11-27",
+     "due": "2026-11-30",
+     "cum": 30.5
+    },
+    {
+     "id": "PH1-KJ05",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-01",
+     "due": "2026-12-04",
+     "cum": 32.5
+    },
+    {
+     "id": "PH1-KJ06",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-05",
+     "due": "2026-12-08",
+     "cum": 34.5
+    },
+    {
+     "id": "PH1-KJ07",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-09",
+     "due": "2026-12-12",
+     "cum": 36.5
+    },
+    {
+     "id": "PH1-KJ08",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-13",
+     "due": "2026-12-16",
+     "cum": 38.5
+    },
+    {
+     "id": "PH1-KJ09",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-17",
+     "due": "2026-12-20",
+     "cum": 40.5
+    },
+    {
+     "id": "PH1-KJ10",
+     "status": "Todo",
+     "est": 2,
+     "start": "2026-12-21",
+     "due": "2026-12-24",
+     "cum": 42.5
+    },
+    {
+     "id": "PH1-REV01",
+     "status": "Skipped",
+     "est": 4,
+     "start": null,
+     "due": null,
+     "cum": 42.5
+    },
+    {
+     "id": "PH2A-M01",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2026-12-25",
+     "due": "2027-01-02",
+     "cum": 47
+    },
+    {
+     "id": "PH2A-M02",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-03",
+     "due": "2027-01-11",
+     "cum": 51.5
+    },
+    {
+     "id": "PH2A-M03",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-12",
+     "due": "2027-01-20",
+     "cum": 56
+    },
+    {
+     "id": "PH2A-M04",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-21",
+     "due": "2027-01-29",
+     "cum": 60.5
+    },
+    {
+     "id": "PH2A-M05",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-01-30",
+     "due": "2027-02-07",
+     "cum": 65
+    },
+    {
+     "id": "PH2A-M06",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-08",
+     "due": "2027-02-16",
+     "cum": 69.5
+    },
+    {
+     "id": "PH2A-M07",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-17",
+     "due": "2027-02-25",
+     "cum": 74
+    },
+    {
+     "id": "PH2A-M08",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-02-26",
+     "due": "2027-03-06",
+     "cum": 78.5
+    },
+    {
+     "id": "PH2A-M09",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-07",
+     "due": "2027-03-15",
+     "cum": 83
+    },
+    {
+     "id": "PH2A-M10",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-16",
+     "due": "2027-03-24",
+     "cum": 87.5
+    },
+    {
+     "id": "PH2A-M11",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-03-25",
+     "due": "2027-04-02",
+     "cum": 92
+    },
+    {
+     "id": "PH2A-M12",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-03",
+     "due": "2027-04-11",
+     "cum": 96.5
+    },
+    {
+     "id": "PH2A-M13",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-12",
+     "due": "2027-04-20",
+     "cum": 101
+    },
+    {
+     "id": "PH2A-M14",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-21",
+     "due": "2027-04-29",
+     "cum": 105.5
+    },
+    {
+     "id": "PH2A-M15",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-04-30",
+     "due": "2027-05-08",
+     "cum": 110
+    },
+    {
+     "id": "PH2A-M16",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-05-09",
+     "due": "2027-05-17",
+     "cum": 114.5
+    },
+    {
+     "id": "PH2A-M17",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-05-18",
+     "due": "2027-05-26",
+     "cum": 119
+    },
+    {
+     "id": "PH2A-M18",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-05-27",
+     "due": "2027-06-04",
+     "cum": 123.5
+    },
+    {
+     "id": "PH2A-M19",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-06-05",
+     "due": "2027-06-13",
+     "cum": 128
+    },
+    {
+     "id": "PH2A-M20",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-06-14",
+     "due": "2027-06-22",
+     "cum": 132.5
+    },
+    {
+     "id": "PH2A-M21",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-06-23",
+     "due": "2027-07-01",
+     "cum": 137
+    },
+    {
+     "id": "PH2A-M22",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-07-02",
+     "due": "2027-07-10",
+     "cum": 141.5
+    },
+    {
+     "id": "PH2A-M23",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-07-11",
+     "due": "2027-07-19",
+     "cum": 146
+    },
+    {
+     "id": "PH2A-M24",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-07-20",
+     "due": "2027-07-28",
+     "cum": 150.5
+    },
+    {
+     "id": "PH2A-M25",
+     "status": "Todo",
+     "est": 4.5,
+     "start": "2027-07-29",
+     "due": "2027-08-06",
+     "cum": 155
+    },
+    {
+     "id": "PH2A-REV01",
+     "status": "Skipped",
+     "est": 6,
+     "start": null,
+     "due": null,
+     "cum": 155
+    },
+    {
+     "id": "PH2B-M26",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-08-07",
+     "due": "2027-08-16",
+     "cum": 160
+    },
+    {
+     "id": "PH2B-M27",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-08-17",
+     "due": "2027-08-26",
+     "cum": 165
+    },
+    {
+     "id": "PH2B-M28",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-08-27",
+     "due": "2027-09-05",
+     "cum": 170
+    },
+    {
+     "id": "PH2B-M29",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-09-06",
+     "due": "2027-09-15",
+     "cum": 175
+    },
+    {
+     "id": "PH2B-M30",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-09-16",
+     "due": "2027-09-25",
+     "cum": 180
+    },
+    {
+     "id": "PH2B-M31",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-09-26",
+     "due": "2027-10-05",
+     "cum": 185
+    },
+    {
+     "id": "PH2B-M32",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-10-06",
+     "due": "2027-10-15",
+     "cum": 190
+    },
+    {
+     "id": "PH2B-M33",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-10-16",
+     "due": "2027-10-25",
+     "cum": 195
+    },
+    {
+     "id": "PH2B-M34",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-10-26",
+     "due": "2027-11-04",
+     "cum": 200
+    },
+    {
+     "id": "PH2B-M35",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-11-05",
+     "due": "2027-11-14",
+     "cum": 205
+    },
+    {
+     "id": "PH2B-M36",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-11-15",
+     "due": "2027-11-24",
+     "cum": 210
+    },
+    {
+     "id": "PH2B-M37",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-11-25",
+     "due": "2027-12-04",
+     "cum": 215
+    },
+    {
+     "id": "PH2B-M38",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-12-05",
+     "due": "2027-12-14",
+     "cum": 220
+    },
+    {
+     "id": "PH2B-M39",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-12-15",
+     "due": "2027-12-24",
+     "cum": 225
+    },
+    {
+     "id": "PH2B-M40",
+     "status": "Todo",
+     "est": 5,
+     "start": "2027-12-25",
+     "due": "2028-01-03",
+     "cum": 230
+    },
+    {
+     "id": "PH2B-M41",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-01-04",
+     "due": "2028-01-13",
+     "cum": 235
+    },
+    {
+     "id": "PH2B-M42",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-01-14",
+     "due": "2028-01-23",
+     "cum": 240
+    },
+    {
+     "id": "PH2B-M43",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-01-24",
+     "due": "2028-02-02",
+     "cum": 245
+    },
+    {
+     "id": "PH2B-M44",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-02-03",
+     "due": "2028-02-12",
+     "cum": 250
+    },
+    {
+     "id": "PH2B-M45",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-02-13",
+     "due": "2028-02-22",
+     "cum": 255
+    },
+    {
+     "id": "PH2B-M46",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-02-23",
+     "due": "2028-03-03",
+     "cum": 260
+    },
+    {
+     "id": "PH2B-M47",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-03-04",
+     "due": "2028-03-13",
+     "cum": 265
+    },
+    {
+     "id": "PH2B-M48",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-03-14",
+     "due": "2028-03-23",
+     "cum": 270
+    },
+    {
+     "id": "PH2B-M49",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-03-24",
+     "due": "2028-04-02",
+     "cum": 275
+    },
+    {
+     "id": "PH2B-M50",
+     "status": "Todo",
+     "est": 5,
+     "start": "2028-04-03",
+     "due": "2028-04-12",
+     "cum": 280
+    },
+    {
+     "id": "PH2B-SH01",
+     "status": "Todo",
+     "est": 10,
+     "start": "2028-04-13",
+     "due": "2028-05-02",
+     "cum": 290
+    },
+    {
+     "id": "PH2B-REV01",
+     "status": "Skipped",
+     "est": 6,
+     "start": null,
+     "due": null,
+     "cum": 290
+    },
+    {
+     "id": "PH3-KJ11",
+     "status": "Skipped",
+     "est": 20,
+     "start": null,
+     "due": null,
+     "cum": 290
+    },
+    {
+     "id": "PH3-KJ21",
+     "status": "Skipped",
+     "est": 20,
+     "start": null,
+     "due": null,
+     "cum": 290
+    },
+    {
+     "id": "PH3-KJ31",
+     "status": "Skipped",
+     "est": 20,
+     "start": null,
+     "due": null,
+     "cum": 290
+    },
+    {
+     "id": "PH3-KJ41",
+     "status": "Skipped",
+     "est": 22,
+     "start": null,
+     "due": null,
+     "cum": 290
+    },
+    {
+     "id": "PH3-SM01",
+     "status": "Todo",
+     "est": 25,
+     "start": "2028-05-03",
+     "due": "2028-06-21",
+     "cum": 315
+    },
+    {
+     "id": "PH3-SK01",
+     "status": "Todo",
+     "est": 20,
+     "start": "2028-06-22",
+     "due": "2028-07-31",
+     "cum": 335
+    },
+    {
+     "id": "PH3-SK02",
+     "status": "Todo",
+     "est": 20,
+     "start": "2028-08-01",
+     "due": "2028-09-09",
+     "cum": 355
+    },
+    {
+     "id": "PH3-SK03",
+     "status": "Todo",
+     "est": 15,
+     "start": "2028-09-10",
+     "due": "2028-10-09",
+     "cum": 370
+    },
+    {
+     "id": "PH3-IT01",
+     "status": "Skipped",
+     "est": 10,
+     "start": null,
+     "due": null,
+     "cum": 370
+    },
+    {
+     "id": "PH3-IT02",
+     "status": "Skipped",
+     "est": 8,
+     "start": null,
+     "due": null,
+     "cum": 370
+    },
+    {
+     "id": "PH3-IT03",
+     "status": "Skipped",
+     "est": 6,
+     "start": null,
+     "due": null,
+     "cum": 370
+    },
+    {
+     "id": "PH3-IT04",
+     "status": "Skipped",
+     "est": 8,
+     "start": null,
+     "due": null,
+     "cum": 370
+    },
+    {
+     "id": "PH3-IT05",
+     "status": "Skipped",
+     "est": 8,
+     "start": null,
+     "due": null,
+     "cum": 370
+    },
+    {
+     "id": "PH3-PGO01",
+     "status": "Todo",
+     "est": 20,
+     "start": "2028-10-10",
+     "due": "2028-11-18",
+     "cum": 390
+    },
+    {
+     "id": "PH3-TEST01",
+     "status": "Todo",
+     "est": 15,
+     "start": "2028-11-19",
+     "due": "2028-12-18",
+     "cum": 405
+    }
+   ],
+   "expected": {
+    "finish": "2028-12-18",
+    "remainingHours": 405
+   }
+  }
+ ]
+}
