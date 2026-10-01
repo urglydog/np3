@@ -27,3 +27,20 @@ export function nextTaskAfter(tasks: TaskProgressRow[], upToSort: number): TaskP
     .sort((a, b) => a.sort - b.sort);
   return after[0] ?? null;
 }
+
+export interface WritingMasteryRow {
+  writingTarget: number;
+  writingReps: number;
+}
+
+/**
+ * Mức thành thục tập viết trung bình = trung bình của min(1, reps/target), chỉ tính trên task có
+ * writingTarget > 0 (đúng công thức file Sheet gốc). Task target=0 (không có chỉ tiêu viết) bị loại
+ * hẳn khỏi phép tính — không tính là 0 cũng không bỏ qua giữa chừng. Danh sách rỗng (sau khi loại) trả 0.
+ */
+export function writingMastery(rows: WritingMasteryRow[]): number {
+  const eligible = rows.filter((r) => r.writingTarget > 0);
+  if (eligible.length === 0) return 0;
+  const sum = eligible.reduce((acc, r) => acc + Math.min(1, r.writingReps / r.writingTarget), 0);
+  return sum / eligible.length;
+}

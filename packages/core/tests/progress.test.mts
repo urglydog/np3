@@ -1,6 +1,6 @@
 // Kiểm tra tasksToMarkDone / nextTaskAfter: logic "đã học đến đâu" (chỉ phục vụ xem trước ở UI).
 import { readFileSync } from 'node:fs';
-import { nextTaskAfter, tasksToMarkDone, type TaskProgressRow } from '../src/progress';
+import { nextTaskAfter, tasksToMarkDone, writingMastery, type TaskProgressRow } from '../src/progress';
 
 let fails = 0,
   checks = 0;
@@ -15,6 +15,7 @@ const eq = (label: string, got: unknown, want: unknown) => {
 interface TplTask {
   code: string;
   sort: number;
+  writing_target: number;
 }
 const tpl: { tasks: TplTask[] } = JSON.parse(readFileSync(new URL('./fixtures/n3-template.json', import.meta.url), 'utf8'));
 const allTodo: TaskProgressRow[] = tpl.tasks
@@ -61,6 +62,49 @@ eq('(d) ngưỡng = sort lớn nhất -> lấy hết', tasksToMarkDone(allTodo, 
   eq('next bỏ qua task skipped ngay sau ngưỡng', nextTaskAfter(withSkippedNext, upTo)?.id, allTodo[6].id);
 }
 eq('next khi hết task -> null', nextTaskAfter(allTodo, allTodo[allTodo.length - 1].sort), null);
+
+// ---- writingMastery ----
+{
+  const withTarget = tpl.tasks.filter((t) => t.writing_target > 0);
+  const withoutTarget = tpl.tasks.filter((t) => t.writing_target === 0);
+  if (withTarget.length === 0 || withoutTarget.length === 0) {
+    throw new Error('fixture phải có cả task writing_target>0 và =0 để test writingMastery');
+  }
+
+  eq('danh sách rỗng -> 0', writingMastery([]), 0);
+
+  // reps = target cho mọi task có target -> trung bình = 1
+  eq(
+    'reps = target hết -> mastery = 1',
+    writingMastery(withTarget.map((t) => ({ writingTarget: t.writing_target, writingReps: t.writing_target }))),
+    1
+  );
+
+  // reps vượt target -> chặn ở 1, không vượt quá
+  eq(
+    'reps vượt target bị chặn ở 1 (không tính >1)',
+    writingMastery(withTarget.map((t) => ({ writingTarget: t.writing_target, writingReps: t.writing_target * 5 }))),
+    1
+  );
+
+  // task target=0 bị loại hoàn toàn khỏi phép tính, dù reps có nhập cũng không ảnh hưởng
+  {
+    const onlyFirstHasReps = [
+      { writingTarget: withTarget[0].writing_target, writingReps: withTarget[0].writing_target }, // mastery 1
+      ...withoutTarget.map((t) => ({ writingTarget: t.writing_target, writingReps: 9999 })), // bị loại, không kéo trung bình xuống
+    ];
+    eq('task target=0 bị loại, không ảnh hưởng trung bình', writingMastery(onlyFirstHasReps), 1);
+  }
+
+  // nửa đạt nửa chưa -> trung bình đúng giữa
+  {
+    const half = [
+      { writingTarget: 100, writingReps: 100 },
+      { writingTarget: 100, writingReps: 0 },
+    ];
+    eq('nửa đạt nửa chưa -> trung bình 0.5', writingMastery(half), 0.5);
+  }
+}
 
 console.log(`${checks - fails}/${checks} kiểm tra đạt`);
 process.exit(fails ? 1 : 0);
