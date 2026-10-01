@@ -14,6 +14,7 @@ const items = [
 
 export function BottomNav() {
   const pathname = usePathname();
+  if (pathname === '/login' || pathname?.startsWith('/login/')) return null;
   return (
     <nav
       className="sticky bottom-0 flex justify-around border-t border-line bg-surface pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2"

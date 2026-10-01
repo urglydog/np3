@@ -75,7 +75,8 @@ Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói tro
 - Commit format: `feat:` / `fix:` / `refactor:` / `test:` / `docs:` / `chore:`.
 ### 8a. ĐƯỢC PHÉP TỰ COMMIT (và push nếu đã có remote) vào nhánh `feat/*` khi ĐỦ CẢ 2 điều kiện
 1. Việc đang làm đã xong (không dở dang).
-2. Đã kiểm tra đúng cấp độ: `npm run lint` + `npm run typecheck` + `npm run test:core`; nếu đụng DB/RLS thì thêm kiểm tra seed + RLS; nếu task có yêu cầu test cụ thể thì chạy đúng test đó và phải pass.
+2. Đã kiểm tra đúng cấp độ: `npm run check` (lint + typecheck + test:core + test apps/web); nếu task có yêu cầu test cụ thể thì chạy đúng test đó và phải pass.
+- **Nhánh `feat/*` nào đụng DB/RPC/form/Server Action** (bất cứ thứ gì chạm Supabase local thật) → **BẮT BUỘC chạy `npm run check:full`** (thêm `scripts/test-integration.mts`, cần Supabase local đang chạy) trước khi báo "xong task" và trước khi gộp (`merge --no-ff`) nhánh đó vào `develop`. `npm run check` suông (không có DB) không đủ cho các nhánh này.
 - Push thẳng `main`/`develop` luôn phải confirm. Có nghi ngờ/bug lạ giữa chừng → sửa xong, verify lại rồi mới commit, không commit code còn nghi vấn.
 
 ## 9. STACK KHÔNG ĐƯỢC TỰ Ý THAY ĐỔI
@@ -97,6 +98,8 @@ Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói tro
 - RLS: dùng `(select auth.uid())`; kiểm thử bằng hai người dùng.
 - iOS: push chỉ hoạt động trong PWA đã cài, từ iOS 16.4; dữ liệu trong tab Safari và trong app đã cài là hai nơi riêng.
 - Môi trường máy dev hiện tại: Next.js 16, Tailwind v4 (token khai báo bằng `@theme` trong CSS, không dùng `tailwind.config.js` kiểu v3); đặt `agentRules: false` trong `next.config.ts` (Next 16 mặc định tự sinh `AGENTS.md`/`CLAUDE.md` mỗi lần `next dev`, phải tắt); cổng 3000 hay bị công cụ khác trên máy chiếm nên web cố định chạy ở cổng 3100; npm workspaces có thể tạo `node_modules` lồng ngay trong `apps/*`/`packages/*` khi version một gói lệch giữa các package — đó là hành vi bình thường của npm, không phải lỗi.
+- Next.js 16 đổi tên file convention `middleware.ts` → `proxy.ts` (hàm export đổi tên `middleware` → `proxy`); đọc `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/proxy.md` nếu nghi ngờ quy ước đã đổi tiếp ở bản sau.
+- `supabase/config.toml` đang để `[auth.email] enable_confirmations = false` (đăng ký xong đăng nhập được ngay, không cần xác nhận email) — chỉ đúng cho **local-only**. **BẮT BUỘC bật lại `enable_confirmations = true`** (và cấu hình SMTP thật) trước khi deploy production, nếu không ai cũng tạo được tài khoản bằng email không có thật.
 
 ## 11. CHECKLIST ĐẦU PHIÊN
 - Đọc kỹ file RULES này.

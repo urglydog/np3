@@ -5,6 +5,7 @@ dist
 !.env.example
 supabase/.temp
 supabase/.branches
+supabase/snippets
 coverage
 .DS_Store
 .claude/settings.local.json
