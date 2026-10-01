@@ -25,6 +25,10 @@ do $$ declare n int; begin
   select count(*) into n from pg_proc p join pg_namespace ns on ns.oid = p.pronamespace
     where ns.nspname = 'public' and p.proname = 'update_plan_progress';
   if n <> 1 then raise exception 'Phải có đúng 1 hàm public.update_plan_progress, hiện có %', n; end if;
+
+  select count(*) into n from pg_proc p join pg_namespace ns on ns.oid = p.pronamespace
+    where ns.nspname = 'public' and p.proname = 'import_plan_backup';
+  if n <> 1 then raise exception 'Phải có đúng 1 hàm public.import_plan_backup, hiện có %', n; end if;
 end $$;
 
 -- ========== A tạo plan bằng RPC create_plan, kèm "đã học xong đến hết task thứ 5" ==========
@@ -197,7 +201,95 @@ do $$ declare v_before int; v_after int; begin
   if v_after <> v_before then raise exception 'RÒ RỈ: update_plan_progress của B làm đổi dữ liệu của A'; end if;
 end $$;
 
--- ========== anon không được gọi create_plan / update_plan_progress (đã REVOKE) ==========
+-- ========== import_plan_backup: A ghi đè plan của chính mình, không đụng B ==========
+set role authenticated;
+select pg_temp.as_user('00000000-0000-0000-0000-00000000000a');
+do $$ declare
+  v_template_id uuid; v_task1_code text; v_task2_code text; v_res_code text; v_payload jsonb;
+  v_plan_id_1 uuid; v_plan_id_2 uuid; v_task1_id uuid;
+begin
+  select id into v_template_id from templates where is_published = true limit 1;
+  select code into v_task1_code from template_tasks where template_id = v_template_id order by sort limit 1;
+  select code into v_task2_code from template_tasks where template_id = v_template_id order by sort limit 1 offset 1;
+  select code into v_res_code from template_resources where template_id = v_template_id limit 1;
+
+  v_payload := jsonb_build_object(
+    'format', 'roadmap-backup', 'version', 1,
+    'template', jsonb_build_object('slug', (select slug from templates where id = v_template_id), 'version', '4.2'),
+    'plan', jsonb_build_object('start_date','2026-10-01','hours_per_day',2,'days_per_week',6,'include_optional',false,'timezone','Asia/Ho_Chi_Minh'),
+    'tasks', jsonb_build_array(
+      jsonb_build_object('code', v_task1_code, 'status','done','writing_reps',100,'kana_accuracy',0.9,'speaking_minutes',10,'pinned_start',null,'done_on','2026-10-02'),
+      jsonb_build_object('code', v_task2_code, 'status','skipped','writing_reps',0,'kana_accuracy',null,'speaking_minutes',0,'pinned_start',null,'done_on',null)
+    ),
+    'resources', jsonb_build_array(jsonb_build_object('code', v_res_code, 'status','owned','opted_in',true,'ordered_on',null,'eta',null))
+  );
+
+  select public.import_plan_backup(v_payload) into v_plan_id_1;
+
+  select tt.id into v_task1_id from template_tasks tt where tt.template_id = v_template_id and tt.code = v_task1_code;
+  if (select status from plan_task_state where plan_id = v_plan_id_1 and task_id = v_task1_id) <> 'done' then
+    raise exception 'import_plan_backup: task 1 phải thành done';
+  end if;
+  if (select writing_reps from plan_task_state where plan_id = v_plan_id_1 and task_id = v_task1_id) <> 100 then
+    raise exception 'import_plan_backup: writing_reps phải lưu đúng 100';
+  end if;
+
+  -- Gọi lại lần 2 với CÙNG payload: phải ra cùng kết quả (idempotent), dù plan_id vật lý đổi
+  select public.import_plan_backup(v_payload) into v_plan_id_2;
+  if (select status from plan_task_state where plan_id = v_plan_id_2 and task_id = v_task1_id) <> 'done' then
+    raise exception 'import_plan_backup lần 2: kết quả phải giống lần 1';
+  end if;
+  if (select count(*) from plans where user_id = '00000000-0000-0000-0000-00000000000a') <> 1 then
+    raise exception 'import_plan_backup: vẫn phải chỉ có đúng 1 plan sau khi import nhiều lần';
+  end if;
+
+  -- Payload sai (template không tồn tại) -> bị từ chối NGUYÊN KHỐI, không đụng plan đang có
+  declare v_count_before int; v_count_after int; v_bad jsonb; begin
+    select count(*) into v_count_before from plan_task_state pts join plans p on p.id = pts.plan_id where p.user_id = '00000000-0000-0000-0000-00000000000a';
+    v_bad := jsonb_build_object('format','roadmap-backup','version',1,'template',jsonb_build_object('slug','khong-ton-tai'),'plan',jsonb_build_object('start_date','2026-10-01','hours_per_day',2,'days_per_week',6,'include_optional',false),'tasks','[]'::jsonb,'resources','[]'::jsonb);
+    begin
+      perform public.import_plan_backup(v_bad);
+      raise exception 'RÒ RỈ: import_plan_backup chấp nhận template không tồn tại';
+    exception when others then
+      if sqlerrm not like '%không tồn tại hoặc chưa xuất bản%' then raise; end if;
+    end;
+    select count(*) into v_count_after from plan_task_state pts join plans p on p.id = pts.plan_id where p.user_id = '00000000-0000-0000-0000-00000000000a';
+    if v_count_after <> v_count_before then
+      raise exception 'RÒ RỈ: import_plan_backup thất bại nhưng vẫn ghi dở dữ liệu (còn %, trước %)', v_count_after, v_count_before;
+    end if;
+  end;
+end $$;
+
+-- B import: chỉ ảnh hưởng plan của B, không đụng A (đo trước/sau bằng bảng tạm dưới quyền superuser)
+reset role;
+do $$ declare v_before int; begin
+  select count(*) into v_before from plan_task_state pts join plans p on p.id = pts.plan_id
+    where p.user_id = '00000000-0000-0000-0000-00000000000a' and pts.status = 'done';
+  insert into tmp_counts(k,v) values ('a_done_before_b_import', v_before) on conflict (k) do update set v = excluded.v;
+end $$;
+
+set role authenticated;
+select pg_temp.as_user('00000000-0000-0000-0000-00000000000b');
+do $$ declare v_template_id uuid; v_payload jsonb; begin
+  select id into v_template_id from templates where is_published = true limit 1;
+  v_payload := jsonb_build_object(
+    'format','roadmap-backup','version',1,
+    'template', jsonb_build_object('slug', (select slug from templates where id = v_template_id)),
+    'plan', jsonb_build_object('start_date','2026-10-01','hours_per_day',1,'days_per_week',7,'include_optional',true,'timezone','Asia/Ho_Chi_Minh'),
+    'tasks','[]'::jsonb, 'resources','[]'::jsonb
+  );
+  perform public.import_plan_backup(v_payload);
+end $$;
+reset role;
+
+do $$ declare v_before int; v_after int; begin
+  select v into v_before from tmp_counts where k = 'a_done_before_b_import';
+  select count(*) into v_after from plan_task_state pts join plans p on p.id = pts.plan_id
+    where p.user_id = '00000000-0000-0000-0000-00000000000a' and pts.status = 'done';
+  if v_after <> v_before then raise exception 'RÒ RỈ: import_plan_backup của B làm đổi dữ liệu của A'; end if;
+end $$;
+
+-- ========== anon không được gọi create_plan / update_plan_progress / import_plan_backup (đã REVOKE) ==========
 set role anon;
 do $$ begin
   begin
@@ -207,6 +299,10 @@ do $$ begin
   begin
     perform public.update_plan_progress('x');
     raise exception 'RÒ RỈ: anon gọi được update_plan_progress';
+  exception when insufficient_privilege then null; end;
+  begin
+    perform public.import_plan_backup('{}'::jsonb);
+    raise exception 'RÒ RỈ: anon gọi được import_plan_backup';
   exception when insufficient_privilege then null; end;
 end $$;
 reset role;
