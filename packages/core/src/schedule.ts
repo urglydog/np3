@@ -124,3 +124,14 @@ export function insertBreak(tasks: TaskInput[], settings: Settings, today: strin
   if (!first) return tasks; // không còn task nào sau ngày nghỉ
   return delayTask(tasks, settings, today, first.id, days);
 }
+
+/**
+ * Task "đang đến lượt": ưu tiên task đang in_progress; nếu không có thì task todo đầu tiên theo
+ * thứ tự. Dùng chung cho mọi màn hiển thị (Hôm nay, Lộ trình, ...) để không bao giờ lệch nhau.
+ */
+export function currentTaskId(tasks: ScheduledTask[]): string | null {
+  const inProgress = tasks.find((t) => t.status === 'in_progress');
+  if (inProgress) return inProgress.id;
+  const todo = tasks.find((t) => t.status === 'todo');
+  return todo ? todo.id : null;
+}
