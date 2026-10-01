@@ -40,21 +40,27 @@ chạy trước khi báo xong hoặc gộp vào `develop` với mọi nhánh `fe
 ```bash
 npm run db:start          # lần đầu sẽ kéo image Docker, có thể mất vài phút
 npm run db:seed:gen       # sinh lại supabase/seed.sql từ data/n3-template.json (nếu sửa template)
-npm run db:reset          # áp lại migration + seed sạch
+npm run db:reset          # áp lại migration + seed sạch — XÓA MỌI TÀI KHOẢN/PLAN LOCAL, kể cả thật
+                           # (xem mục "Sao lưu" bên dưới để giữ tiến độ trước khi chạy)
+npm run db:migrate        # áp migration MỚI mà GIỮ dữ liệu hiện có (npx supabase migration up)
 
-# Kiểm tra RLS (tạo 2 người dùng giả, xác nhận không rò rỉ dữ liệu):
+# Kiểm tra RLS (tạo vài người dùng giả, xác nhận không rò rỉ dữ liệu). CẢNH BÁO: script này đặt
+# templates.is_published=false và để lại vài user giả — nếu DB đã có tài khoản thật, KHÔNG chạy
+# `db:reset` để dọn (sẽ xóa luôn tài khoản thật); thay vào đó sửa tay:
+#   update templates set is_published = true;
+#   delete from auth.users where id::text like '00000000%';
 docker exec -i supabase_db_np3 psql -U postgres -d postgres < scripts/rls_test.sql
-npm run db:reset          # chạy lại sau khi test RLS để khôi phục dữ liệu seed sạch
 ```
 
 Supabase Studio: http://127.0.0.1:54323 sau khi `db:start`.
 
 ## Kiểm thử tích hợp (`test:integration` / `check:full`)
 
-Script `scripts/test-integration.mts` tạo 1 user thật qua Auth, tạo plan qua RPC `create_plan`, rồi
-xác nhận dữ liệu màn Hôm nay và Lộ trình khớp nhau (cùng task hiện tại, cùng ngày dự kiến hoàn
-thành) — xuyên suốt RLS thật, không mock. Luôn tự xoá user test khi kết thúc (kể cả khi lỗi giữa
-chừng), **không** `db reset`.
+`npm run test:integration` chạy một loạt script `scripts/test-*.mts`, mỗi script tạo (các) user thật
+qua Auth, thao tác thật qua Supabase local (tạo plan, Bỏ qua/Hoãn/Ghim/Nghỉ, ghi nhận hằng ngày, xuất/
+nhập sao lưu...), xác nhận DB + kết quả tính bằng `@roadmap/core` đúng và user khác không tác động
+được. Luôn tự xoá user test khi kết thúc (kể cả khi lỗi giữa chừng, qua `try/finally`), **không**
+`db reset`.
 
 Cần `npm run db:start` trước, rồi lấy 3 giá trị bằng `npx supabase status` và truyền trên dòng lệnh
 (script không đọc `.env*`, không có giá trị mặc định hardcode):
@@ -75,6 +81,15 @@ Script từ chối chạy nếu `SUPABASE_URL` không trỏ tới `127.0.0.1`/`l
 - `apps/worker` — worker Node, sau này gửi Web Push theo outbox `reminders`.
 - `supabase/` — schema, migration, seed.
 - `deploy/` — mẫu Hetzner, **chưa dùng** (xem `deploy/README.md`).
+
+## Sao lưu (tải xuống trước khi `db reset`)
+
+`npm run db:reset` xóa sạch toàn bộ DB local, **kể cả tài khoản và plan thật của bạn**. Trước khi chạy
+lệnh này (hoặc trước khi thử nghiệm gì rủi ro), vào **Cài đặt → Sao lưu → Tải bản sao lưu** (hoặc gọi
+`GET /api/backup` khi đã đăng nhập) để tải file `roadmap-backup-YYYY-MM-DD.json`. Sau khi `db reset`,
+đăng ký lại tài khoản rồi vào **Cài đặt → Khôi phục từ bản sao lưu**, chọn file vừa tải, xem trước rồi
+xác nhận — toàn bộ tiến độ (trạng thái task, ghi nhận hằng ngày, trạng thái mua sách) sẽ được khôi
+phục lại nguyên vẹn. File sao lưu không chứa `user_id`, email hay bất kỳ khóa nào.
 
 ## Lưu ý
 
