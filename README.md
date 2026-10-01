@@ -17,7 +17,7 @@ Xem `docs/PLAN.md` (kế hoạch) và `docs/UpComming_Plan.md` (việc đang là
 npm install
 cp .env.example apps/web/.env.local   # tự điền giá trị thật, xem chú thích trong file
 npm run db:start                      # khởi động Supabase local (cần Docker)
-npm run dev:web                       # http://localhost:3000 (hoặc cổng kế tiếp nếu 3000 bận)
+npm run dev:web                       # http://localhost:3100 (cố định cổng 3100, tránh đụng cổng 3000 hay bị chiếm)
 npm run dev:worker                    # worker: chỉ in nhịp tim, chưa gửi push thật
 ```
 
