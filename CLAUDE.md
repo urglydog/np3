@@ -75,7 +75,8 @@ Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói tro
 - Commit format: `feat:` / `fix:` / `refactor:` / `test:` / `docs:` / `chore:`.
 ### 8a. ĐƯỢC PHÉP TỰ COMMIT (và push nếu đã có remote) vào nhánh `feat/*` khi ĐỦ CẢ 2 điều kiện
 1. Việc đang làm đã xong (không dở dang).
-2. Đã kiểm tra đúng cấp độ: `npm run lint` + `npm run typecheck` + `npm run test:core`; nếu đụng DB/RLS thì thêm kiểm tra seed + RLS; nếu task có yêu cầu test cụ thể thì chạy đúng test đó và phải pass.
+2. Đã kiểm tra đúng cấp độ: `npm run check` (lint + typecheck + test:core + test apps/web); nếu task có yêu cầu test cụ thể thì chạy đúng test đó và phải pass.
+- **Nhánh `feat/*` nào đụng DB/RPC/form/Server Action** (bất cứ thứ gì chạm Supabase local thật) → **BẮT BUỘC chạy `npm run check:full`** (thêm `scripts/test-integration.mts`, cần Supabase local đang chạy) trước khi báo "xong task" và trước khi gộp (`merge --no-ff`) nhánh đó vào `develop`. `npm run check` suông (không có DB) không đủ cho các nhánh này.
 - Push thẳng `main`/`develop` luôn phải confirm. Có nghi ngờ/bug lạ giữa chừng → sửa xong, verify lại rồi mới commit, không commit code còn nghi vấn.
 
 ## 9. STACK KHÔNG ĐƯỢC TỰ Ý THAY ĐỔI
