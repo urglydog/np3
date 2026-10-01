@@ -50,4 +50,17 @@ export const copy = {
   updateProgressChooseAgain: 'Chọn lại',
   updateProgressResult: (count: number) => `Đã đánh dấu ${count} task là Xong.`,
   updateProgressLink: 'Cập nhật tiến độ (đã học đến đâu)',
+
+  // Lộ trình
+  roadmapTitle: 'Lộ trình',
+  roadmapDoneCount: (done: number, total: number) => `${done}/${total} xong`,
+  roadmapOptionalOffCount: (count: number) => `${count} task tùy chọn đang tắt`,
+  roadmapJumpToCurrent: 'Đi tới task đang học',
+  roadmapStatusTodo: 'Chưa làm',
+  roadmapStatusInProgress: 'Đang làm',
+  roadmapStatusDone: 'Đã xong',
+  roadmapStatusSkipped: 'Đã bỏ qua',
+  roadmapOptionalTag: '(tùy chọn)',
+  roadmapNoDates: '—',
+  roadmapEstHoursLabel: (hours: number) => `${hours} giờ`,
 } as const;

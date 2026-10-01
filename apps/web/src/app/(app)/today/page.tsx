@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { currentTaskId } from '@roadmap/core';
 import { loadCurrentPlanSchedule } from '@/lib/plan';
 import { copy } from '@/lib/copy';
 import { markTaskDone } from './actions';
@@ -10,7 +11,8 @@ export default async function TodayPage() {
   if (!plan) redirect('/create-plan');
 
   const { schedule, taskInfoById } = plan;
-  const current = schedule.tasks.find((t) => t.status !== 'done' && t.status !== 'skipped');
+  const currentId = currentTaskId(schedule.tasks);
+  const current = currentId ? schedule.tasks.find((t) => t.id === currentId) : undefined;
   const info = current ? taskInfoById.get(current.id) : undefined;
 
   return (

@@ -6,6 +6,8 @@ export interface TemplateTaskOutline {
   name: string;
   sort: number;
   phaseCode: string;
+  estHours: number;
+  optional: boolean;
 }
 
 export interface TemplatePhaseOutline {
@@ -40,7 +42,7 @@ export async function loadPublishedTemplateOutline(): Promise<TemplateOutline | 
 
   const { data: tasks } = await supabase
     .from('template_tasks')
-    .select('id, code, name, sort, template_phases(code)')
+    .select('id, code, name, sort, est_hours, optional, template_phases(code)')
     .eq('template_id', template.id)
     .order('sort');
 
@@ -53,6 +55,8 @@ export async function loadPublishedTemplateOutline(): Promise<TemplateOutline | 
       code: t.code,
       name: t.name,
       sort: t.sort,
+      estHours: Number(t.est_hours),
+      optional: t.optional,
       phaseCode: (t.template_phases as unknown as { code: string } | null)?.code ?? '',
     })),
   };
