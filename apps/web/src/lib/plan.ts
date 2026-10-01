@@ -12,6 +12,7 @@ export interface PlanSchedule {
   today: string;
   schedule: ScheduleResult;
   taskInfoById: Map<string, PlanTaskInfo>;
+  pinnedStartById: Map<string, string | null>;
 }
 
 /**
@@ -58,6 +59,9 @@ export async function loadCurrentPlanSchedule(): Promise<PlanSchedule | null> {
   const taskInfoById = new Map<string, PlanTaskInfo>(
     (templateTasks ?? []).map((t) => [t.id, { name: t.name, milestone: t.milestone }])
   );
+  const pinnedStartById = new Map<string, string | null>(
+    (planTaskStates ?? []).map((s) => [s.task_id, s.pinned_start])
+  );
 
-  return { planId: plan.id, timezone: plan.timezone, today, schedule, taskInfoById };
+  return { planId: plan.id, timezone: plan.timezone, today, schedule, taskInfoById, pinnedStartById };
 }
