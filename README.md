@@ -24,11 +24,16 @@ npm run dev:worker                    # worker: chỉ in nhịp tim, chưa gửi
 ## Kiểm tra
 
 ```bash
-npm run check       # lint + typecheck + test:core (phải thấy 1381/13/23/21 kiểm tra đạt)
+npm run check       # lint + typecheck + test:core + test apps/web — KHÔNG cần Supabase đang chạy
 npm run lint
 npm run typecheck
 npm run test:core
+npm run test:web
 ```
+
+`npm run check:full` = `check` + `test:integration` (script tích hợp thật, xem bên dưới) — **bắt buộc**
+chạy trước khi báo xong hoặc gộp vào `develop` với mọi nhánh `feat/*` đụng DB/RPC/form/Server Action
+(xem CLAUDE.md mục 8a).
 
 ## Supabase local (seed + RLS)
 
@@ -43,6 +48,24 @@ npm run db:reset          # chạy lại sau khi test RLS để khôi phục d�
 ```
 
 Supabase Studio: http://127.0.0.1:54323 sau khi `db:start`.
+
+## Kiểm thử tích hợp (`test:integration` / `check:full`)
+
+Script `scripts/test-integration.mts` tạo 1 user thật qua Auth, tạo plan qua RPC `create_plan`, rồi
+xác nhận dữ liệu màn Hôm nay và Lộ trình khớp nhau (cùng task hiện tại, cùng ngày dự kiến hoàn
+thành) — xuyên suốt RLS thật, không mock. Luôn tự xoá user test khi kết thúc (kể cả khi lỗi giữa
+chừng), **không** `db reset`.
+
+Cần `npm run db:start` trước, rồi lấy 3 giá trị bằng `npx supabase status` và truyền trên dòng lệnh
+(script không đọc `.env*`, không có giá trị mặc định hardcode):
+
+```bash
+SUPABASE_URL=... SUPABASE_ANON_KEY=... SUPABASE_SERVICE_ROLE_KEY=... npm run test:integration
+# hoặc chạy kèm cả bộ còn lại:
+SUPABASE_URL=... SUPABASE_ANON_KEY=... SUPABASE_SERVICE_ROLE_KEY=... npm run check:full
+```
+
+Script từ chối chạy nếu `SUPABASE_URL` không trỏ tới `127.0.0.1`/`localhost`.
 
 ## Cấu trúc
 
