@@ -27,3 +27,38 @@ export async function importPlanAction(jsonString: string): Promise<BackupAction
     return { ok: false, error: toUserMessage(err) };
   }
 }
+
+export type UpdateSettingsResult = { ok: true } | { ok: false; error: string };
+
+/** Server Action: Cập nhật cài đặt. */
+export async function updateSettingsAction(formData: FormData): Promise<UpdateSettingsResult> {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { ok: false, error: 'Chưa đăng nhập.' };
+
+    const reminderTime = formData.get('reminderTime') as string;
+    const quietStart = formData.get('quietStart') as string;
+    const quietEnd = formData.get('quietEnd') as string;
+    
+    // Thu thập các ngày nghỉ đã check
+    const restDays = [];
+    for (let i = 0; i < 7; i++) {
+      if (formData.get(`restDay_${i}`)) {
+        restDays.push(i);
+      }
+    }
+
+    const { error } = await supabase.from('plans').update({
+      reminder_time: reminderTime || '20:00',
+      quiet_hours_start: quietStart || '22:00',
+      quiet_hours_end: quietEnd || '07:00',
+      rest_days: restDays
+    }).eq('user_id', user.id);
+
+    if (error) return { ok: false, error: error.message };
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: toUserMessage(err) };
+  }
+}

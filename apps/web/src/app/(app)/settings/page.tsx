@@ -1,14 +1,42 @@
 import Link from 'next/link';
-import { Bell, Database } from 'lucide-react';
+import { Bell, Database, Settings } from 'lucide-react';
 import { signOut } from '@/app/(auth)/login/actions';
 import { copy } from '@/lib/copy';
 import { PushToggle } from '@/components/push-toggle';
 import { BackupPanel } from '@/components/backup-panel';
+import { PlanSettingsForm } from '@/components/plan-settings-form';
+import { createClient } from '@/lib/supabase/server';
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const { data: plan } = await supabase
+    .from('plans')
+    .select('reminder_time, quiet_hours_start, quiet_hours_end, rest_days')
+    .eq('user_id', user!.id)
+    .single();
+
   return (
     <main className="mx-auto flex max-w-screen-sm flex-col gap-6 p-4">
       <h1 className="text-xl font-semibold text-ink">Cài đặt</h1>
+
+      {/* Cấu hình lịch & nhắc nhở — T-009 */}
+      <section className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <Settings size={16} className="text-ink-muted" />
+          <h2 className="text-sm font-medium text-ink">Cấu hình chung</h2>
+        </div>
+        {plan && (
+          <PlanSettingsForm
+            initialReminderTime={plan.reminder_time}
+            initialQuietStart={plan.quiet_hours_start}
+            initialQuietEnd={plan.quiet_hours_end}
+            initialRestDays={plan.rest_days}
+          />
+        )}
+      </section>
+
+      <hr className="border-line" />
 
       {/* Thông báo — T-001 */}
       <section className="flex flex-col gap-3">

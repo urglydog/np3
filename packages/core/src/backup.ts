@@ -13,6 +13,10 @@ const planRowSchema = z.object({
   include_optional: z.boolean(),
   timezone: z.string().min(1),
   created_at: z.string(),
+  reminder_time: z.string().regex(/^\d{2}:\d{2}(:\d{2})?$/).optional(),
+  quiet_hours_start: z.string().regex(/^\d{2}:\d{2}(:\d{2})?$/).optional(),
+  quiet_hours_end: z.string().regex(/^\d{2}:\d{2}(:\d{2})?$/).optional(),
+  rest_days: z.array(z.number().int().min(0).max(6)).optional(),
 });
 
 const taskStateRowSchema = z.object({

@@ -18,7 +18,7 @@ export async function exportPlan(supabase: SupabaseClient): Promise<BackupData> 
 
   const { data: plan, error: planErr } = await supabase
     .from('plans')
-    .select('id, template_id, start_date, hours_per_day, days_per_week, include_optional, timezone, created_at')
+    .select('id, template_id, start_date, hours_per_day, days_per_week, include_optional, timezone, created_at, reminder_time, quiet_hours_start, quiet_hours_end, rest_days')
     .limit(1)
     .maybeSingle();
 
@@ -51,6 +51,10 @@ export async function exportPlan(supabase: SupabaseClient): Promise<BackupData> 
       include_optional: plan.include_optional,
       timezone: plan.timezone,
       created_at: plan.created_at,
+      reminder_time: plan.reminder_time,
+      quiet_hours_start: plan.quiet_hours_start,
+      quiet_hours_end: plan.quiet_hours_end,
+      rest_days: plan.rest_days,
     },
     task_states: (taskStates ?? []).map((s) => ({
       task_id: s.task_id,
