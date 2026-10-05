@@ -1,17 +1,46 @@
-// Mẫu service worker cho Web Push (T-001). CHƯA đăng ký ở client trong scaffold này.
-// Không cache API: service worker này chỉ xử lý push, không can thiệp fetch.
+// Service Worker — Roadmap Planner (T-001)
+// Chỉ xử lý push + notification click. KHÔNG cache API.
+
+self.addEventListener('install', () => {
+  // Kích hoạt ngay, không chờ tab cũ đóng.
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
 self.addEventListener('push', (event) => {
   const d = event.data ? event.data.json() : {};
-  event.waitUntil(
-    self.registration.showNotification(d.title || 'Roadmap Planner', {
-      body: d.body || '',
-      tag: d.tag,
-      data: { url: d.url || '/' },
-    })
-  );
+  const title = d.title || 'Roadmap Planner';
+  const options = {
+    body: d.body || '',
+    icon: '/icons/icon-192.png',
+    badge: '/icons/icon-192.png',
+    tag: d.tag || 'roadmap-default',
+    renotify: !!d.tag,
+    data: { url: d.url || '/' },
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
 });
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  event.waitUntil(clients.openWindow(event.notification.data.url));
+  const targetUrl = event.notification.data?.url || '/';
+  event.waitUntil(
+    self.clients
+      .matchAll({ type: 'window', includeUncontrolled: true })
+      .then((windowClients) => {
+        // Nếu đang mở tab nào cùng origin → focus và navigate
+        for (const client of windowClients) {
+          if ('focus' in client) {
+            client.focus();
+            if ('navigate' in client) client.navigate(targetUrl);
+            return;
+          }
+        }
+        // Không có tab nào mở → mở tab mới
+        return self.clients.openWindow(targetUrl);
+      })
+  );
 });
