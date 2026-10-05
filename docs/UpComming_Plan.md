@@ -20,7 +20,7 @@
 - [x] **T-008 Xuất/nhập sao lưu** — Export ra file JSON chuẩn (`BackupData`), schema Zod đặt ở `packages/core/src/backup.ts`. Import qua RPC `import_user_plan` (1 transaction: xóa plan cũ + insert plan mới + task_states + resource_states). `BackupPanel` tích hợp vào màn Cài đặt với xác nhận cảnh báo xóa dữ liệu. Đã có script test tích hợp xác nhận vòng lặp export → đổi dữ liệu DB → import → khôi phục thành công. Nhánh `feat/backup`.
 - [x] **T-009 Cài đặt** — giờ nhắc, giờ yên tĩnh, ngày nghỉ cố định, múi giờ. Thêm các cột `reminder_time`, `quiet_hours_start`, `quiet_hours_end`, `rest_days` vào bảng `plans`. Update RPC `import_user_plan` và luồng sao lưu. Tạo UI trong trang `/settings` và Server Action để cập nhật các tuỳ chọn này (không tác động logic `days_per_week` ở `@roadmap/core`). Nhánh `feat/settings`.
 - [x] **T-010 Nhắc việc** — `buildReminders` + `diffReminders` vào bảng `reminders`; worker gửi (desktop); nút "gửi thông báo thử". Worker chạy nền `syncAllReminders` qua Supabase JS bằng Service Role để tạo outbox nhắc việc tự động. Nhánh `feat/reminders`.
-- [ ] **T-011 Rà nội dung template** — thêm "Bộ đề JLPT N3" vào danh mục tài nguyên (task `PH3-TEST01` đang thiếu); điền `source_note`; xem lại giờ ước tính (đặc biệt Soumatome 25 giờ).
+- [x] **T-011 Rà nội dung template** — thêm "Bộ đề JLPT N3" vào danh mục tài nguyên (task `PH3-TEST01` đang thiếu); điền `source_note`; xem lại giờ ước tính (đặc biệt Soumatome lên 30 giờ). Chạy script tự động nạp thay đổi vào DB mà không làm mất dữ liệu hiện tại của user. Nhánh `feat/template-content`.
 - [ ] **T-012 Dùng thật 2–4 tuần** — ghi giờ thật so với ước tính, ghi chỗ phiền, chỉnh.
 
 ## Bị chặn / hoãn

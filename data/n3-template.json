@@ -3,6 +3,7 @@
  "version": "4.2",
  "locale": "vi",
  "title": "Lộ trình tự học tiếng Nhật N3 & Song ngữ IT",
+ "source_note": "Biên soạn nội bộ dựa trên Minna no Nihongo, Soumatome, Shinkanzen và thực tế dự án",
  "hours_disclaimer": "Số giờ là ước tính của tác giả khi tự học, chưa kiểm chứng. Các nguồn bên ngoài ước tính N3 từ số 0 trong khoảng 450-1.700 giờ tùy nền tảng.",
  "phases": [
   {
@@ -1751,7 +1752,7 @@
    "name": "Soumatome N3 Từ Vựng & Kanji (4 Tuần)",
    "deliverable": "Thuộc 800 từ vựng N3 & 300 Kanji N3",
    "tool_note": "Sách Soumatome N3",
-   "est_hours": 25,
+   "est_hours": 30,
    "writing_target": 200,
    "sort": 103,
    "origin": "v4.1",
@@ -1916,7 +1917,9 @@
    "sort": 113,
    "origin": "v4.1",
    "optional": false,
-   "resources": []
+   "resources": [
+    "RES-11"
+   ]
   }
  ],
  "resources": [
@@ -2049,6 +2052,19 @@
    "lead_time_days": 0,
    "is_affiliate": false,
    "buy_url": null
+  },
+  {
+   "code": "RES-11",
+   "phase_note": "Phase 3",
+   "kind": "Sách",
+   "title": "Bộ Đề Thi Thử JLPT N3",
+   "purpose": "Làm quen cấu trúc đề thi thực tế",
+   "price_vnd": 150000,
+   "tier": "core",
+   "note": null,
+   "lead_time_days": 5,
+   "is_affiliate": false,
+   "buy_url": "https://example.com/buy"
   }
  ]
 }
