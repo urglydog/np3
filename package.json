@@ -10,7 +10,7 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test:core": "npm run test --workspace=packages/core",
     "test:web": "npm run test --workspace=apps/web",
-    "test:integration": "tsx scripts/test-integration.mts && tsx scripts/test-schedule-skip.mts && tsx scripts/test-schedule-delay.mts && tsx scripts/test-schedule-pin.mts && tsx scripts/test-schedule-break.mts",
+    "test:integration": "tsx scripts/test-integration.mts && tsx scripts/test-schedule-skip.mts && tsx scripts/test-schedule-delay.mts && tsx scripts/test-schedule-pin.mts && tsx scripts/test-schedule-break.mts && tsx scripts/test-buy-upcoming.mts",
     "check": "npm run lint && npm run typecheck && npm run test:core && npm run test:web",
     "check:full": "npm run check && npm run test:integration",
     "dev:web": "npm run dev --workspace=apps/web",

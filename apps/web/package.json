@@ -8,7 +8,7 @@
     "start": "next start -p 3100",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "tsx tests/roadmap.test.mts && tsx tests/schedule-forms.test.mts"
+    "test": "tsx tests/roadmap.test.mts && tsx tests/schedule-forms.test.mts && tsx tests/resource-forms.test.mts && tsx tests/buy.test.mts && tsx tests/upcoming.test.mts"
   },
   "dependencies": {
     "@roadmap/core": "*",
