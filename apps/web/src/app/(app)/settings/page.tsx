@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { Bell } from 'lucide-react';
+import { Bell, Database } from 'lucide-react';
 import { signOut } from '@/app/(auth)/login/actions';
 import { copy } from '@/lib/copy';
 import { PushToggle } from '@/components/push-toggle';
+import { BackupPanel } from '@/components/backup-panel';
 
 export default function SettingsPage() {
   return (
@@ -19,6 +20,17 @@ export default function SettingsPage() {
           Nhắc học hàng ngày và nhắc mua sách đúng hạn. Không cần mở trình duyệt, thông báo hiện thẳng trên màn hình.
         </p>
         <PushToggle />
+      </section>
+
+      <hr className="border-line" />
+
+      {/* Sao lưu dữ liệu — T-008 */}
+      <section className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <Database size={16} className="text-ink-muted" />
+          <h2 className="text-sm font-medium text-ink">Sao lưu dữ liệu</h2>
+        </div>
+        <BackupPanel />
       </section>
 
       <hr className="border-line" />
