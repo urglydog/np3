@@ -9,7 +9,7 @@
   - Đã đạt đủ (có Docker): lint/typecheck/test:core sạch, 1381/13/23/21; seed đủ 4 phase/113 task/10 tài nguyên/193 liên kết, 566h tổng/425h bắt buộc; RLS test đạt (RLS OK) trên Supabase local thật; web + worker chạy và tắt sạch. Nhánh `feat/scaffold`.
 
 ## Kế tiếp (theo thứ tự, chưa duyệt)
-- [ ] **T-001 P0a: thử push trên desktop (localhost)** — đăng ký, gửi thử bằng `web-push`, bấm thông báo mở đúng trang, 404/410 vô hiệu hóa đăng ký.
+- [x] **T-001 P0a: thử push trên desktop (localhost)** — đăng ký subscription → lưu `push_subscriptions`, nút Gửi thử trên `/settings` hiện thông báo nảy lên màn hình, bấm vào mở `/today`; 404/410 tự vô hiệu hóa đăng ký; worker thật gửi hàng đợi `reminders` (outbox). Feature-detect đầy đủ, fallback graceful cho trình duyệt không hỗ trợ / bị deny. Nhánh `feat/push-notification`.
 - [x] **T-002 Xác minh Supabase local** — chạy seed + `rls_test.sql` (gồm cả RPC `create_plan`) trên Supabase local, in `RLS OK`; cách chạy đã ghi vào README.
 - [x] **T-003 Đăng nhập + tạo plan từ template N3** — email/mật khẩu (Supabase Auth local, xác nhận email tắt ở local); `/create-plan` chọn bản gốc 425h hay kèm bổ sung 566h, ngày bắt đầu, giờ/ngày, ngày/tuần, múi giờ mặc định `Asia/Ho_Chi_Minh`. Tạo plan qua RPC `create_plan` (1 transaction, SECURITY INVOKER, v1 mỗi user 1 plan). `proxy.ts` bảo vệ nhóm `(app)`, `(app)/layout.tsx` chuyển hướng sang `/create-plan` nếu chưa có plan.
 - [x] **T-004 Màn Hôm nay** — task đang làm/tiếp theo (tính bằng `computeSchedule` từ `@roadmap/core`, không lưu ngày vào DB), nút Xong (lưu `status='done'`, `done_on` theo múi giờ plan), ngày dự kiến hoàn thành, "giờ/ngày cần để xong trong 365 ngày". Chưa làm: nhập số lần viết/phút luyện nói (để sau, chưa có trong phạm vi lượt này).
