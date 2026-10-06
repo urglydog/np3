@@ -16,9 +16,10 @@ export default async function TodayPage() {
   const info = current ? taskInfoById.get(current.id) : undefined;
 
   return (
-    <main className="mx-auto flex min-h-[80vh] w-full max-w-xl flex-col items-center justify-center gap-8 p-4">
+    <main className="mx-auto flex min-h-[calc(100vh-64px)] w-full max-w-xl flex-col items-center justify-center gap-8 p-4">
       <div className="flex flex-col items-center text-center gap-2">
-        <h1 className="text-3xl font-bold tracking-tight text-ink bg-clip-text text-transparent bg-gradient-to-r from-brand to-accent">
+        {/* pb-2 prevents gradient text bottom clip */}
+        <h1 className="pb-2 text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand to-success">
           {copy.todayTitle}
         </h1>
         {schedule.finish ? <p className="text-sm font-medium text-ink-muted">{copy.todayFinishLabel(schedule.finish)}</p> : null}
