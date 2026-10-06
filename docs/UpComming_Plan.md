@@ -4,9 +4,7 @@
 > Mỗi task cần user confirm trước khi bắt đầu (CLAUDE.md mục 1). Khi xong, cập nhật trạng thái ở đây và báo theo khung 1a.
 
 ## Đang làm
-- [x] **T-000 Scaffold cấu trúc dự án** (theo `MASTER_PROMPT.md`)
-  - Xong khi: `npm install` OK; `npm run lint`, `npm run typecheck` sạch; `npm run test:core` ra 1381/13/23/21; web chạy được, `/api/health` trả 200; worker khởi động và tắt sạch; (nếu có Docker) `supabase db reset` nạp đủ 113 task.
-  - Đã đạt đủ (có Docker): lint/typecheck/test:core sạch, 1381/13/23/21; seed đủ 4 phase/113 task/10 tài nguyên/193 liên kết, 566h tổng/425h bắt buộc; RLS test đạt (RLS OK) trên Supabase local thật; web + worker chạy và tắt sạch. Nhánh `feat/scaffold`.
+- [~] **T-013 & P8: Deploy Hetzner & Push iPhone** — Triển khai ứng dụng lên máy chủ thật (Hetzner) với chứng chỉ HTTPS. Đây là điều kiện tiên quyết để iPhone cho phép: (1) Lưu trang web thành App (PWA) ngoài màn hình chính, (2) Kích hoạt tính năng Push Notification (Apple không cho phép chạy các tính năng này ở `localhost` HTTP thường).
 
 ## Kế tiếp (theo thứ tự, chưa duyệt)
 - [x] **T-001 P0a: thử push trên desktop (localhost)** — đăng ký subscription → lưu `push_subscriptions`, nút Gửi thử trên `/settings` hiện thông báo nảy lên màn hình, bấm vào mở `/today`; 404/410 tự vô hiệu hóa đăng ký; worker thật gửi hàng đợi `reminders` (outbox). Feature-detect đầy đủ, fallback graceful cho trình duyệt không hỗ trợ / bị deny. Nhánh `feat/push-notification`.
@@ -24,8 +22,6 @@
 - [ ] **T-012 Dùng thật 2–4 tuần** — ghi giờ thật so với ước tính, ghi chỗ phiền, chỉnh.
 
 ## Bị chặn / hoãn
-- [!] **T-013 P0b: thử push trên iPhone** — cần HTTPS công khai (đường hầm tạm hoặc server). Chờ user quyết định.
-- [!] **Deploy Hetzner (P8)** — chờ user chủ động yêu cầu.
 - [!] **Tùy biến bằng Gemini (P6), thu phí, mục tiêu khác (P7)** — chỉ sau khi có người dùng thật (P5).
 
 ## Câu hỏi đang mở (user chốt)
