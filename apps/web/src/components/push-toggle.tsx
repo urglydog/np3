@@ -43,11 +43,20 @@ export function PushToggle() {
   const [message, setMessage] = useState('');
 
   // Kiểm tra async: đã có subscription chưa?
+  // Dùng getRegistration() thay vì serviceWorker.ready để không bị treo
+  // khi chưa có service worker nào được đăng ký (lần đầu vào trang).
   useEffect(() => {
     if (support !== 'checking') return;
-    navigator.serviceWorker.ready
-      .then((reg) => reg.pushManager.getSubscription())
-      .then((sub) => setSupport(sub ? 'subscribed' : 'not_subscribed'))
+    navigator.serviceWorker.getRegistration('/sw.js')
+      .then((reg) => {
+        if (!reg) {
+          setSupport('not_subscribed');
+          return;
+        }
+        return reg.pushManager.getSubscription().then((sub) =>
+          setSupport(sub ? 'subscribed' : 'not_subscribed')
+        );
+      })
       .catch(() => setSupport('not_subscribed'));
   }, [support]);
 

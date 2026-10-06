@@ -5,8 +5,7 @@ import { loadPublishedTemplateOutline } from '@/lib/template';
 import { buildRoadmapRows } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
 import { AppError } from '@/lib/errors';
-import { TaskRow } from '@/components/task-row';
-import { TaskActions } from '@/components/task-actions';
+import { RoadmapFilter } from '@/components/roadmap-filter';
 import { breakAction } from './actions';
 
 export const dynamic = 'force-dynamic';
@@ -33,74 +32,89 @@ export default async function RoadmapPage({
   const totalNotSkipped = rows.length - optionalOffCount;
 
   return (
-    <main className="mx-auto flex max-w-screen-sm flex-col gap-4 p-4">
-      <h1 className="text-xl font-semibold text-ink">{copy.roadmapTitle}</h1>
+    <main className="mx-auto flex w-full max-w-screen-md flex-col gap-6 p-4 md:p-6">
+      {/* Header */}
+      <div className="flex flex-col gap-2 border-b border-line pb-4">
+        <h1 className="pb-1 text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand to-success">
+          {copy.roadmapTitle}
+        </h1>
+        <div className="flex flex-wrap items-center gap-3 text-sm">
+          <span className="font-medium text-ink bg-surface-raised px-3 py-1 rounded-full border border-line shadow-sm">
+            {copy.roadmapDoneCount(doneCount, totalNotSkipped)}
+          </span>
+          {optionalOffCount > 0 ? (
+            <span className="text-ink-muted bg-surface-raised px-3 py-1 rounded-full border border-line shadow-sm">
+              {copy.roadmapOptionalOffCount(optionalOffCount)}
+            </span>
+          ) : null}
+          {plan.schedule.finish ? (
+            <span className="font-medium bg-brand/10 text-brand px-3 py-1 rounded-full border border-brand/20">
+              {copy.todayFinishLabel(plan.schedule.finish)}
+            </span>
+          ) : null}
+        </div>
+      </div>
 
+      {/* Alerts */}
       {error ? (
-        <p className="rounded-md border border-red-600 p-3 text-sm text-red-600">{decodeURIComponent(error)}</p>
+        <div className="rounded-xl border border-danger bg-danger/5 p-4 text-sm text-danger flex items-center gap-2">
+          <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {decodeURIComponent(error)}
+        </div>
       ) : null}
       {ok === '1' ? (
-        <div className="flex flex-col gap-1 rounded-md border border-line p-3 text-sm text-ink">
-          <p>{noop === '1' ? copy.scheduleNoTaskAffected : copy.scheduleActionSuccess}</p>
-          {conflict === '1' ? <p className="text-ink-muted">{copy.scheduleConflictWarning}</p> : null}
-          {clamped === '1' ? <p className="text-ink-muted">{copy.scheduleClampedWarning}</p> : null}
+        <div className="flex flex-col gap-1 rounded-xl border border-success/30 bg-success/5 p-4 text-sm text-ink shadow-sm">
+          <p className="font-medium text-success flex items-center gap-2">
+            <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+            </svg>
+            {noop === '1' ? copy.scheduleNoTaskAffected : copy.scheduleActionSuccess}
+          </p>
+          {conflict === '1' ? <p className="text-warning mt-1">{copy.scheduleConflictWarning}</p> : null}
+          {clamped === '1' ? <p className="text-warning mt-1">{copy.scheduleClampedWarning}</p> : null}
         </div>
       ) : null}
 
-      <section className="flex flex-col gap-1">
-        <p className="text-sm text-ink">{copy.roadmapDoneCount(doneCount, totalNotSkipped)}</p>
-        {optionalOffCount > 0 ? (
-          <p className="text-xs text-ink-faint">{copy.roadmapOptionalOffCount(optionalOffCount)}</p>
-        ) : null}
-        {plan.schedule.finish ? <p className="text-xs text-ink-muted">{copy.todayFinishLabel(plan.schedule.finish)}</p> : null}
+      {/* Jump to current + Break dropdown */}
+      <div className="flex items-center justify-between gap-4">
         {currentId ? (
-          <a href={`#task-${currentId}`} className="text-sm text-accent underline">
+          <a href={`#task-${currentId}`} className="btn-primary text-sm shadow-md">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
             {copy.roadmapJumpToCurrent}
           </a>
-        ) : null}
-      </section>
+        ) : <div />}
 
-      <details className="rounded-md border border-line">
-        <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-ink">{copy.scheduleBreakTitle}</summary>
-        <form action={breakAction} className="flex flex-wrap items-end gap-2 p-3 pt-0">
-          <label className="flex flex-col gap-0.5 text-xs text-ink-muted">
-            {copy.scheduleBreakFromLabel}
-            <input type="date" name="fromDate" required className="rounded-md border border-line bg-surface px-2 py-1 text-sm text-ink" />
-          </label>
-          <label className="flex flex-col gap-0.5 text-xs text-ink-muted">
-            {copy.scheduleBreakDaysLabel}
-            <input
-              type="number"
-              name="days"
-              min="1"
-              step="1"
-              required
-              className="w-20 rounded-md border border-line bg-surface px-2 py-1 text-sm text-ink"
-            />
-          </label>
-          <button type="submit" className="rounded-md bg-accent px-3 py-1.5 text-xs font-medium text-white">
-            {copy.scheduleBreakSubmit}
-          </button>
-        </form>
-      </details>
-
-      <div className="flex flex-col gap-2">
-        {groups.map((g) => {
-          const containsCurrent = currentId ? g.tasks.some((t) => t.id === currentId) : false;
-          return (
-            <details key={g.code} open={containsCurrent} className="rounded-md border border-line">
-              <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-ink">{g.title}</summary>
-              <ul className="flex flex-col gap-2 p-3 pt-0">
-                {g.tasks.map((row) => (
-                  <TaskRow key={row.id} row={row} isCurrent={row.id === currentId} actions={<TaskActions row={row} />} />
-                ))}
-              </ul>
-            </details>
-          );
-        })}
+        <details className="group relative">
+          <summary className="btn-premium cursor-pointer list-none select-none">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {copy.scheduleBreakTitle}
+          </summary>
+          <div className="absolute right-0 top-full mt-2 w-72 rounded-xl border border-line bg-surface-raised p-4 shadow-xl glass z-20">
+            <form action={breakAction} className="flex flex-col gap-4">
+              <label className="flex flex-col gap-1 text-sm font-medium text-ink">
+                {copy.scheduleBreakFromLabel}
+                <input type="date" name="fromDate" required className="input-premium" />
+              </label>
+              <label className="flex flex-col gap-1 text-sm font-medium text-ink">
+                {copy.scheduleBreakDaysLabel}
+                <input type="number" name="days" min="1" step="1" required className="input-premium" />
+              </label>
+              <button type="submit" className="btn-primary w-full">{copy.scheduleBreakSubmit}</button>
+            </form>
+          </div>
+        </details>
       </div>
 
-      <p className="text-xs text-ink-faint">{copy.hoursEstimateDisclaimer}</p>
+      {/* Client-side search/filter + task groups */}
+      <RoadmapFilter groups={groups} currentId={currentId ?? null} />
+
+      <p className="text-xs text-ink-faint mt-4 text-center">{copy.hoursEstimateDisclaimer}</p>
     </main>
   );
 }

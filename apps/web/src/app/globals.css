@@ -1,27 +1,37 @@
 @import "tailwindcss";
 
+/* ── Design Tokens ─────────────────────────────────────────── */
 :root {
-  --color-ink: #171717;
-  --color-ink-muted: #525252;
-  --color-ink-faint: #a3a3a3;
-  --color-surface: #ffffff;
-  --color-surface-raised: #f5f5f5;
-  --color-line: #e5e5e5;
-  --color-accent: #2563eb;
+  --color-ink: #0f172a;
+  --color-ink-muted: #475569;
+  --color-ink-faint: #94a3b8;
+  --color-surface: #f8fafc;
+  --color-surface-raised: #ffffff;
+  --color-line: #e2e8f0;
+  --color-brand: #3b82f6;
+  --color-brand-hover: #2563eb;
+  --color-danger: #ef4444;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-ink: #ededed;
-    --color-ink-muted: #b4b4b4;
-    --color-ink-faint: #737373;
-    --color-surface: #0a0a0a;
-    --color-surface-raised: #171717;
-    --color-line: #2e2e2e;
-    --color-accent: #60a5fa;
+    --color-ink: #f8fafc;
+    --color-ink-muted: #94a3b8;
+    --color-ink-faint: #475569;
+    --color-surface: #020617;
+    --color-surface-raised: #0f172a;
+    --color-line: #1e293b;
+    --color-brand: #60a5fa;
+    --color-brand-hover: #3b82f6;
+    --color-danger: #f87171;
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
   }
 }
 
+/* ── Tailwind Theme (must come before @apply classes) ───────── */
 @theme inline {
   --color-ink: var(--color-ink);
   --color-ink-muted: var(--color-ink-muted);
@@ -29,13 +39,79 @@
   --color-surface: var(--color-surface);
   --color-surface-raised: var(--color-surface-raised);
   --color-line: var(--color-line);
-  --color-accent: var(--color-accent);
+  --color-brand: var(--color-brand);
+  --color-brand-hover: var(--color-brand-hover);
+  --color-danger: var(--color-danger);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+/* ── Base ───────────────────────────────────────────────────── */
 body {
   background: var(--color-surface);
   color: var(--color-ink);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* ── Glassmorphism ──────────────────────────────────────────── */
+.glass {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+@media (prefers-color-scheme: light) {
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* ── Component Utilities (must come after @theme) ───────────── */
+@utility input-premium {
+  @apply rounded-xl border border-line bg-surface-raised px-3 py-2 text-sm text-ink
+    transition-all focus:border-brand focus:ring-2 focus:ring-brand/20 focus:outline-none
+    placeholder:text-ink-faint;
+}
+
+@utility btn-premium {
+  @apply flex items-center justify-center gap-2 rounded-xl bg-surface-raised border border-line
+    px-4 py-2 text-sm font-medium text-ink transition-all hover:bg-line active:scale-95
+    disabled:opacity-50 disabled:pointer-events-none;
+}
+
+@utility btn-primary {
+  @apply flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2 text-sm
+    font-medium text-white transition-all hover:bg-brand-hover active:scale-95
+    disabled:opacity-50 disabled:pointer-events-none shadow-md shadow-brand/20;
+}
+
+/* ── Date & Number inputs global style ─────────────────────── */
+input[type="date"],
+input[type="number"] {
+  @apply rounded-xl border border-line bg-surface-raised px-3 py-2 text-sm text-ink
+    transition-all focus:border-brand focus:ring-2 focus:ring-brand/20 focus:outline-none
+    placeholder:text-ink-faint;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  input[type="date"],
+  input[type="number"] {
+    color-scheme: light;
+  }
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.5;
+  cursor: pointer;
+  filter: invert(0.5);
+}
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+  opacity: 1;
+}
+/* Remove spin buttons on number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.4;
 }
