@@ -61,7 +61,7 @@ export default async function UpdateProgressPage({
               ))}
             </select>
           </label>
-          <button type="submit" className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-white">
+          <button type="submit" className="btn-primary">
             {copy.updateProgressPreviewSubmit}
           </button>
         </form>
@@ -112,12 +112,12 @@ export default async function UpdateProgressPage({
         {idsToMark.length > 0 ? (
           <form action={applyProgressUpdate}>
             <input type="hidden" name="code" value={code} />
-            <button type="submit" className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-white">
+            <button type="submit" className="btn-primary">
               {copy.updateProgressConfirmSubmit}
             </button>
           </form>
         ) : null}
-        <Link href="/settings/update-progress" className="rounded-md border border-line px-4 py-2 text-sm text-ink">
+        <Link href="/settings/update-progress" className="btn-premium">
           {copy.updateProgressChooseAgain}
         </Link>
       </div>

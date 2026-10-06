@@ -93,7 +93,7 @@ export function CreatePlanForm({ outline }: { outline: TemplateOutline }) {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+        className="btn-primary disabled:opacity-60"
       >
         {copy.createPlanSubmit}
       </button>

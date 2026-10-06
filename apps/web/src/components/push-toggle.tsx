@@ -62,7 +62,7 @@ export function PushToggle() {
 
   const subscribe = useCallback(async () => {
     if (!VAPID_PUBLIC_KEY) {
-      setMessage('NEXT_PUBLIC_VAPID_PUBLIC_KEY chưa được cấu hình.');
+      setMessage('Thông báo đẩy chưa được thiết lập trên hệ thống. Vui lòng thử lại sau.');
       return;
     }
     setLoading(true);
@@ -188,7 +188,7 @@ export function PushToggle() {
             onClick={subscribe}
             disabled={loading}
             title="Bật thông báo để nhắc học hàng ngày"
-            className="flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+            className="btn-primary disabled:opacity-60"
           >
             {loading ? (
               <Loader2 size={16} className="animate-spin" />
