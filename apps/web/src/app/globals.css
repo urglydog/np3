@@ -10,6 +10,7 @@
   --color-line: #e2e8f0;
   --color-brand: #3b82f6;
   --color-brand-hover: #2563eb;
+  --color-accent: #3b82f6;
   --color-danger: #ef4444;
   --color-success: #10b981;
   --color-warning: #f59e0b;
@@ -25,6 +26,7 @@
     --color-line: #1e293b;
     --color-brand: #60a5fa;
     --color-brand-hover: #3b82f6;
+    --color-accent: #60a5fa;
     --color-danger: #f87171;
     --color-success: #34d399;
     --color-warning: #fbbf24;
@@ -41,6 +43,7 @@
   --color-line: var(--color-line);
   --color-brand: var(--color-brand);
   --color-brand-hover: var(--color-brand-hover);
+  --color-accent: var(--color-accent);
   --color-danger: var(--color-danger);
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
@@ -53,6 +56,25 @@ body {
   background: var(--color-surface);
   color: var(--color-ink);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overscroll-behavior-y: none;
+}
+
+/* Chống chạm-giữ gây chọn chữ/kéo lệch trên mobile ở các phần tử tương tác,
+   trong khi vẫn cho chọn chữ bình thường trong nội dung văn bản và input. */
+button,
+a,
+li,
+nav,
+header {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+input,
+textarea,
+p,
+span {
+  user-select: text;
 }
 
 /* ── Glassmorphism ──────────────────────────────────────────── */
