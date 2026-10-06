@@ -6,6 +6,7 @@ import { PushToggle } from '@/components/push-toggle';
 import { BackupPanel } from '@/components/backup-panel';
 import { PlanSettingsForm } from '@/components/plan-settings-form';
 import { createClient } from '@/lib/supabase/server';
+import { SubmitButton } from '@/components/submit-button';
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -76,13 +77,11 @@ export default async function SettingsPage() {
       {/* Đăng xuất */}
       <section>
         <form action={signOut}>
-          <button
-            type="submit"
-            id="settings-logout-btn"
-            className="rounded-md border border-line px-4 py-2 text-sm text-ink"
+          <SubmitButton
+            className="btn-premium"
           >
             {copy.logoutButton}
-          </button>
+          </SubmitButton>
         </form>
       </section>
     </main>

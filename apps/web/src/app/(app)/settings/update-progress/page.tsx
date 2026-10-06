@@ -5,6 +5,7 @@ import { loadPublishedTemplateOutline } from '@/lib/template';
 import { copy } from '@/lib/copy';
 import { AppError } from '@/lib/errors';
 import { applyProgressUpdate } from './actions';
+import { SubmitButton } from '@/components/submit-button';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,9 +62,9 @@ export default async function UpdateProgressPage({
               ))}
             </select>
           </label>
-          <button type="submit" className="btn-primary">
+          <SubmitButton className="btn-primary">
             {copy.updateProgressPreviewSubmit}
-          </button>
+          </SubmitButton>
         </form>
       </main>
     );
@@ -112,9 +113,9 @@ export default async function UpdateProgressPage({
         {idsToMark.length > 0 ? (
           <form action={applyProgressUpdate}>
             <input type="hidden" name="code" value={code} />
-            <button type="submit" className="btn-primary">
+            <SubmitButton className="btn-primary">
               {copy.updateProgressConfirmSubmit}
-            </button>
+            </SubmitButton>
           </form>
         ) : null}
         <Link href="/settings/update-progress" className="btn-premium">

@@ -3,6 +3,7 @@ import { currentTaskId } from '@roadmap/core';
 import { loadCurrentPlanSchedule } from '@/lib/plan';
 import { copy } from '@/lib/copy';
 import { markTaskDone } from './actions';
+import { SubmitButton } from '@/components/submit-button';
 
 export const dynamic = 'force-dynamic';
 
@@ -70,12 +71,9 @@ export default async function TodayPage() {
               </label>
             </div>
 
-            <button
-              type="submit"
-              className="btn-primary mt-4 w-full py-3 text-lg font-bold shadow-lg"
-            >
+            <SubmitButton className="btn-primary mt-4 w-full py-3 text-lg font-bold shadow-lg">
               {copy.todayDoneButton}
-            </button>
+            </SubmitButton>
           </form>
         </section>
       ) : (

@@ -4,6 +4,7 @@ import { copy } from '@/lib/copy';
 import type { PurchaseRow } from '@/lib/buy';
 import type { Urgency } from '@roadmap/core';
 import { setStatusAction, updateEtaAction, setOptedInAction } from './actions';
+import { SubmitButton } from '@/components/submit-button';
 
 export const dynamic = 'force-dynamic';
 
@@ -91,9 +92,9 @@ function ResourceCard({ row }: { row: PurchaseRow }) {
             <form action={setStatusAction} className="flex-1 min-w-[120px]">
               <input type="hidden" name="resourceId" value={row.id} />
               <input type="hidden" name="targetStatus" value="owned" />
-              <button type="submit" className="btn-premium w-full text-success hover:border-success hover:bg-success/5">
+              <SubmitButton className="btn-premium w-full text-success hover:border-success hover:bg-success/5">
                 {copy.buyMarkOwned}
-              </button>
+              </SubmitButton>
             </form>
             <form action={setStatusAction} className="flex flex-wrap items-end gap-2 w-full">
               <input type="hidden" name="resourceId" value={row.id} />
@@ -102,18 +103,18 @@ function ResourceCard({ row }: { row: PurchaseRow }) {
                 {copy.buyEtaLabel}
                 <div className="flex gap-2">
                   <input type="date" name="eta" required className="input-premium py-1.5 px-2 flex-1" />
-                  <button type="submit" className="btn-premium py-1.5 px-3 whitespace-nowrap">
+                  <SubmitButton className="btn-premium py-1.5 px-3 whitespace-nowrap">
                     {copy.buyMarkOrdered}
-                  </button>
+                  </SubmitButton>
                 </div>
               </label>
             </form>
             <form action={setStatusAction} className="w-full sm:w-auto">
               <input type="hidden" name="resourceId" value={row.id} />
               <input type="hidden" name="targetStatus" value="not_needed" />
-              <button type="submit" className="text-xs text-ink-muted underline hover:text-ink px-2 py-1">
+              <SubmitButton className="text-xs text-ink-muted underline hover:text-ink px-2 py-1">
                 {copy.buyMarkNotNeeded}
-              </button>
+              </SubmitButton>
             </form>
           </>
         ) : null}
@@ -123,9 +124,9 @@ function ResourceCard({ row }: { row: PurchaseRow }) {
             <form action={setStatusAction} className="flex-1 min-w-[120px]">
               <input type="hidden" name="resourceId" value={row.id} />
               <input type="hidden" name="targetStatus" value="received" />
-              <button type="submit" className="btn-premium w-full text-brand hover:border-brand hover:bg-brand/5">
+              <SubmitButton className="btn-premium w-full text-brand hover:border-brand hover:bg-brand/5">
                 {copy.buyMarkReceived}
-              </button>
+              </SubmitButton>
             </form>
             <form action={updateEtaAction} className="flex flex-wrap items-end gap-2 w-full">
               <input type="hidden" name="resourceId" value={row.id} />
@@ -133,18 +134,18 @@ function ResourceCard({ row }: { row: PurchaseRow }) {
                 {copy.buyEditEta}
                 <div className="flex gap-2">
                   <input type="date" name="eta" required defaultValue={row.eta ?? undefined} className="input-premium py-1.5 px-2 flex-1" />
-                  <button type="submit" className="btn-premium py-1.5 px-3 whitespace-nowrap">
+                  <SubmitButton className="btn-premium py-1.5 px-3 whitespace-nowrap">
                     {copy.buyEtaSubmit}
-                  </button>
+                  </SubmitButton>
                 </div>
               </label>
             </form>
             <form action={setStatusAction} className="w-full sm:w-auto mt-2">
               <input type="hidden" name="resourceId" value={row.id} />
               <input type="hidden" name="targetStatus" value="none" />
-              <button type="submit" className="text-xs text-danger underline hover:text-danger/80 px-2 py-1">
+              <SubmitButton className="text-xs text-danger underline hover:text-danger/80 px-2 py-1">
                 {copy.buyCancelOrder}
-              </button>
+              </SubmitButton>
             </form>
           </>
         ) : null}
@@ -279,17 +280,16 @@ export default async function BuyPage({
                   <form action={setOptedInAction}>
                     <input type="hidden" name="resourceId" value={r.id} />
                     <input type="hidden" name="optedIn" value={r.optedIn ? 'false' : 'true'} />
-                    <button
-                      type="submit"
+                    <SubmitButton
                       className={`btn-premium py-1.5 px-3 text-xs w-[120px] justify-between ${r.optedIn ? 'border-brand text-brand bg-brand/5 shadow-[inset_0_0_0_1px_rgba(59,130,246,0.2)]' : 'border-line text-ink'}`}
                     >
-                      {copy.buyOptInToggle} 
+                      {copy.buyOptInToggle}
                       {r.optedIn ? (
                         <svg className="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                       ) : (
                         <span className="w-4 h-4"></span>
                       )}
-                    </button>
+                    </SubmitButton>
                   </form>
                 </div>
                 {!r.optedIn ? <p className="text-sm text-ink-muted italic border-l-2 border-line pl-3 py-1">{copy.buyOptOutNote}</p> : null}
