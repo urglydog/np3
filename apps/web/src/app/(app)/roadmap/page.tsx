@@ -6,6 +6,7 @@ import { buildRoadmapRows } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
 import { AppError } from '@/lib/errors';
 import { RoadmapFilter } from '@/components/roadmap-filter';
+import { SubmitButton } from '@/components/submit-button';
 import { breakAction } from './actions';
 
 export const dynamic = 'force-dynamic';
@@ -105,7 +106,7 @@ export default async function RoadmapPage({
                 {copy.scheduleBreakDaysLabel}
                 <input type="number" name="days" min="1" step="1" required className="input-premium" />
               </label>
-              <button type="submit" className="btn-primary w-full">{copy.scheduleBreakSubmit}</button>
+              <SubmitButton className="btn-primary w-full">{copy.scheduleBreakSubmit}</SubmitButton>
             </form>
           </div>
         </details>

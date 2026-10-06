@@ -1,6 +1,7 @@
 import type { RoadmapRow } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
 import { toggleSkipAction, delayAction, pinAction, unpinAction } from '@/app/(app)/roadmap/actions';
+import { SubmitButton } from '@/components/submit-button';
 
 /** Nút/form thao tác cho 1 task trên /roadmap. Ẩn hoàn toàn với task đã Xong. */
 export function TaskActions({ row }: { row: RoadmapRow }) {
@@ -10,9 +11,9 @@ export function TaskActions({ row }: { row: RoadmapRow }) {
     return (
       <form action={toggleSkipAction} className="flex">
         <input type="hidden" name="taskId" value={row.id} />
-        <button type="submit" className="rounded-md border border-line px-3 py-1.5 text-xs text-ink">
+        <SubmitButton className="rounded-md border border-line px-3 py-1.5 text-xs text-ink">
           {copy.scheduleUnskipButton}
-        </button>
+        </SubmitButton>
       </form>
     );
   }
@@ -21,9 +22,9 @@ export function TaskActions({ row }: { row: RoadmapRow }) {
     <div className="flex flex-col gap-3">
       <form action={toggleSkipAction} className="flex">
         <input type="hidden" name="taskId" value={row.id} />
-        <button type="submit" className="btn-premium py-1.5 px-3 text-xs flex-1">
+        <SubmitButton className="btn-premium py-1.5 px-3 text-xs flex-1">
           {copy.scheduleSkipButton}
-        </button>
+        </SubmitButton>
       </form>
 
       <div className="flex flex-wrap items-start gap-4 border-t border-line/50 pt-3">
@@ -40,9 +41,9 @@ export function TaskActions({ row }: { row: RoadmapRow }) {
                 required
                 className="input-premium py-1.5 px-2 w-16"
               />
-              <button type="submit" className="btn-premium py-1.5 px-3 text-xs flex-1">
+              <SubmitButton className="btn-premium py-1.5 px-3 text-xs flex-1">
                 {copy.scheduleDelaySubmit}
-              </button>
+              </SubmitButton>
             </div>
           </label>
         </form>
@@ -58,9 +59,9 @@ export function TaskActions({ row }: { row: RoadmapRow }) {
               defaultValue={row.pinnedStart ?? undefined}
               className="input-premium py-1.5 px-2 flex-1"
             />
-            <button type="submit" className="btn-premium py-1.5 px-3 text-xs">
+            <SubmitButton className="btn-premium py-1.5 px-3 text-xs">
               {copy.schedulePinSubmit}
-            </button>
+            </SubmitButton>
           </div>
         </form>
       </div>
@@ -68,10 +69,10 @@ export function TaskActions({ row }: { row: RoadmapRow }) {
       {row.pinnedStart ? (
         <form action={unpinAction} className="flex mt-1 border-t border-line/50 pt-3">
           <input type="hidden" name="taskId" value={row.id} />
-          <button type="submit" className="btn-premium border-danger/30 text-danger hover:bg-danger/10 py-1.5 px-3 text-xs w-full">
+          <SubmitButton className="btn-premium border-danger/30 text-danger hover:bg-danger/10 py-1.5 px-3 text-xs w-full">
             <svg className="w-4 h-4 mr-1 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
             {copy.scheduleUnpinSubmit}
-          </button>
+          </SubmitButton>
         </form>
       ) : null}
     </div>

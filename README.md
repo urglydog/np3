@@ -18,7 +18,7 @@ npm install
 cp .env.example apps/web/.env.local   # tự điền giá trị thật, xem chú thích trong file
 npm run db:start                      # khởi động Supabase local (cần Docker)
 npm run dev:web                       # http://localhost:3100 (cố định cổng 3100, tránh đụng cổng 3000 hay bị chiếm)
-npm run dev:worker                    # worker: chỉ in nhịp tim, chưa gửi push thật
+npm run dev:worker                    # worker: tự tạo nhắc việc/mua sách từ lịch và gửi Web Push thật — phải tự chạy, chưa deploy ở đâu 24/7
 ```
 
 ## Kiểm tra
