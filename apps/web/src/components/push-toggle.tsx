@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Bell, BellOff, Send, AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
+import { Bell, BellOff, AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
 
 // VAPID public key từ env — an toàn để bundle xuống trình duyệt
 const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? '';
@@ -39,7 +39,6 @@ export function PushToggle() {
 
   const [support, setSupport] = useState<PushSupport>(initialSupport);
   const [loading, setLoading] = useState(false);
-  const [sendStatus, setSendStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
   // Kiểm tra async: đã có subscription chưa?
@@ -129,23 +128,6 @@ export function PushToggle() {
     }
   }, []);
 
-  const sendTest = useCallback(async () => {
-    setSendStatus('sending');
-    setMessage('');
-    try {
-      const res = await fetch('/api/push/send-test', { method: 'POST' });
-      const json = (await res.json()) as { ok?: boolean; error?: string; succeeded?: number; failed?: number };
-      if (!res.ok || !json.ok) throw new Error(json.error ?? 'Lỗi gửi thử.');
-      setSendStatus('ok');
-      setMessage(`Đã gửi thử thành công (${json.succeeded ?? 1} thiết bị). Kiểm tra góc màn hình!`);
-    } catch (err) {
-      setSendStatus('error');
-      setMessage(err instanceof Error ? err.message : 'Lỗi gửi thử.');
-    } finally {
-      setTimeout(() => setSendStatus('idle'), 3000);
-    }
-  }, []);
-
   // --- Render ---
   if (support === 'checking') {
     return (
@@ -159,7 +141,7 @@ export function PushToggle() {
   if (support === 'unsupported') {
     return (
       <div className="flex items-start gap-2 rounded-md border border-line bg-surface-raised p-3 text-sm text-ink-muted">
-        <AlertTriangle size={16} className="mt-0.5 shrink-0 text-amber-500" />
+        <AlertTriangle size={16} className="mt-0.5 shrink-0 text-warning" />
         <span>
           Trình duyệt này chưa hỗ trợ Push Notification.{' '}
           <span className="text-ink-faint">(Dùng Chrome/Firefox desktop, hoặc PWA đã cài trên iOS 16.4+)</span>
@@ -171,7 +153,7 @@ export function PushToggle() {
   if (support === 'denied') {
     return (
       <div className="flex items-start gap-2 rounded-md border border-line bg-surface-raised p-3 text-sm text-ink-muted">
-        <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-500" />
+        <AlertTriangle size={16} className="mt-0.5 shrink-0 text-danger" />
         <span>
           Bạn đã chặn thông báo từ trang này. Hãy vào cài đặt trình duyệt để mở lại quyền, sau đó tải lại trang.
         </span>
@@ -200,23 +182,9 @@ export function PushToggle() {
         ) : (
           <>
             <div className="flex items-center gap-2 rounded-md border border-line bg-surface-raised px-3 py-2 text-sm text-ink">
-              <CheckCircle size={16} className="text-green-500" />
+              <CheckCircle size={16} className="text-success" />
               <span>Thông báo đang bật</span>
             </div>
-            <button
-              id="push-send-test-btn"
-              onClick={sendTest}
-              disabled={sendStatus === 'sending'}
-              title="Gửi một thông báo thử để kiểm tra"
-              className="flex items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-ink disabled:opacity-60"
-            >
-              {sendStatus === 'sending' ? (
-                <Loader2 size={16} className="animate-spin" />
-              ) : (
-                <Send size={16} />
-              )}
-              Gửi thông báo thử
-            </button>
             <button
               id="push-unsubscribe-btn"
               onClick={unsubscribe}
@@ -236,13 +204,7 @@ export function PushToggle() {
       </div>
 
       {message && (
-        <p
-          className={`text-sm ${
-            sendStatus === 'error' || (support !== 'subscribed' && message.startsWith('Không'))
-              ? 'text-red-500'
-              : 'text-green-600'
-          }`}
-        >
+        <p className={`text-sm ${message.startsWith('Không') ? 'text-danger' : 'text-success'}`}>
           {message}
         </p>
       )}
