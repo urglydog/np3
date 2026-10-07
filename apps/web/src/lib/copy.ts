@@ -67,6 +67,8 @@ export const copy = {
   // Thao tác lịch (T-006)
   scheduleSkipButton: 'Bỏ qua',
   scheduleUnskipButton: 'Bỏ "bỏ qua"',
+  scheduleMarkDoneButton: 'Đánh dấu đã xong',
+  scheduleUnmarkDoneButton: 'Bỏ đánh dấu xong (quay lại làm mốc)',
   scheduleDelayLabel: 'Hoãn (số ngày)',
   scheduleDelaySubmit: 'Hoãn',
   schedulePinLabel: 'Ghim ngày bắt đầu',

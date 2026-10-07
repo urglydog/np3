@@ -114,6 +114,23 @@ export async function toggleTaskSkip(supabase: SupabaseClient, taskId: string): 
   return toResult(schedule, taskId, true);
 }
 
+/**
+ * Đánh dấu Xong / Bỏ đánh dấu Xong: todo|in_progress ⇄ done. Không áp dụng cho task đã bỏ qua
+ * (bỏ "Bỏ qua" trước ở nút riêng). Cho phép quay ngược done → todo để sửa lại mốc tiến độ khi
+ * người dùng phát hiện mình nhảy cóc/hổng kiến thức, không chỉ đi tới như update_plan_progress RPC.
+ */
+export async function toggleDoneInDb(supabase: SupabaseClient, taskId: string): Promise<MutationResult> {
+  const ctx = await loadScheduleContext(supabase);
+  const current = findInput(ctx.inputs, taskId);
+  if (current.status === 'skipped') throw new AppError('Task đang bị bỏ qua, bỏ "Bỏ qua" trước', 'invalid_state', 400);
+
+  const newStatus: Status = current.status === 'done' ? 'todo' : 'done';
+  await writeStatus(supabase, ctx.planId, taskId, newStatus);
+  const newInputs = ctx.inputs.map((t) => (t.id === taskId ? { ...t, status: newStatus } : t));
+  const schedule = computeSchedule(newInputs, ctx.settings, ctx.today);
+  return toResult(schedule, taskId, true);
+}
+
 /** Hoãn N ngày (delayTask từ @roadmap/core) cho task chưa xong, chưa bị bỏ qua. */
 export async function delayTaskInDb(supabase: SupabaseClient, taskId: string, days: number): Promise<MutationResult> {
   const ctx = await loadScheduleContext(supabase);

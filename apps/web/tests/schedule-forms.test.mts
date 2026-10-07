@@ -1,6 +1,7 @@
 // Kiểm tra các hàm thuần "FormData -> tham số" cho 4 thao tác lịch (T-006).
 import {
   parseToggleSkipForm,
+  parseToggleDoneForm,
   parseDelayForm,
   parsePinForm,
   parseUnpinForm,
@@ -28,6 +29,13 @@ eq('toggleSkip: rỗng -> lỗi thiếu task', parseToggleSkipForm(fd({}), 'todo
 eq('toggleSkip: task done -> lỗi', parseToggleSkipForm(fd({ taskId: 'A' }), 'done').ok, false);
 eq('toggleSkip: hợp lệ', parseToggleSkipForm(fd({ taskId: 'A' }), 'todo'), { ok: true, value: { taskId: 'A' } });
 eq('toggleSkip: hợp lệ với skipped', parseToggleSkipForm(fd({ taskId: 'A' }), 'skipped'), { ok: true, value: { taskId: 'A' } });
+
+// ---- parseToggleDoneForm ----
+eq('toggleDone: rỗng -> lỗi thiếu task', parseToggleDoneForm(fd({}), 'todo').ok, false);
+eq('toggleDone: task skipped -> lỗi', parseToggleDoneForm(fd({ taskId: 'A' }), 'skipped').ok, false);
+eq('toggleDone: hợp lệ với todo', parseToggleDoneForm(fd({ taskId: 'A' }), 'todo'), { ok: true, value: { taskId: 'A' } });
+eq('toggleDone: hợp lệ với in_progress', parseToggleDoneForm(fd({ taskId: 'A' }), 'in_progress'), { ok: true, value: { taskId: 'A' } });
+eq('toggleDone: hợp lệ với done (quay ngược)', parseToggleDoneForm(fd({ taskId: 'A' }), 'done'), { ok: true, value: { taskId: 'A' } });
 
 // ---- parseDelayForm ----
 eq('delay: rỗng -> lỗi', parseDelayForm(fd({ taskId: 'A' }), 'todo').ok, false);

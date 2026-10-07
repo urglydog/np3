@@ -6,6 +6,7 @@ import { buildRoadmapRows } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
 import { AppError } from '@/lib/errors';
 import { RoadmapFilter } from '@/components/roadmap-filter';
+import { AnchorDetailsOpener } from '@/components/anchor-details-opener';
 import { SubmitButton } from '@/components/submit-button';
 import { breakAction } from './actions';
 
@@ -32,6 +33,7 @@ export default async function RoadmapPage({
 
   return (
     <main className="mx-auto flex w-full max-w-screen-md flex-col gap-6 p-4 md:p-6">
+      <AnchorDetailsOpener />
       {/* Header */}
       <div className="flex flex-col gap-2 border-b border-line pb-4">
         <h1 className="pb-1 text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand to-success">

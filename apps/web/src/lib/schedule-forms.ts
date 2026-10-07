@@ -41,6 +41,16 @@ export function parseToggleSkipForm(formData: FormData, currentStatus: Status): 
   return { ok: true, value: { taskId: taskId.value } };
 }
 
+export interface ToggleDoneParams {
+  taskId: string;
+}
+export function parseToggleDoneForm(formData: FormData, currentStatus: Status): FormResult<ToggleDoneParams> {
+  const taskId = parseTaskId(formData);
+  if (!taskId.ok) return taskId;
+  if (currentStatus === 'skipped') return { ok: false, error: 'Task đang bị bỏ qua, bỏ "Bỏ qua" trước' };
+  return { ok: true, value: { taskId: taskId.value } };
+}
+
 export interface DelayParams {
   taskId: string;
   days: number;

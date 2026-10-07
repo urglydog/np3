@@ -1,11 +1,20 @@
 import type { RoadmapRow } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
-import { toggleSkipAction, delayAction, pinAction, unpinAction } from '@/app/(app)/roadmap/actions';
+import { toggleSkipAction, toggleDoneAction, delayAction, pinAction, unpinAction } from '@/app/(app)/roadmap/actions';
 import { SubmitButton } from '@/components/submit-button';
 
-/** Nút/form thao tác cho 1 task trên /roadmap. Ẩn hoàn toàn với task đã Xong. */
+/** Nút/form thao tác cho 1 task trên /roadmap. */
 export function TaskActions({ row }: { row: RoadmapRow }) {
-  if (row.status === 'done') return null;
+  if (row.status === 'done') {
+    return (
+      <form action={toggleDoneAction} className="flex">
+        <input type="hidden" name="taskId" value={row.id} />
+        <SubmitButton className="rounded-md border border-line px-3 py-1.5 text-xs text-ink-muted hover:text-ink">
+          {copy.scheduleUnmarkDoneButton}
+        </SubmitButton>
+      </form>
+    );
+  }
 
   if (row.status === 'skipped') {
     return (
@@ -20,12 +29,20 @@ export function TaskActions({ row }: { row: RoadmapRow }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <form action={toggleSkipAction} className="flex">
-        <input type="hidden" name="taskId" value={row.id} />
-        <SubmitButton className="btn-premium py-1.5 px-3 text-xs flex-1">
-          {copy.scheduleSkipButton}
-        </SubmitButton>
-      </form>
+      <div className="flex gap-2">
+        <form action={toggleDoneAction} className="flex-1">
+          <input type="hidden" name="taskId" value={row.id} />
+          <SubmitButton className="btn-premium py-1.5 px-3 text-xs w-full text-success hover:border-success hover:bg-success/5">
+            {copy.scheduleMarkDoneButton}
+          </SubmitButton>
+        </form>
+        <form action={toggleSkipAction} className="flex-1">
+          <input type="hidden" name="taskId" value={row.id} />
+          <SubmitButton className="btn-premium py-1.5 px-3 text-xs w-full">
+            {copy.scheduleSkipButton}
+          </SubmitButton>
+        </form>
+      </div>
 
       <div className="flex flex-wrap items-start gap-4 border-t border-line/50 pt-3">
         <form action={delayAction} className="flex items-end gap-2 flex-1 min-w-[140px]">

@@ -5,6 +5,7 @@ import type { PurchaseRow } from '@/lib/buy';
 import type { Urgency } from '@roadmap/core';
 import { setStatusAction, updateEtaAction, setOptedInAction } from './actions';
 import { SubmitButton } from '@/components/submit-button';
+import { AnchorDetailsOpener } from '@/components/anchor-details-opener';
 
 export const dynamic = 'force-dynamic';
 
@@ -190,6 +191,7 @@ export default async function BuyPage({
 
   return (
     <main className="mx-auto flex w-full max-w-screen-md flex-col gap-8 p-4 md:p-6 pb-24">
+      <AnchorDetailsOpener />
       <div className="flex flex-col gap-2 border-b border-line pb-4">
         <h1 className="text-3xl font-bold tracking-tight text-ink bg-clip-text text-transparent bg-gradient-to-r from-brand to-accent">{copy.buyTitle}</h1>
       </div>

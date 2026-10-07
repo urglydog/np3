@@ -6,6 +6,7 @@ import type { Status } from '@roadmap/core';
 import { createClient } from '@/lib/supabase/server';
 import {
   parseToggleSkipForm,
+  parseToggleDoneForm,
   parseDelayForm,
   parsePinForm,
   parseUnpinForm,
@@ -13,6 +14,7 @@ import {
 } from '@/lib/schedule-forms';
 import {
   toggleTaskSkip,
+  toggleDoneInDb,
   delayTaskInDb,
   pinTaskInDb,
   unpinTaskInDb,
@@ -63,6 +65,25 @@ export async function toggleSkipAction(formData: FormData): Promise<void> {
     const parsed = parseToggleSkipForm(formData, currentStatus);
     if (!parsed.ok) throw new AppError(parsed.error, 'invalid_input', 400);
     const result = await toggleTaskSkip(supabase, parsed.value.taskId);
+    url = resultUrl(taskId, result);
+  } catch (err) {
+    url = errorUrl(toUserMessage(err), taskId);
+  }
+  revalidatePath('/roadmap');
+  redirect(url);
+}
+
+export async function toggleDoneAction(formData: FormData): Promise<void> {
+  const supabase = await getUserOrRedirect();
+  let taskId = '';
+  let url: string;
+  try {
+    const rawTaskId = formData.get('taskId');
+    taskId = typeof rawTaskId === 'string' ? rawTaskId : '';
+    const currentStatus = await readTaskStatus(supabase, taskId);
+    const parsed = parseToggleDoneForm(formData, currentStatus);
+    if (!parsed.ok) throw new AppError(parsed.error, 'invalid_input', 400);
+    const result = await toggleDoneInDb(supabase, parsed.value.taskId);
     url = resultUrl(taskId, result);
   } catch (err) {
     url = errorUrl(toUserMessage(err), taskId);
