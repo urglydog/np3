@@ -4,7 +4,7 @@
 services:
   worker:
     build:
-      context: .
+      context: ..
       dockerfile: deploy/Dockerfile.worker
     restart: unless-stopped
     env_file:
