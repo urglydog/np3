@@ -1,0 +1,14 @@
+node_modules
+**/node_modules
+.git
+.next
+apps/web/.next
+apps/web/public
+.env
+.env.local
+**/.env
+**/.env.local
+supabase
+docs
+.claude
+*.md

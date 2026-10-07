@@ -1,0 +1,17 @@
+# Chỉ chạy worker gửi nhắc việc. apps/web deploy riêng ở Vercel, không dựng ở đây.
+# Chạy từ thư mục gốc repo: docker compose -p roadmap -f deploy/docker-compose.worker.yml up -d --build
+# Không publish port nào — worker chỉ gọi ra ngoài (Supabase, dịch vụ push), không nhận kết nối vào.
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.worker
+    restart: unless-stopped
+    env_file:
+      - ../apps/worker/.env
+    mem_limit: 200m
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
