@@ -15,8 +15,8 @@ self.addEventListener('push', (event) => {
   const title = d.title || 'Roadmap Planner';
   const options = {
     body: d.body || '',
-    icon: '/icons/icon-192.png',
-    badge: '/icons/icon-192.png',
+    icon: '/icons/icon-192-v2.png',
+    badge: '/icons/icon-192-v2.png',
     tag: d.tag || 'roadmap-default',
     renotify: !!d.tag,
     data: { url: d.url || '/' },

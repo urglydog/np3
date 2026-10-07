@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
@@ -23,3 +24,13 @@ export async function createClient() {
     }
   );
 }
+
+// getUser() xác thực lại với Supabase Auth server (round-trip mạng) mỗi lần gọi.
+// cache() của React gộp mọi lần gọi trong cùng 1 request thành 1 round-trip duy nhất.
+export const getCurrentUser = cache(async () => {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return user;
+});

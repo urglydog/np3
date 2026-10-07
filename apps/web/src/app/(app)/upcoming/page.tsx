@@ -15,9 +15,8 @@ const urgencyColor: Record<string, string> = {
 };
 
 export default async function UpcomingPage() {
-  const plan = await loadCurrentPlanSchedule();
+  const [plan, purchaseData] = await Promise.all([loadCurrentPlanSchedule(), loadPurchaseData()]);
   if (!plan) redirect('/create-plan');
-  const purchaseData = await loadPurchaseData();
 
   const taskNameById = new Map([...plan.taskInfoById.entries()].map(([id, info]) => [id, info.name]));
   // Mở rộng horizon 30 ngày để hiện task sắp tới dài hơn 14 ngày

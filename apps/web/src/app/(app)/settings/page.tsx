@@ -5,12 +5,12 @@ import { copy } from '@/lib/copy';
 import { PushToggle } from '@/components/push-toggle';
 import { BackupPanel } from '@/components/backup-panel';
 import { PlanSettingsForm } from '@/components/plan-settings-form';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, getCurrentUser } from '@/lib/supabase/server';
 import { SubmitButton } from '@/components/submit-button';
 
 export default async function SettingsPage() {
+  const user = await getCurrentUser();
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
   const { data: plan } = await supabase
     .from('plans')
     .select('reminder_time, quiet_hours_start, quiet_hours_end, rest_days')

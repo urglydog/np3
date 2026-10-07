@@ -8,7 +8,7 @@ import {
   todayInTimeZone,
   type ResourceStatus,
 } from '@roadmap/core';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, getCurrentUser } from '@/lib/supabase/server';
 import { buildPurchaseRows, type PurchaseRow } from '@/lib/buy';
 
 export interface PurchaseData {
@@ -20,12 +20,10 @@ export interface PurchaseData {
 
 /** Đọc toàn bộ dữ liệu cần cho /buy và /upcoming (tài nguyên + trạng thái mua) của plan hiện tại. */
 export async function loadPurchaseData(): Promise<PurchaseData | null> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) return null;
 
+  const supabase = await createClient();
   const { data: plan } = await supabase
     .from('plans')
     .select('id, template_id, start_date, hours_per_day, days_per_week, timezone')
@@ -33,25 +31,32 @@ export async function loadPurchaseData(): Promise<PurchaseData | null> {
     .maybeSingle();
   if (!plan) return null;
 
-  const { data: templateTasks } = await supabase
-    .from('template_tasks')
-    .select('id, est_hours, optional, sort')
-    .eq('template_id', plan.template_id)
-    .order('sort');
-  const { data: planTaskStates } = await supabase.from('plan_task_state').select('task_id, status, pinned_start').eq('plan_id', plan.id);
-
-  const { data: templateResources } = await supabase
-    .from('template_resources')
-    .select('id, code, title, tier, price_vnd, price_checked_at, free_alternative, buy_url, is_affiliate, lead_time_days')
-    .eq('template_id', plan.template_id);
-  const { data: planResourceStates } = await supabase
-    .from('plan_resource_state')
-    .select('resource_id, status, opted_in, ordered_on, eta')
-    .eq('plan_id', plan.id);
-  const { data: taskResourceLinks } = await supabase
-    .from('template_task_resources')
-    .select('task_id, resource_id, template_tasks!inner(template_id)')
-    .eq('template_tasks.template_id', plan.template_id);
+  const [
+    { data: templateTasks },
+    { data: planTaskStates },
+    { data: templateResources },
+    { data: planResourceStates },
+    { data: taskResourceLinks },
+  ] = await Promise.all([
+    supabase
+      .from('template_tasks')
+      .select('id, est_hours, optional, sort')
+      .eq('template_id', plan.template_id)
+      .order('sort'),
+    supabase.from('plan_task_state').select('task_id, status, pinned_start').eq('plan_id', plan.id),
+    supabase
+      .from('template_resources')
+      .select('id, code, title, tier, price_vnd, price_checked_at, free_alternative, buy_url, is_affiliate, lead_time_days')
+      .eq('template_id', plan.template_id),
+    supabase
+      .from('plan_resource_state')
+      .select('resource_id, status, opted_in, ordered_on, eta')
+      .eq('plan_id', plan.id),
+    supabase
+      .from('template_task_resources')
+      .select('task_id, resource_id, template_tasks!inner(template_id)')
+      .eq('template_tasks.template_id', plan.template_id),
+  ]);
 
   if (!templateTasks || !planTaskStates || !templateResources || !planResourceStates || !taskResourceLinks) return null;
 

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Roadmap Planner',
   },
   icons: {
-    apple: '/icons/icon-192.png',
+    apple: '/icons/icon-192-v2.png',
   },
 };
 

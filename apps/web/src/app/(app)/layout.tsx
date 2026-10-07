@@ -1,13 +1,12 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, getCurrentUser } from '@/lib/supabase/server';
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) redirect('/login');
+
+  const supabase = await createClient();
 
   const { data: plan } = await supabase.from('plans').select('id').limit(1).maybeSingle();
   if (!plan) redirect('/create-plan');

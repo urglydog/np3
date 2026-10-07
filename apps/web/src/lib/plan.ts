@@ -1,5 +1,5 @@
 import { computeSchedule, toTaskInputs, todayInTimeZone, type ScheduleResult } from '@roadmap/core';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, getCurrentUser } from '@/lib/supabase/server';
 
 export interface PlanTaskInfo {
   name: string;
@@ -20,12 +20,10 @@ export interface PlanSchedule {
  * Không lưu Start/Due vào DB — chỉ tính lại mỗi lần gọi từ start_date/hours_per_day/days_per_week/status.
  */
 export async function loadCurrentPlanSchedule(): Promise<PlanSchedule | null> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) return null;
 
+  const supabase = await createClient();
   const { data: plan } = await supabase
     .from('plans')
     .select('id, template_id, start_date, hours_per_day, days_per_week, timezone')
@@ -33,16 +31,14 @@ export async function loadCurrentPlanSchedule(): Promise<PlanSchedule | null> {
     .maybeSingle();
   if (!plan) return null;
 
-  const { data: templateTasks } = await supabase
-    .from('template_tasks')
-    .select('id, name, milestone, est_hours, optional, sort')
-    .eq('template_id', plan.template_id)
-    .order('sort');
-
-  const { data: planTaskStates } = await supabase
-    .from('plan_task_state')
-    .select('task_id, status, pinned_start')
-    .eq('plan_id', plan.id);
+  const [{ data: templateTasks }, { data: planTaskStates }] = await Promise.all([
+    supabase
+      .from('template_tasks')
+      .select('id, name, milestone, est_hours, optional, sort')
+      .eq('template_id', plan.template_id)
+      .order('sort'),
+    supabase.from('plan_task_state').select('task_id, status, pinned_start').eq('plan_id', plan.id),
+  ]);
 
   const inputs = toTaskInputs(
     (templateTasks ?? []).map((t) => ({ id: t.id, estHours: Number(t.est_hours), optional: t.optional, sort: t.sort })),
