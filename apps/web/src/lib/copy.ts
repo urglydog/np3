@@ -127,4 +127,9 @@ export const copy = {
   // Điều hướng
   navUpcoming: 'Sắp tới',
   navBuy: 'Cần mua',
+
+  // Chuông thông báo
+  notificationBellLabel: 'Thông báo',
+  notificationEmptyState: 'Chưa có thông báo nào.',
+  notificationPanelTitle: 'Thông báo',
 } as const;

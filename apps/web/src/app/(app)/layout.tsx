@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { createClient, getCurrentUser } from '@/lib/supabase/server';
+import { loadRecentNotifications } from '@/lib/notifications';
+import { NotificationBell } from '@/components/notification-bell';
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
@@ -8,17 +10,21 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   const supabase = await createClient();
 
-  const { data: plan } = await supabase.from('plans').select('id').limit(1).maybeSingle();
+  const [{ data: plan }, notifications] = await Promise.all([
+    supabase.from('plans').select('id').limit(1).maybeSingle(),
+    loadRecentNotifications(),
+  ]);
   if (!plan) redirect('/create-plan');
 
   return (
     <div className="min-h-screen flex flex-col bg-surface text-ink">
       {/* Sticky top header — chỉ hiển thị thương hiệu, điều hướng chính nằm ở BottomNav (tránh trùng 2 bộ nav) */}
       <header className="sticky top-0 z-40 border-b border-line bg-surface/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-screen-md items-center px-4 py-3">
+        <div className="mx-auto flex max-w-screen-md items-center justify-between px-4 py-3">
           <Link href="/today" className="text-base font-extrabold tracking-tight text-brand">
             Roadmap N3
           </Link>
+          <NotificationBell items={notifications} />
         </div>
       </header>
 
