@@ -57,9 +57,11 @@ export function ProgressRings({ stats }: { stats: ProgressStats }) {
       </div>
 
       <div className="text-sm text-ink-muted">
-        {hover === 'outer' && <p>{copy.progressRingOuterHint(stats.totalTasks)}</p>}
-        {hover === 'inner' && <p>{copy.progressRingInnerHint(stats.doneTasks, stats.totalTasks, pct)}</p>}
-        {!hover && <p>{copy.progressRingDefaultHint}</p>}
+        {hover === 'outer' ? (
+          <p>{copy.progressRingOuterHint(stats.totalTasks)}</p>
+        ) : (
+          <p>{copy.progressRingInnerHint(stats.doneTasks, stats.totalTasks, pct)}</p>
+        )}
       </div>
     </div>
   );

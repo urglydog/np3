@@ -58,7 +58,6 @@ export const copy = {
   progressRingDonePercent: 'hoàn thành',
   progressRingOuterHint: (total: number) => `Tổng ${total} task phải làm (đã bỏ task tùy chọn tắt).`,
   progressRingInnerHint: (done: number, total: number, pct: number) => `${done}/${total} task đã xong (${pct}%).`,
-  progressRingDefaultHint: 'Chạm hoặc di chuột vào vòng tròn để xem chi tiết.',
   progressStatsTitle: 'Thống kê theo milestone',
   progressStatsWriting: (n: number) => `${n} lần viết`,
   progressStatsSpeaking: (n: number) => `${n} phút nói`,
