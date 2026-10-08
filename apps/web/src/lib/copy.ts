@@ -64,6 +64,21 @@ export const copy = {
   roadmapNoDates: '—',
   roadmapEstHoursLabel: (hours: number) => `${hours} giờ`,
 
+  // Trang chi tiết task
+  taskDetailBackLink: '← Quay lại',
+  taskDetailDeliverableLabel: 'Sản phẩm cần đạt',
+  taskDetailToolNoteLabel: 'Công cụ/ghi chú',
+  taskDetailWritingTargetLabel: (n: number) => `Mục tiêu: viết ${n} lần`,
+  taskDetailStatsTitle: 'Ghi nhận của bạn',
+  taskDetailWritingRepsLabel: 'Số lần đã viết',
+  taskDetailSpeakingMinutesLabel: 'Số phút đã luyện nói',
+  taskDetailKanaAccuracyLabel: 'Độ chính xác tự đánh giá (%, để trống nếu chưa rõ)',
+  taskDetailStatsSubmit: 'Lưu ghi nhận',
+  taskDetailStatsSaved: 'Đã lưu.',
+  taskDetailPrevTask: '‹ Task trước',
+  taskDetailNextTask: 'Task sau ›',
+  taskDetailNotFound: 'Không tìm thấy task này trong lộ trình của bạn.',
+
   // Thao tác lịch (T-006)
   scheduleSkipButton: 'Bỏ qua',
   scheduleUnskipButton: 'Bỏ "bỏ qua"',

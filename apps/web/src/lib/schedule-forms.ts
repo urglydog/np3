@@ -51,6 +51,41 @@ export function parseToggleDoneForm(formData: FormData, currentStatus: Status): 
   return { ok: true, value: { taskId: taskId.value } };
 }
 
+export interface UpdateStatsParams {
+  taskId: string;
+  writingReps: number;
+  speakingMinutes: number;
+  kanaAccuracy: number | null; // 0..1
+}
+function parseNonNegativeInt(raw: FormDataEntryValue | null, label: string): FormResult<number> {
+  if (typeof raw !== 'string' || raw.trim() === '') return { ok: false, error: `${label} không được để trống` };
+  if (!/^\d+$/.test(raw.trim())) return { ok: false, error: `${label} phải là số nguyên không âm` };
+  return { ok: true, value: Number(raw) };
+}
+export function parseUpdateStatsForm(formData: FormData): FormResult<UpdateStatsParams> {
+  const taskId = parseTaskId(formData);
+  if (!taskId.ok) return taskId;
+  const writingReps = parseNonNegativeInt(formData.get('writingReps'), 'Số lần viết');
+  if (!writingReps.ok) return writingReps;
+  const speakingMinutes = parseNonNegativeInt(formData.get('speakingMinutes'), 'Số phút nói');
+  if (!speakingMinutes.ok) return speakingMinutes;
+
+  const rawAccuracy = formData.get('kanaAccuracyPercent');
+  let kanaAccuracy: number | null = null;
+  if (typeof rawAccuracy === 'string' && rawAccuracy.trim() !== '') {
+    const pct = Number(rawAccuracy);
+    if (!Number.isFinite(pct) || pct < 0 || pct > 100) {
+      return { ok: false, error: 'Độ chính xác phải từ 0 đến 100' };
+    }
+    kanaAccuracy = Math.round(pct) / 100;
+  }
+
+  return {
+    ok: true,
+    value: { taskId: taskId.value, writingReps: writingReps.value, speakingMinutes: speakingMinutes.value, kanaAccuracy },
+  };
+}
+
 export interface DelayParams {
   taskId: string;
   days: number;

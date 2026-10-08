@@ -2,6 +2,7 @@
 import {
   parseToggleSkipForm,
   parseToggleDoneForm,
+  parseUpdateStatsForm,
   parseDelayForm,
   parsePinForm,
   parseUnpinForm,
@@ -36,6 +37,18 @@ eq('toggleDone: task skipped -> lỗi', parseToggleDoneForm(fd({ taskId: 'A' }),
 eq('toggleDone: hợp lệ với todo', parseToggleDoneForm(fd({ taskId: 'A' }), 'todo'), { ok: true, value: { taskId: 'A' } });
 eq('toggleDone: hợp lệ với in_progress', parseToggleDoneForm(fd({ taskId: 'A' }), 'in_progress'), { ok: true, value: { taskId: 'A' } });
 eq('toggleDone: hợp lệ với done (quay ngược)', parseToggleDoneForm(fd({ taskId: 'A' }), 'done'), { ok: true, value: { taskId: 'A' } });
+
+// ---- parseUpdateStatsForm ----
+eq('updateStats: rỗng -> lỗi thiếu task', parseUpdateStatsForm(fd({})).ok, false);
+eq('updateStats: thiếu writingReps -> lỗi', parseUpdateStatsForm(fd({ taskId: 'A', speakingMinutes: '0' })).ok, false);
+eq('updateStats: writingReps âm -> lỗi', parseUpdateStatsForm(fd({ taskId: 'A', writingReps: '-1', speakingMinutes: '0' })).ok, false);
+eq('updateStats: accuracy ngoài 0-100 -> lỗi', parseUpdateStatsForm(fd({ taskId: 'A', writingReps: '0', speakingMinutes: '0', kanaAccuracyPercent: '150' })).ok, false);
+eq('updateStats: hợp lệ không có accuracy', parseUpdateStatsForm(fd({ taskId: 'A', writingReps: '10', speakingMinutes: '5' })), {
+  ok: true, value: { taskId: 'A', writingReps: 10, speakingMinutes: 5, kanaAccuracy: null },
+});
+eq('updateStats: hợp lệ có accuracy', parseUpdateStatsForm(fd({ taskId: 'A', writingReps: '10', speakingMinutes: '5', kanaAccuracyPercent: '85' })), {
+  ok: true, value: { taskId: 'A', writingReps: 10, speakingMinutes: 5, kanaAccuracy: 0.85 },
+});
 
 // ---- parseDelayForm ----
 eq('delay: rỗng -> lỗi', parseDelayForm(fd({ taskId: 'A' }), 'todo').ok, false);

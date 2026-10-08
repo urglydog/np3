@@ -78,6 +78,27 @@ async function writePinnedStart(supabase: SupabaseClient, planId: string, taskId
   if (error) throw new AppError(error.message, 'update_failed', 400);
 }
 
+/** Ghi số lần viết/phút nói/độ chính xác tự nhập cho 1 task — không ảnh hưởng lịch (không cần recompute). */
+export async function updateTaskStatsInDb(
+  supabase: SupabaseClient,
+  taskId: string,
+  stats: { writingReps: number; speakingMinutes: number; kanaAccuracy: number | null }
+): Promise<void> {
+  const { data: plan } = await supabase.from('plans').select('id').limit(1).maybeSingle();
+  if (!plan) throw new AppError('Bạn chưa có lộ trình', 'no_plan', 404);
+
+  const { error } = await supabase
+    .from('plan_task_state')
+    .update({
+      writing_reps: stats.writingReps,
+      speaking_minutes: stats.speakingMinutes,
+      kana_accuracy: stats.kanaAccuracy,
+    })
+    .eq('plan_id', plan.id)
+    .eq('task_id', taskId);
+  if (error) throw new AppError(error.message, 'update_failed', 400);
+}
+
 export interface MutationResult {
   taskId: string;
   status: Status;

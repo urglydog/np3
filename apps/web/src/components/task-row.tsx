@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { RoadmapRow } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
 
@@ -33,10 +34,13 @@ export function TaskRow({
       } ${dimmed ? 'opacity-50 grayscale' : ''}`}
     >
       <div className="grid grid-cols-[1fr_auto] items-start gap-x-3 gap-y-1">
-        <span className={`min-w-0 text-base font-semibold break-words ${isCurrent ? 'text-brand' : 'text-ink'}`}>
+        <Link
+          href={`/task/${row.id}`}
+          className={`min-w-0 text-base font-semibold break-words hover:underline ${isCurrent ? 'text-brand' : 'text-ink'}`}
+        >
           {row.name}
           {row.optional ? <span className="ml-2 inline-flex items-center rounded-full bg-surface px-2 py-0.5 text-[10px] font-medium text-ink-faint border border-line">{copy.roadmapOptionalTag}</span> : null}
-        </span>
+        </Link>
         <span className={`shrink-0 inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
           row.status === 'done' ? 'bg-success/10 text-success border border-success/20' : 
           row.status === 'in_progress' ? 'bg-brand/10 text-brand border border-brand/20' : 
