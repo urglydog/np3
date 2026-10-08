@@ -40,9 +40,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-surface text-ink">
+      <body className="flex h-dvh flex-col overflow-hidden bg-surface text-ink">
         <QueryProvider>
-          <div className="flex-1 pb-[max(env(safe-area-inset-bottom),0.5rem)]">{children}</div>
+          <div className="flex-1 overflow-y-auto">{children}</div>
           <BottomNav />
         </QueryProvider>
       </body>

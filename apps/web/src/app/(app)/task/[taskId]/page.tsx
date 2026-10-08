@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { loadTaskDetail } from '@/lib/task-detail';
 import { copy } from '@/lib/copy';
 import { TaskActions } from '@/components/task-actions';
+import { BackLink } from '@/components/back-link';
 import { SubmitButton } from '@/components/submit-button';
 import { updateTaskStatsAction } from './actions';
 
@@ -29,9 +30,7 @@ export default async function TaskDetailPage({
 
   return (
     <main className="mx-auto flex w-full max-w-screen-sm flex-col gap-6 p-4 md:p-6 pb-24">
-      <Link href="/roadmap" className="text-sm text-ink-muted hover:text-ink w-fit">
-        {copy.taskDetailBackLink}
-      </Link>
+      <BackLink label={copy.taskDetailBackLink} />
 
       <div className="flex flex-col gap-2 border-b border-line pb-4">
         <div className="grid grid-cols-[1fr_auto] items-start gap-x-3 gap-y-1">

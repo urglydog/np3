@@ -17,7 +17,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   if (!plan) redirect('/create-plan');
 
   return (
-    <div className="min-h-screen flex flex-col bg-surface text-ink">
+    <div className="h-full flex flex-col bg-surface text-ink">
       {/* Sticky top header — chỉ hiển thị thương hiệu, điều hướng chính nằm ở BottomNav (tránh trùng 2 bộ nav) */}
       <header className="sticky top-0 z-40 border-b border-line bg-surface/80 backdrop-blur-sm">
         <div className="mx-auto flex max-w-screen-md items-center justify-between px-4 py-3">
