@@ -1,9 +1,11 @@
 import { redirect } from 'next/navigation';
 import { currentTaskId } from '@roadmap/core';
 import { loadCurrentPlanSchedule } from '@/lib/plan';
+import { buildPhraseMatrix } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
 import { markTaskDone } from './actions';
 import { SubmitButton } from '@/components/submit-button';
+import { PhraseMatrix } from '@/components/phrase-matrix';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,9 +17,10 @@ export default async function TodayPage() {
   const currentId = currentTaskId(schedule.tasks);
   const current = currentId ? schedule.tasks.find((t) => t.id === currentId) : undefined;
   const info = current ? taskInfoById.get(current.id) : undefined;
+  const phraseGroups = buildPhraseMatrix(schedule.tasks, taskInfoById);
 
   return (
-    <main className="mx-auto flex min-h-[calc(100vh-64px)] w-full max-w-xl flex-col items-center justify-center gap-8 p-4">
+    <main className="mx-auto flex w-full max-w-xl flex-col items-center gap-8 p-4 py-10">
       <div className="flex flex-col items-center text-center gap-2">
         {/* pb-2 prevents gradient text bottom clip */}
         <h1 className="pb-2 text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand to-success">
@@ -87,6 +90,17 @@ export default async function TodayPage() {
       )}
 
       <p className="text-xs text-ink-faint">{copy.hoursEstimateDisclaimer}</p>
+
+      {phraseGroups.length > 0 ? (
+        <details className="group w-full">
+          <summary className="cursor-pointer select-none list-none text-center text-sm font-medium text-ink-muted hover:text-ink">
+            {copy.todayPhraseMatrixTitle}
+          </summary>
+          <div className="mt-4">
+            <PhraseMatrix groups={phraseGroups} />
+          </div>
+        </details>
+      ) : null}
     </main>
   );
 }
