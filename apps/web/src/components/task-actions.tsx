@@ -18,12 +18,15 @@ export function TaskActions({ row }: { row: RoadmapRow }) {
 
   if (row.status === 'skipped') {
     return (
-      <form action={toggleSkipAction} className="flex">
-        <input type="hidden" name="taskId" value={row.id} />
-        <SubmitButton className="rounded-md border border-line px-3 py-1.5 text-xs text-ink">
-          {copy.scheduleUnskipButton}
-        </SubmitButton>
-      </form>
+      <div className="flex flex-col gap-1.5">
+        <form action={toggleSkipAction} className="flex">
+          <input type="hidden" name="taskId" value={row.id} />
+          <SubmitButton className="rounded-md border border-line px-3 py-1.5 text-xs text-ink">
+            {row.optional ? copy.scheduleReenableOptionalButton : copy.scheduleUnskipButton}
+          </SubmitButton>
+        </form>
+        {row.optional ? <p className="text-[11px] text-ink-faint">{copy.scheduleReenableOptionalNote}</p> : null}
+      </div>
     );
   }
 

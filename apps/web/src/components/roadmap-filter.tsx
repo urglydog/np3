@@ -13,6 +13,7 @@ const STATUS_FILTERS = [
   { value: 'todo', label: 'Chưa làm' },
   { value: 'done', label: 'Đã xong' },
   { value: 'skipped', label: 'Bỏ qua' },
+  { value: 'optional_off', label: 'Tùy chọn đang tắt' },
 ] as const;
 
 export function RoadmapFilter({
@@ -34,7 +35,12 @@ export function RoadmapFilter({
   const filteredGroups = groups.map((g) => ({
     ...g,
     tasks: g.tasks.filter((t) => {
-      const matchesStatus = statusFilter === '' || t.status === statusFilter;
+      const matchesStatus =
+        statusFilter === ''
+          ? true
+          : statusFilter === 'optional_off'
+            ? t.status === 'skipped' && t.optional
+            : t.status === statusFilter;
       const matchesQuery = q === '' || t.name.toLowerCase().includes(q);
       return matchesStatus && matchesQuery;
     }),

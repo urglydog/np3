@@ -88,6 +88,8 @@ export const copy = {
   // Thao tác lịch (T-006)
   scheduleSkipButton: 'Bỏ qua',
   scheduleUnskipButton: 'Bỏ "bỏ qua"',
+  scheduleReenableOptionalButton: 'Bật lại task tùy chọn này',
+  scheduleReenableOptionalNote: 'Không ảnh hưởng tiến độ hiện tại — chỉ thêm 1 task chưa hoàn thành vào lộ trình.',
   scheduleMarkDoneButton: 'Đánh dấu đã xong',
   scheduleUnmarkDoneButton: 'Bỏ đánh dấu xong (quay lại làm mốc)',
   scheduleDelayLabel: 'Hoãn (số ngày)',
