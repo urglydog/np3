@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
+import { Plus } from 'lucide-react';
 import { playClickSound } from '@/lib/click-sound';
 import { copy } from '@/lib/copy';
 import { SubmitButton } from '@/components/submit-button';
@@ -35,8 +36,24 @@ export function TodayCarousel({ tasks, startIndex }: { tasks: CarouselTask[]; st
     };
   }, [emblaApi, onSelect]);
 
+  const scrollToToday = useCallback(() => {
+    emblaApi?.scrollTo(startIndex);
+  }, [emblaApi, startIndex]);
+
   return (
-    <div className="w-full">
+    <div className="relative w-full">
+      {selected !== startIndex ? (
+        <button
+          type="button"
+          onClick={scrollToToday}
+          aria-label={copy.todayCarouselJumpToToday}
+          title={copy.todayCarouselJumpToToday}
+          className="absolute -top-3 right-2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-brand bg-brand text-white shadow-lg transition-transform active:scale-90"
+        >
+          <Plus size={20} />
+        </button>
+      ) : null}
+
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {tasks.map((t, i) => {
