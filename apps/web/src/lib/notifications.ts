@@ -30,3 +30,24 @@ export async function loadRecentNotifications(): Promise<NotificationItem[]> {
     sentAt: r.sent_at as string,
   }));
 }
+
+/**
+ * Đếm nhẹ số reminder sắp tới (còn pending, trong 3 ngày tới) — dùng cho badge trên tab Sắp tới
+ * ở bottom nav. Chỉ 1 query count, không load lại toàn bộ lịch/mua sắm (tránh chậm ở layout dùng
+ * chung mọi trang).
+ */
+export async function loadUpcomingBadgeCount(): Promise<number> {
+  const user = await getCurrentUser();
+  if (!user) return 0;
+
+  const supabase = await createClient();
+  const in3Days = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+  const { count } = await supabase
+    .from('reminders')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', user.id)
+    .eq('status', 'pending')
+    .lte('fire_at', in3Days);
+
+  return count ?? 0;
+}

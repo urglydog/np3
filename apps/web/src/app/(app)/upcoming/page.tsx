@@ -14,13 +14,31 @@ const urgencyColor: Record<string, string> = {
   later:    'bg-surface text-ink-muted border-line',
 };
 
-export default async function UpcomingPage() {
+type Tab = 'all' | 'task' | 'purchase';
+
+export default async function UpcomingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>;
+}) {
+  const { tab: rawTab } = await searchParams;
+  const tab: Tab = rawTab === 'task' || rawTab === 'purchase' ? rawTab : 'all';
+
   const [plan, purchaseData] = await Promise.all([loadCurrentPlanSchedule(), loadPurchaseData()]);
   if (!plan) redirect('/create-plan');
 
   const taskNameById = new Map([...plan.taskInfoById.entries()].map(([id, info]) => [id, info.name]));
   // Mở rộng horizon 30 ngày để hiện task sắp tới dài hơn 14 ngày
-  const list = buildUpcomingList(plan.schedule.tasks, taskNameById, purchaseData?.rows ?? [], plan.today, 30);
+  const fullList = buildUpcomingList(plan.schedule.tasks, taskNameById, purchaseData?.rows ?? [], plan.today, 30);
+  const taskCount = fullList.filter((e) => e.type === 'task').length;
+  const purchaseCount = fullList.filter((e) => e.type === 'purchase').length;
+  const list = tab === 'all' ? fullList : fullList.filter((e) => e.type === tab);
+
+  const tabs: { value: Tab; label: string; count: number }[] = [
+    { value: 'all', label: copy.upcomingTabAll, count: fullList.length },
+    { value: 'task', label: copy.upcomingTabTask, count: taskCount },
+    { value: 'purchase', label: copy.upcomingTabPurchase, count: purchaseCount },
+  ];
 
   return (
     <main className="mx-auto flex w-full max-w-screen-md flex-col gap-6 p-4 md:p-6">
@@ -29,6 +47,27 @@ export default async function UpcomingPage() {
           {copy.upcomingTitle}
         </h1>
         <p className="text-sm text-ink-muted">30 ngày tới</p>
+      </div>
+
+      <div className="flex gap-2">
+        {tabs.map((t) => (
+          <Link
+            key={t.value}
+            href={t.value === 'all' ? '/upcoming' : `/upcoming?tab=${t.value}`}
+            className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+              tab === t.value ? 'border-brand bg-brand/10 text-brand' : 'border-line text-ink-muted hover:text-ink'
+            }`}
+          >
+            {t.label}
+            {t.count > 0 ? (
+              <span className={`inline-flex min-w-[18px] items-center justify-center rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                tab === t.value ? 'bg-brand text-white' : 'bg-line text-ink-muted'
+              }`}>
+                {t.count}
+              </span>
+            ) : null}
+          </Link>
+        ))}
       </div>
 
       {list.length === 0 ? (

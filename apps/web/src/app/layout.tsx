@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { QueryProvider } from '@/components/query-provider';
 import { BottomNav } from '@/components/bottom-nav';
+import { loadUpcomingBadgeCount } from '@/lib/notifications';
 import './globals.css';
 
 const geistSans = Geist({
@@ -37,13 +38,14 @@ export const viewport: Viewport = {
   themeColor: '#ef4a6d',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const upcomingCount = await loadUpcomingBadgeCount();
   return (
     <html lang="vi" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex h-dvh flex-col overflow-hidden bg-surface text-ink">
         <QueryProvider>
           <div className="flex-1 overflow-y-auto">{children}</div>
-          <BottomNav />
+          <BottomNav badgeCounts={{ '/upcoming': upcomingCount }} />
         </QueryProvider>
       </body>
     </html>

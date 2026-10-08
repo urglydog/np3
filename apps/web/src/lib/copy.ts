@@ -143,6 +143,9 @@ export const copy = {
   // Sắp tới (/upcoming) — T-007
   upcomingTitle: 'Sắp tới',
   upcomingHorizonLabel: '14 ngày tới',
+  upcomingTabAll: 'Tất cả',
+  upcomingTabTask: 'Học',
+  upcomingTabPurchase: 'Mua',
   upcomingEmptyState: 'Không có task hay mục cần mua nào trong 14 ngày tới.',
   upcomingTaskStartLabel: (date: string) => `Bắt đầu: ${date}`,
   upcomingPurchaseOrderByLabel: (date: string) => `Hạn đặt: ${date}`,

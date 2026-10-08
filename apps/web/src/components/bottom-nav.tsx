@@ -12,7 +12,7 @@ const items = [
   { href: '/settings', label: 'Cài đặt', title: 'Màn Cài đặt', icon: Settings },
 ] as const;
 
-export function BottomNav() {
+export function BottomNav({ badgeCounts = {} }: { badgeCounts?: Partial<Record<(typeof items)[number]['href'], number>> }) {
   const pathname = usePathname();
   if (pathname === '/login' || pathname?.startsWith('/login/')) return null;
   return (
@@ -22,16 +22,24 @@ export function BottomNav() {
     >
       {items.map(({ href, label, title, icon: Icon }) => {
         const active = pathname?.startsWith(href);
+        const count = badgeCounts[href] ?? 0;
         return (
           <Link
             key={href}
             href={href}
             title={title}
-            className={`flex flex-col items-center gap-1 px-2 text-xs ${
+            className={`relative flex flex-col items-center gap-1 px-2 text-xs ${
               active ? 'text-accent' : 'text-ink-muted'
             }`}
           >
-            <Icon size={22} strokeWidth={1.75} aria-hidden="true" />
+            <span className="relative">
+              <Icon size={22} strokeWidth={1.75} aria-hidden="true" />
+              {count > 0 ? (
+                <span className="absolute -right-2 -top-1.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-danger px-1 text-[9px] font-bold text-white">
+                  {count > 99 ? '99+' : count}
+                </span>
+              ) : null}
+            </span>
             {label}
           </Link>
         );
