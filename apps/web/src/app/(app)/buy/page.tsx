@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { CheckCircle2, CircleDot, Circle, XCircle } from 'lucide-react';
 import { loadPurchaseData } from '@/lib/resources';
 import { copy } from '@/lib/copy';
 import type { PurchaseRow } from '@/lib/buy';
@@ -25,6 +26,14 @@ const statusLabel: Record<PurchaseRow['status'], string> = {
   not_needed: copy.buyStatusNotNeeded,
 };
 
+const statusIcon: Record<PurchaseRow['status'], React.ReactNode> = {
+  none: <Circle size={20} className="text-ink-faint" />,
+  ordered: <CircleDot size={20} className="text-brand" />,
+  owned: <CheckCircle2 size={20} className="text-success" />,
+  received: <CheckCircle2 size={20} className="text-success" />,
+  not_needed: <XCircle size={20} className="text-ink-faint" />,
+};
+
 function ResourceCard({ row }: { row: PurchaseRow }) {
   const lateRisk = row.purchase?.action === 'late_risk';
   const canBuyNow = row.purchase && ['overdue', 'due_soon', 'upcoming'].includes(row.purchase.urgency) && row.buyUrl;
@@ -36,11 +45,14 @@ function ResourceCard({ row }: { row: PurchaseRow }) {
         lateRisk ? 'border-danger/50 shadow-danger/10' : 'border-line hover:border-brand/30'
       }`}
     >
-      <div className="grid grid-cols-[1fr_auto] items-start gap-x-3 gap-y-1">
-        <span className="min-w-0 text-base font-semibold break-words text-ink">{row.title}</span>
+      <div className="grid grid-cols-[auto_1fr_auto] items-start gap-x-3 gap-y-1">
+        <span className="shrink-0 pt-0.5" aria-hidden="true">{statusIcon[row.status]}</span>
+        <span className={`min-w-0 text-base font-semibold break-words ${row.status === 'owned' || row.status === 'received' ? 'text-ink-muted line-through' : 'text-ink'}`}>
+          {row.title}
+        </span>
         <span className={`shrink-0 inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
-          row.status === 'owned' || row.status === 'received' ? 'bg-success/10 text-success border border-success/20' : 
-          row.status === 'ordered' ? 'bg-brand/10 text-brand border border-brand/20' : 
+          row.status === 'owned' || row.status === 'received' ? 'bg-success/10 text-success border border-success/20' :
+          row.status === 'ordered' ? 'bg-brand/10 text-brand border border-brand/20' :
           'bg-surface text-ink-muted border border-line'
         }`}>
           {statusLabel[row.status]}
