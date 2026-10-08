@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
-import { Plus } from 'lucide-react';
 import { playClickSound } from '@/lib/click-sound';
 import { copy } from '@/lib/copy';
 import { SubmitButton } from '@/components/submit-button';
@@ -50,7 +49,11 @@ export function TodayCarousel({ tasks, startIndex }: { tasks: CarouselTask[]; st
           title={copy.todayCarouselJumpToToday}
           className="absolute -top-3 right-2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-brand bg-brand text-white shadow-lg transition-transform active:scale-90"
         >
-          <Plus size={20} />
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <rect x="6" y="6" width="12" height="12" transform="rotate(45 12 12)" />
+            <line x1="7" y1="7" x2="17" y2="17" />
+            <line x1="17" y1="7" x2="7" y2="17" />
+          </svg>
         </button>
       ) : null}
 
