@@ -162,4 +162,8 @@ export const copy = {
   notificationBellLabel: 'Thông báo',
   notificationEmptyState: 'Chưa có thông báo nào.',
   notificationPanelTitle: 'Thông báo',
+  notificationTabAll: 'Tất cả',
+  notificationTabStudy: 'Học',
+  notificationTabBuy: 'Mua',
+  notificationTabLateRisk: 'Quá hạn',
 } as const;

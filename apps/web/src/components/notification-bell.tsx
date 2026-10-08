@@ -6,7 +6,10 @@ import { Bell } from 'lucide-react';
 import { copy } from '@/lib/copy';
 import type { NotificationItem } from '@/lib/notifications';
 
-const LAST_SEEN_KEY = 'roadmap:notifications:lastSeenAt';
+const READ_IDS_KEY = 'roadmap:notifications:readIds';
+const MAX_STORED_READ_IDS = 200;
+
+type Tab = 'all' | 'study_daily' | 'buy_book' | 'late_risk';
 
 function formatSentAt(iso: string): string {
   return new Intl.DateTimeFormat('vi-VN', {
@@ -17,20 +20,34 @@ function formatSentAt(iso: string): string {
   }).format(new Date(iso));
 }
 
-function readHasUnread(items: NotificationItem[]): boolean {
-  if (items.length === 0 || typeof window === 'undefined') return false;
+function readReadIds(): Set<string> {
+  if (typeof window === 'undefined') return new Set();
   try {
-    const lastSeen = localStorage.getItem(LAST_SEEN_KEY);
-    return !lastSeen || new Date(items[0].sentAt) > new Date(lastSeen);
+    const raw = localStorage.getItem(READ_IDS_KEY);
+    return new Set(raw ? (JSON.parse(raw) as string[]) : []);
   } catch {
-    // localStorage không khả dụng (vd chế độ riêng tư) → không hiện chấm đỏ.
-    return false;
+    return new Set();
   }
+}
+
+function writeReadIds(ids: Set<string>): void {
+  try {
+    localStorage.setItem(READ_IDS_KEY, JSON.stringify([...ids].slice(-MAX_STORED_READ_IDS)));
+  } catch {
+    // localStorage không khả dụng (vd chế độ riêng tư) — bỏ qua, chỉ ảnh hưởng tiện ích hiển thị.
+  }
+}
+
+function matchesTab(item: NotificationItem, tab: Tab): boolean {
+  if (tab === 'all') return true;
+  if (tab === 'late_risk') return item.lateRisk;
+  return item.kind === tab;
 }
 
 export function NotificationBell({ items }: { items: NotificationItem[] }) {
   const [open, setOpen] = useState(false);
-  const [hasUnread, setHasUnread] = useState(() => readHasUnread(items));
+  const [tab, setTab] = useState<Tab>('all');
+  const [readIds, setReadIds] = useState<Set<string>>(() => readReadIds());
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -42,32 +59,41 @@ export function NotificationBell({ items }: { items: NotificationItem[] }) {
     return () => document.removeEventListener('mousedown', onClickOutside);
   }, [open]);
 
-  function toggleOpen() {
-    const next = !open;
-    setOpen(next);
-    if (next && items.length > 0) {
-      try {
-        localStorage.setItem(LAST_SEEN_KEY, items[0].sentAt);
-      } catch {
-        // bỏ qua
-      }
-      setHasUnread(false);
-    }
+  function markRead(id: string) {
+    setReadIds((prev) => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev);
+      next.add(id);
+      writeReadIds(next);
+      return next;
+    });
   }
+
+  const unreadTotal = items.filter((i) => !readIds.has(i.id)).length;
+  const tabs: { value: Tab; label: string }[] = [
+    { value: 'all', label: copy.notificationTabAll },
+    { value: 'study_daily', label: copy.notificationTabStudy },
+    { value: 'buy_book', label: copy.notificationTabBuy },
+    { value: 'late_risk', label: copy.notificationTabLateRisk },
+  ];
+  const unreadByTab = (t: Tab) => items.filter((i) => matchesTab(i, t) && !readIds.has(i.id)).length;
+  const visibleItems = items.filter((i) => matchesTab(i, tab));
 
   return (
     <div className="relative" ref={panelRef}>
       <button
         type="button"
-        onClick={toggleOpen}
+        onClick={() => setOpen((o) => !o)}
         aria-label={copy.notificationBellLabel}
         title={copy.notificationBellLabel}
         className="relative flex h-9 w-9 items-center justify-center rounded-full text-ink-muted transition-all hover:bg-line hover:text-ink"
       >
         <Bell size={20} />
-        {hasUnread && (
-          <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-brand ring-2 ring-surface" />
-        )}
+        {unreadTotal > 0 ? (
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-danger px-1 text-[9px] font-bold text-white">
+            {unreadTotal > 99 ? '99+' : unreadTotal}
+          </span>
+        ) : null}
       </button>
 
       {open && (
@@ -75,24 +101,57 @@ export function NotificationBell({ items }: { items: NotificationItem[] }) {
           <div className="border-b border-line px-4 py-3">
             <h2 className="text-sm font-semibold text-ink">{copy.notificationPanelTitle}</h2>
           </div>
+
+          <div className="flex gap-1 overflow-x-auto border-b border-line px-3 py-2">
+            {tabs.map((t) => {
+              const count = unreadByTab(t.value);
+              return (
+                <button
+                  key={t.value}
+                  type="button"
+                  onClick={() => setTab(t.value)}
+                  className={`flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
+                    tab === t.value ? 'bg-brand/10 text-brand' : 'text-ink-muted hover:text-ink'
+                  }`}
+                >
+                  {t.label}
+                  {count > 0 ? (
+                    <span className="inline-flex min-w-[14px] items-center justify-center rounded-full bg-danger px-1 text-[9px] font-bold text-white">
+                      {count}
+                    </span>
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
+
           <div className="max-h-96 overflow-y-auto">
-            {items.length === 0 ? (
+            {visibleItems.length === 0 ? (
               <p className="px-4 py-6 text-center text-sm text-ink-muted">{copy.notificationEmptyState}</p>
             ) : (
               <ul className="flex flex-col divide-y divide-line">
-                {items.map((item) => (
-                  <li key={item.id}>
-                    <Link
-                      href={item.deepLink}
-                      onClick={() => setOpen(false)}
-                      className="flex flex-col gap-0.5 px-4 py-3 transition-colors hover:bg-surface"
-                    >
-                      <span className="text-sm font-medium text-ink">{item.title}</span>
-                      <span className="text-xs text-ink-muted">{item.body}</span>
-                      <span className="mt-1 text-[11px] text-ink-faint">{formatSentAt(item.sentAt)}</span>
-                    </Link>
-                  </li>
-                ))}
+                {visibleItems.map((item) => {
+                  const isRead = readIds.has(item.id);
+                  return (
+                    <li key={item.id}>
+                      <Link
+                        href={item.deepLink}
+                        onClick={() => {
+                          markRead(item.id);
+                          setOpen(false);
+                        }}
+                        className={`flex flex-col gap-0.5 px-4 py-3 transition-colors hover:bg-surface ${isRead ? 'opacity-60' : ''}`}
+                      >
+                        <span className="flex items-center gap-1.5">
+                          {!isRead ? <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand" /> : null}
+                          <span className="text-sm font-medium text-ink">{item.title}</span>
+                        </span>
+                        <span className="text-xs text-ink-muted">{item.body}</span>
+                        <span className="mt-1 text-[11px] text-ink-faint">{formatSentAt(item.sentAt)}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>

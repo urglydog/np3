@@ -1,11 +1,15 @@
 import { createClient, getCurrentUser } from '@/lib/supabase/server';
 
+export type NotificationKind = 'study_daily' | 'buy_book';
+
 export interface NotificationItem {
   id: string;
   title: string;
   body: string;
   deepLink: string;
   sentAt: string;
+  kind: NotificationKind;
+  lateRisk: boolean; // buy_book có nguy cơ giao trễ — tiêu đề sinh từ packages/core/reminders.ts
 }
 
 /** 20 thông báo đã gửi gần nhất của user hiện tại (dùng cho chuông thông báo). */
@@ -16,7 +20,7 @@ export async function loadRecentNotifications(): Promise<NotificationItem[]> {
   const supabase = await createClient();
   const { data } = await supabase
     .from('reminders')
-    .select('id, title, body, deep_link, sent_at')
+    .select('id, title, body, deep_link, sent_at, kind')
     .eq('user_id', user.id)
     .eq('status', 'sent')
     .order('sent_at', { ascending: false })
@@ -28,6 +32,8 @@ export async function loadRecentNotifications(): Promise<NotificationItem[]> {
     body: r.body,
     deepLink: r.deep_link,
     sentAt: r.sent_at as string,
+    kind: r.kind as NotificationKind,
+    lateRisk: r.title.startsWith('Có thể giao trễ:'),
   }));
 }
 
