@@ -35,6 +35,7 @@ export const copy = {
   todayDoneButton: 'Xong',
   todayEmptyState: 'Không còn task nào đang chờ — bạn đã hoàn thành lộ trình!',
   todayPhraseMatrixTitle: 'Xem toàn bộ theo nhóm (bấm để mở)',
+  todayCarouselViewDetail: 'Xem chi tiết',
   todayFinishLabel: (date: string) => `Ngày dự kiến hoàn thành: ${date}`,
   todayRequiredHoursLabel: (hours: number) => `Cần khoảng ${hours} giờ/ngày để xong trong 365 ngày`,
 
