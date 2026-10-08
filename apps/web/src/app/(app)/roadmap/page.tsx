@@ -2,12 +2,14 @@ import { redirect } from 'next/navigation';
 import { currentTaskId, groupTasksByPhase } from '@roadmap/core';
 import { loadCurrentPlanSchedule } from '@/lib/plan';
 import { loadPublishedTemplateOutline } from '@/lib/template';
+import { loadProgressStats } from '@/lib/progress';
 import { buildRoadmapRows } from '@/lib/roadmap';
 import { copy } from '@/lib/copy';
 import { AppError } from '@/lib/errors';
 import { RoadmapFilter } from '@/components/roadmap-filter';
 import { AnchorDetailsOpener } from '@/components/anchor-details-opener';
 import { BreakPopover } from '@/components/break-popover';
+import { ProgressRings } from '@/components/progress-rings';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,7 +20,11 @@ export default async function RoadmapPage({
 }) {
   const { error, ok, conflict, clamped, noop } = await searchParams;
 
-  const [plan, outline] = await Promise.all([loadCurrentPlanSchedule(), loadPublishedTemplateOutline()]);
+  const [plan, outline, progressStats] = await Promise.all([
+    loadCurrentPlanSchedule(),
+    loadPublishedTemplateOutline(),
+    loadProgressStats(),
+  ]);
   if (!plan) redirect('/create-plan');
   if (!outline) throw new AppError('Chưa có template nào được xuất bản', 'no_template', 500);
 
@@ -54,6 +60,30 @@ export default async function RoadmapPage({
           ) : null}
         </div>
       </div>
+
+      {/* Vòng tròn tiến độ + thống kê viết/nói theo milestone */}
+      {progressStats && progressStats.totalTasks > 0 ? (
+        <section className="rounded-2xl border border-line bg-surface-raised p-5 shadow-sm">
+          <ProgressRings stats={progressStats} />
+          {progressStats.byMilestone.length > 0 ? (
+            <details className="mt-4 group">
+              <summary className="cursor-pointer text-sm font-medium text-ink-muted hover:text-ink select-none list-none">
+                {copy.progressStatsTitle}
+              </summary>
+              <ul className="mt-2 flex flex-col gap-1.5 text-sm">
+                {progressStats.byMilestone.map((m) => (
+                  <li key={m.milestone} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-surface px-3 py-2">
+                    <span className="font-medium text-ink">{m.milestone}</span>
+                    <span className="text-ink-muted text-xs">
+                      {m.doneCount}/{m.taskCount} xong · {copy.progressStatsWriting(m.totalWritingReps)} · {copy.progressStatsSpeaking(m.totalSpeakingMinutes)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ) : null}
+        </section>
+      ) : null}
 
       {/* Alerts */}
       {error ? (
