@@ -70,15 +70,6 @@ export async function createReviewList(supabase: SupabaseClient, userId: string,
   return data.id;
 }
 
-export async function renameReviewList(supabase: SupabaseClient, listId: string, name: string): Promise<void> {
-  const { data, error } = await supabase.from('review_list').update({ name }).eq('id', listId).select('id');
-  if (error) {
-    if (error.code === '23505') throw new AppError('Bạn đã có danh sách cùng tên', 'review_list_duplicate', 409);
-    throw new AppError(`Không đổi tên được: ${error.message}`, 'review_list_update_failed');
-  }
-  if (!data?.length) throw new AppError('Không tìm thấy danh sách', 'review_list_not_found', 404);
-}
-
 export async function deleteReviewList(supabase: SupabaseClient, listId: string): Promise<void> {
   const { data, error } = await supabase.from('review_list').delete().eq('id', listId).select('id');
   if (error) throw new AppError(`Không xoá được danh sách: ${error.message}`, 'review_list_delete_failed');
