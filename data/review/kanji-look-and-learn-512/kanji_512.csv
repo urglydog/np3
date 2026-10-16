@@ -1,0 +1,513 @@
+lesson,order_in_lesson,kanji,unicode_hex,is_kanji,han_viet_main,han_viet_accepted,han_viet_other,meaning_en,note,onyomi,kunyomi,stroke_count,grade,jlpt_old,freq,needs_review,review_note,svg_file
+1,1,一,04e00,true,Nhất,,,one,one radical (no.1),イチ|イツ,ひと-|ひと.つ,1,1,4,2,false,,svg/04e00.svg
+1,2,二,04e8c,true,Nhị,,,two,two radical (no. 7),ニ|ジ,ふた|ふた.つ|ふたたび,2,1,4,9,false,,svg/04e8c.svg
+1,3,三,04e09,true,Tam,,Tám,three,,サン|ゾウ,み|み.つ|みっ.つ,3,1,4,14,false,,svg/04e09.svg
+1,4,四,056db,true,Tứ,,,four,,シ,よ|よ.つ|よっ.つ|よん,5,1,4,47,false,,svg/056db.svg
+1,5,五,04e94,true,Ngũ,,,five,,ゴ,いつ|いつ.つ,4,1,4,31,false,,svg/04e94.svg
+1,6,六,0516d,true,Lục,,,six,,ロク|リク,む|む.つ|むっ.つ|むい,4,1,4,93,false,,svg/0516d.svg
+1,7,七,04e03,true,Thất,,,seven,,シチ,なな|なな.つ|なの,2,1,4,115,false,,svg/04e03.svg
+1,8,八,0516b,true,Bát,,,eight,eight radical (no. 12),ハチ,や|や.つ|やっ.つ|よう,2,1,4,92,false,,svg/0516b.svg
+1,9,九,04e5d,true,Cửu,,Cưu,nine,,キュウ|ク,ここの|ここの.つ,2,1,4,55,false,,svg/04e5d.svg
+1,10,十,05341,true,Thập,,,ten,,ジュウ|ジッ|ジュッ,とお|と|そ,2,1,4,8,false,,svg/05341.svg
+1,11,百,0767e,true,Bách,,Bá|Mạch,hundred,,ヒャク|ビャク,もも,6,1,4,163,false,,svg/0767e.svg
+1,12,千,05343,true,Thiên,,,thousand,,セン,ち,3,1,4,195,false,,svg/05343.svg
+1,13,万,04e07,true,Vạn,,Mặc,"ten thousand; 10,000",,マン|バン,よろず,3,2,4,375,false,,svg/04e07.svg
+1,14,円,05186,true,Viên,,,circle; yen; round,,エン,まる.い|まる|まど|まど.か|まろ.やか,4,1,4,69,false,,svg/05186.svg
+1,15,口,053e3,true,Khẩu,,,mouth,,コウ|ク,くち,3,1,4,284,false,,svg/053e3.svg
+1,16,目,076ee,true,Mục,,,eye; class; look; insight; experience; care; favor,,モク|ボク,め|-め|ま-,5,1,4,76,false,,svg/076ee.svg
+2,1,日,065e5,true,Nhật,,,day; sun; Japan; counter for days,,ニチ|ジツ,ひ|-び|-か,4,1,4,1,false,,svg/065e5.svg
+2,2,月,06708,true,Nguyệt,,,month; moon,,ゲツ|ガツ,つき,4,1,4,23,false,,svg/06708.svg
+2,3,火,0706b,true,Hỏa,,,fire,,カ,ひ|-び|ほ-,4,1,4,574,false,,svg/0706b.svg
+2,4,水,06c34,true,Thủy,,,water,,スイ,みず|みず-,4,1,4,223,false,,svg/06c34.svg
+2,5,木,06728,true,Mộc,,,tree; wood,,ボク|モク,き|こ-,4,1,4,317,false,,svg/06728.svg
+2,6,金,091d1,true,Kim,,,gold,,キン|コン|ゴン,かね|かな-|-がね,8,1,4,53,false,,svg/091d1.svg
+2,7,土,0571f,true,Thổ,,Độ|Đỗ,soil; earth; ground; Turkey,,ド|ト,つち,3,1,4,307,false,,svg/0571f.svg
+2,8,曜,066dc,true,Diệu,,,weekday,,ヨウ,,18,2,3,940,false,,svg/066dc.svg
+2,9,本,0672c,true,Bản,Bổn,,book; present; main; origin; true; real; counter for long cylindrical things,,ホン,もと,5,1,4,10,false,,svg/0672c.svg
+2,10,人,04eba,true,Nhân,,,person,,ジン|ニン,ひと|-り|-と,2,1,4,5,false,,svg/04eba.svg
+2,11,今,04eca,true,Kim,,,now,,コン|キン,いま,4,2,4,49,false,,svg/04eca.svg
+2,12,寺,05bfa,true,Tự,,,Buddhist temple,,ジ,てら,6,2,2,879,false,,svg/05bfa.svg
+2,13,時,06642,true,Thời,Thì,,time; hour,,ジ,とき|-どき,10,2,4,16,false,,svg/06642.svg
+2,14,半,0534a,true,Bán,,,half; middle; odd number; semi-; part-,,ハン,なか.ば,5,2,4,224,false,,svg/0534a.svg
+2,15,刀,05200,true,Đao,,,sword; saber; knife,,トウ,かたな|そり,2,2,1,1794,false,,svg/05200.svg
+2,16,分,05206,true,Phân,,Phận,part; minute of time; segment; share; degree; one's lot; duty; understand; know; rate; 1%; chances; shaku/100,,ブン|フン|ブ,わ.ける|わ.け|わ.かれる|わ.かる|わ.かつ,4,2,4,24,false,,svg/05206.svg
+3,1,上,04e0a,true,Thượng,,Thướng,above; up,,ジョウ|ショウ|シャン,うえ|-うえ|うわ-|かみ|あ.げる|-あ.げる|あ.がる|-あ.がる|あ.がり|-あ.がり|のぼ.る|のぼ.り|のぼ.せる|のぼ.す|たてまつ.る,3,1,4,35,false,,svg/04e0a.svg
+3,2,下,04e0b,true,Hạ,,Há,below; down; descend; give; low; inferior,,カ|ゲ,した|しも|もと|さ.げる|さ.がる|くだ.る|くだ.り|くだ.す|-くだ.す|くだ.さる|お.ろす|お.りる,3,1,4,97,false,,svg/04e0b.svg
+3,3,中,04e2d,true,Trung,,Trúng,in; inside; middle; mean; center,,チュウ,なか|うち|あた.る,4,1,4,11,false,,svg/04e2d.svg
+3,4,外,05916,true,Ngoại,,,outside,,ガイ|ゲ,そと|ほか|はず.す|はず.れる|と-,5,2,4,81,false,,svg/05916.svg
+3,5,右,053f3,true,Hữu,,,right,,ウ|ユウ,みぎ,5,1,4,602,false,,svg/053f3.svg
+3,6,工,05de5,true,Công,,,craft; construction,katakana e radical (no. 48),コウ|ク|グ,,3,2,3,299,false,,svg/05de5.svg
+3,7,左,05de6,true,Tả,,Tá,left,,サ|シャ,ひだり,5,1,4,630,false,,svg/05de6.svg
+3,8,前,0524d,true,Tiền,,,in front; before,,ゼン,まえ|-まえ,9,2,4,27,false,,svg/0524d.svg
+3,9,後,05f8c,true,Hậu,,Hấu,behind; back; later,,ゴ|コウ,のち|うし.ろ|うしろ|あと|おく.れる,9,2,4,26,false,,svg/05f8c.svg
+3,10,午,05348,true,Ngọ,,,noon; sign of the horse; 11AM-1PM; seventh sign of Chinese zodiac,,ゴ,うま,4,2,4,154,false,,svg/05348.svg
+3,11,門,09580,true,Môn,,,gate; counter for cannons,,モン,かど|と,8,2,3,452,false,,svg/09580.svg
+3,12,間,09593,true,Gian,,,interval; space,,カン|ケン,あいだ|ま|あい,12,2,4,33,false,,svg/09593.svg
+3,13,東,06771,true,Đông,,,east,,トウ,ひがし,8,2,4,37,false,,svg/06771.svg
+3,14,西,0897f,true,Tây,,Tê,west; Spain,,セイ|サイ|ス,にし,6,2,4,259,false,,svg/0897f.svg
+3,15,南,05357,true,Nam,,,south,,ナン|ナ,みなみ,9,2,4,341,false,,svg/05357.svg
+3,16,北,05317,true,Bắc,,,north,,ホク,きた,5,2,4,153,false,,svg/05317.svg
+4,1,田,07530,true,Điền,,,rice field; rice paddy,,デン,た,5,1,3,90,false,,svg/07530.svg
+4,2,力,0529b,true,Lực,,,power; strength; strong; strain; bear up; exert,,リョク|リキ|リイ,ちから,2,1,3,62,false,,svg/0529b.svg
+4,3,男,07537,true,Nam,,,male,,ダン|ナン,おとこ|お,7,1,4,240,false,,svg/07537.svg
+4,4,女,05973,true,Nữ,,Nứ|Nhữ,woman; female,,ジョ|ニョ|ニョウ,おんな|め,3,1,4,151,false,,svg/05973.svg
+4,5,子,05b50,true,Tử,Tý,,child; sign of the rat; 11PM-1AM; first sign of Chinese zodiac,,シ|ス|ツ,こ|-こ|ね,3,1,4,72,false,,svg/05b50.svg
+4,6,学,05b66,true,Học,,,study; learning; science,,ガク,まな.ぶ,8,1,4,63,false,,svg/05b66.svg
+4,7,生,0751f,true,Sinh,Sanh,,life; genuine; birth,,セイ|ショウ,い.きる|い.かす|い.ける|う.まれる|うま.れる|う.まれ|うまれ|う.む|お.う|は.える|は.やす|き|なま|なま-|な.る|な.す|む.す|-う,5,1,4,29,false,,svg/0751f.svg
+4,8,先,05148,true,Tiên,,Tiến,before; ahead; previous; future; precedence,,セン,さき|ま.ず,6,1,4,173,false,,svg/05148.svg
+4,9,何,04f55,true,Hà,,,what,,カ,なに|なん|なに-|なん-,7,2,4,340,false,,svg/04f55.svg
+4,10,父,07236,true,Phụ,,Phủ,father,,フ,ちち,4,2,4,646,false,,svg/07236.svg
+4,11,母,06bcd,true,Mẫu,,,mother,,ボ,はは|も,5,2,4,570,false,,svg/06bcd.svg
+4,12,年,05e74,true,Niên,,,year; counter for years,,ネン,とし,6,1,4,6,false,,svg/05e74.svg
+4,13,去,053bb,true,Khứ,,Khu,gone; past; quit; leave; elapse; eliminate; divorce,,キョ|コ,さ.る|-さ.る,5,3,3,440,false,,svg/053bb.svg
+4,14,毎,06bce,true,Mỗi,,,every,,マイ,ごと|-ごと.に,6,2,4,436,false,,svg/06bce.svg
+4,15,王,0738b,true,Vương,,Vượng,king; rule; magnate,,オウ|-ノウ,,4,1,2,684,false,,svg/0738b.svg
+4,16,国,056fd,true,Quốc,,Cuốc,country,,コク,くに,8,2,4,3,false,,svg/056fd.svg
+5,1,見,0898b,true,Kiến,Hiện,,see; hopes; chances; idea; opinion; look at; visible,,ケン,み.る|み.える|み.せる,7,1,4,22,false,,svg/0898b.svg
+5,2,行,0884c,true,Hành,Hạnh|Hàng,Hạng,going; journey; carry out; conduct; act; line; row; bank,,コウ|ギョウ|アン,い.く|ゆ.く|-ゆ.き|-ゆき|-い.き|-いき|おこな.う|おこ.なう,6,2,4,20,true,Hành (行動) hay Hạnh (行) hay Hàng (銀行),svg/0884c.svg
+5,3,米,07c73,true,Mễ,,,rice; USA; metre,,ベイ|マイ|メエトル,こめ|よね,6,2,2,61,false,,svg/07c73.svg
+5,4,来,06765,true,Lai,,Lãi|Lay|Lơi|Ray|Rơi,come; due; next; cause; become,,ライ|タイ,く.る|きた.る|きた.す|き.たす|き.たる|き|こ,7,2,4,102,false,,svg/06765.svg
+5,5,良,0826f,true,Lương,,,good; pleasing; skilled,,リョウ,よ.い|-よ.い|い.い|-い.い,7,4,2,501,false,,svg/0826f.svg
+5,6,食,098df,true,Thực,,Tự,eat; food,,ショク|ジキ,く.う|く.らう|た.べる|は.む,9,2,4,328,false,,svg/098df.svg
+5,7,飲,098f2,true,Ẩm,,Ấm|Hẩm|Ỡm,drink; smoke; take,,イン|オン,の.む|-の.み,12,3,4,969,false,,svg/098f2.svg
+5,8,会,04f1a,true,Hội,,Cối|Hụi,meeting; meet; party; association; interview; join,,カイ|エ,あ.う|あ.わせる|あつ.まる,6,2,4,4,false,,svg/04f1a.svg
+5,9,耳,08033,true,Nhĩ,,,ear,,ジ,みみ,6,1,4,1328,false,,svg/08033.svg
+5,10,聞,0805e,true,Văn,,Vấn|Vặn,hear; ask; listen,,ブン|モン,き.く|き.こえる,14,2,4,319,false,,svg/0805e.svg
+5,11,言,08a00,true,Ngôn,,Ngân,say; word,,ゲン|ゴン,い.う|こと,7,2,4,83,false,,svg/08a00.svg
+5,12,話,08a71,true,Thoại,,,tale; talk,,ワ,はな.す|はなし,13,2,4,134,false,,svg/08a71.svg
+5,13,立,07acb,true,Lập,,,stand up; rise; set up; erect,,リツ|リュウ|リットル,た.つ|-た.つ|た.ち-|た.てる|-た.てる|た.て-|たて-|-た.て|-だ.て|-だ.てる,5,1,4,58,false,,svg/07acb.svg
+5,14,待,05f85,true,Đãi,,,wait; depend on,,タイ,ま.つ|-ま.ち,9,3,3,391,false,,svg/05f85.svg
+5,15,周,05468,true,Chu,,,circumference; circuit; lap,,シュウ,まわ.り,8,4,2,562,false,,svg/05468.svg
+5,16,週,09031,true,Chu,,,week,,シュウ,,11,2,4,540,false,,svg/09031.svg
+6,1,大,05927,true,Đại,Thái,,large; big,,ダイ|タイ,おお-|おお.きい|-おお.いに,3,1,4,7,false,,svg/05927.svg
+6,2,小,05c0f,true,Tiểu,,,little; small,,ショウ,ちい.さい|こ-|お-|さ-,3,1,4,114,false,,svg/05c0f.svg
+6,3,高,09ad8,true,Cao,,,tall; high; expensive,,コウ,たか.い|たか|-だか|たか.まる|たか.める,10,2,4,65,false,,svg/09ad8.svg
+6,4,安,05b89,true,An,,,relax; cheap; low; quiet; rested; contented; peaceful,,アン,やす.い|やす.まる|やす|やす.らか,6,3,4,144,false,,svg/05b89.svg
+6,5,新,065b0,true,Tân,,,new,,シン,あたら.しい|あら.た|あら-|にい-,13,2,4,51,false,,svg/065b0.svg
+6,6,古,053e4,true,Cổ,,,old,,コ,ふる.い|ふる-|-ふる.す,5,2,4,509,false,,svg/053e4.svg
+6,7,元,05143,true,Nguyên,,,beginning; former time; origin,,ゲン|ガン,もと,4,2,3,192,false,,svg/05143.svg
+6,8,気,06c17,true,Khí,,,spirit; mind; air; atmosphere; mood,,キ|ケ,き,6,1,4,113,false,,svg/06c17.svg
+6,9,多,0591a,true,Đa,,,many; frequent; much,,タ,おお.い|まさ.に|まさ.る,6,2,4,139,false,,svg/0591a.svg
+6,10,少,05c11,true,Thiểu,,Thiếu,few; little,,ショウ,すく.ない|すこ.し,4,2,4,287,false,,svg/05c11.svg
+6,11,広,05e83,true,Quảng,,,wide; broad; spacious,,コウ,ひろ.い|ひろ.まる|ひろ.める|ひろ.がる|ひろ.げる,5,2,3,263,false,,svg/05e83.svg
+6,12,早,065e9,true,Tảo,,,early; fast,,ソウ|サッ,はや.い|はや|はや-|はや.まる|はや.める|さ-,6,1,3,402,false,,svg/065e9.svg
+6,13,長,09577,true,Trường,,Trưởng|Trướng,long; leader; superior; senior,,チョウ,なが.い|おさ,8,2,4,12,false,,svg/09577.svg
+6,14,明,0660e,true,Minh,,,bright; light,,メイ|ミョウ|ミン,あ.かり|あか.るい|あか.るむ|あか.らむ|あき.らか|あ.ける|-あ.け|あ.く|あ.くる|あ.かす,8,2,3,67,false,,svg/0660e.svg
+6,15,好,0597d,true,Hảo,,Hiếu,fond; pleasing; like something,,コウ,この.む|す.く|よ.い|い.い,6,4,3,423,false,,svg/0597d.svg
+6,16,友,053cb,true,Hữu,,,friend,,ユウ,とも,4,2,4,622,false,,svg/053cb.svg
+7,1,入,05165,true,Nhập,,,enter; insert,,ニュウ|ジュ,い.る|-い.る|-い.り|い.れる|-い.れ|はい.る,2,1,4,56,false,,svg/05165.svg
+7,2,出,051fa,true,Xuất,,Xúy,exit; leave; go out; come out; put out; protrude,,シュツ|スイ,で.る|-で|だ.す|-だ.す|い.でる|い.だす,5,1,4,13,false,,svg/051fa.svg
+7,3,市,05e02,true,Thị,,,market; city; town,,シ,いち,5,2,3,42,false,,svg/05e02.svg
+7,4,町,0753a,true,Đinh,,,town; village; block; street,,チョウ,まち,7,1,3,292,false,,svg/0753a.svg
+7,5,村,06751,true,Thôn,,,village; town,,ソン,むら,7,1,3,253,false,,svg/06751.svg
+7,6,雨,096e8,true,Vũ,,Vú,rain,,ウ,あめ|あま-|-さめ,8,1,4,950,false,,svg/096e8.svg
+7,7,電,096fb,true,Điện,,,electricity,,デン,,13,2,4,268,false,,svg/096fb.svg
+7,8,車,08eca,true,Xa,,,car,,シャ,くるま,7,1,4,333,false,,svg/08eca.svg
+7,9,馬,099ac,true,Mã,,,horse,,バ,うま|うま-|ま,10,2,2,639,false,,svg/099ac.svg
+7,10,駅,099c5,true,Dịch,,,station,,エキ,,14,3,4,724,false,,svg/099c5.svg
+7,11,社,0793e,true,Xã,,,company; firm; office; association; shrine,,シャ,やしろ,7,2,4,21,false,,svg/0793e.svg
+7,12,校,06821,true,Hiệu,Giáo,Hào,exam; school; printing; proof; correction,,コウ|キョウ,,10,1,4,294,true,Hiệu (学校) hay Giáo,svg/06821.svg
+7,13,店,05e97,true,Điếm,,,store; shop,,テン,みせ|たな,8,2,4,378,false,,svg/05e97.svg
+7,14,銀,09280,true,Ngân,,,silver,,ギン,しろがね,14,3,3,395,false,,svg/09280.svg
+7,15,病,075c5,true,Bệnh,,,ill; sick,,ビョウ|ヘイ,や.む|-や.み|やまい,10,3,3,384,false,,svg/075c5.svg
+7,16,院,09662,true,Viện,,,Inst.; institution; temple; mansion; school,,イン,,10,3,3,150,false,,svg/09662.svg
+8,1,休,04f11,true,Hưu,,,rest; day off; retire; sleep,,キュウ,やす.む|やす.まる|やす.める,6,1,4,642,false,,svg/04f11.svg
+8,2,走,08d70,true,Tẩu,,,run,,ソウ,はし.る,7,2,3,626,false,,svg/08d70.svg
+8,3,起,08d77,true,Khởi,,,rouse; wake up; get up,,キ,お.きる|お.こる|お.こす|おこ.す|た.つ,10,3,3,374,false,,svg/08d77.svg
+8,4,貝,08c9d,true,Bối,,,shellfish,,バイ,かい,7,1,2,1787,false,,svg/08c9d.svg
+8,5,買,08cb7,true,Mãi,,,buy,,バイ,か.う,12,2,4,520,false,,svg/08cb7.svg
+8,6,売,058f2,true,Mại,,Xác|Xạc,sell,,バイ,う.る|う.れる,7,2,3,202,false,,svg/058f2.svg
+8,7,読,08aad,true,Độc,,Đậu,read,,ドク|トク|トウ,よ.む|-よ.み,14,2,4,618,false,,svg/08aad.svg
+8,8,書,066f8,true,Thư,,,write,,ショ,か.く|-が.き|-がき,10,2,4,169,false,,svg/066f8.svg
+8,9,帰,05e30,true,Quy,,,homecoming; arrive at; lead to; result in,,キ,かえ.る|かえ.す|おく.る|とつ.ぐ,10,2,3,504,false,,svg/05e30.svg
+8,10,勉,052c9,true,Miễn,,,exertion; endeavour; encourage; strive; make effort; diligent,,ベン,つと.める,10,3,3,1066,false,,svg/052c9.svg
+8,11,弓,05f13,true,Cung,,,"bow; bow (archery, violin)",,キュウ,ゆみ,3,2,1,1802,false,,svg/05f13.svg
+8,12,虫,0866b,true,Trùng,,,insect; bug; temper,,チュウ|キ,むし,6,1,2,1351,false,,svg/0866b.svg
+8,13,強,05f37,true,Cường,,Cưỡng|Càng|Cướng|Cượng|Gàn|Gàng|Gắng|Gương|Gượng|Ngượng,strong,,キョウ|ゴウ,つよ.い|つよ.まる|つよ.める|し.いる|こわ.い,11,2,3,112,false,,svg/05f37.svg
+8,14,持,06301,true,Trì,,,hold; have,,ジ,も.つ|-も.ち|も.てる,9,3,3,119,false,,svg/06301.svg
+8,15,名,0540d,true,Danh,,,name; noted; distinguished; reputation,,メイ|ミョウ,な|-な,6,1,4,177,false,,svg/0540d.svg
+8,16,語,08a9e,true,Ngữ,,Ngứ,word; speech; language,,ゴ,かた.る|かた.らう,14,2,4,301,false,,svg/08a9e.svg
+9,1,春,06625,true,Xuân,,,springtime; spring (season),,シュン,はる,9,2,3,579,false,,svg/06625.svg
+9,2,夏,0590f,true,Hạ,,Giạ|Giá,summer,,カ|ガ|ゲ,なつ,10,2,3,659,false,,svg/0590f.svg
+9,3,秋,079cb,true,Thu,,,autumn,,シュウ,あき|とき,9,2,3,635,false,,svg/079cb.svg
+9,4,冬,051ac,true,Đông,,,winter,,トウ,ふゆ,5,2,3,1090,false,,svg/051ac.svg
+9,5,朝,0671d,true,Triều,Triêu,,morning; dynasty; regime; epoch; period; (North) Korea,,チョウ,あさ,12,2,3,248,true,Triều (朝/王朝) hay Triêu (朝食),svg/0671d.svg
+9,6,昼,0663c,true,Trú,,,daytime; noon,,チュウ,ひる,9,2,3,1115,false,,svg/0663c.svg
+9,7,夕,05915,true,Tịch,,,evening,,セキ,ゆう,3,1,3,924,false,,svg/05915.svg
+9,8,方,065b9,true,Phương,,,direction; person; alternative,,ホウ,かた|-かた|-がた,4,2,3,46,false,,svg/065b9.svg
+9,9,晩,06669,true,Vãn,,,nightfall; night,,バン,,12,6,2,1424,true,"Sửa tay: KANJIDIC2 ghi Hào/Mạn/Man, Hán Việt chuẩn là Vãn",svg/06669.svg
+9,10,夜,0591c,true,Dạ,,,night; evening,,ヤ,よ|よる,8,2,3,487,false,,svg/0591c.svg
+9,11,心,05fc3,true,Tâm,,,heart; mind; spirit,heart radical (no. 61),シン,こころ|-ごころ,4,2,3,157,false,,svg/05fc3.svg
+9,12,手,0624b,true,Thủ,,,hand,,シュ|ズ,て|て-|-て|た-,4,1,4,60,false,,svg/0624b.svg
+9,13,足,08db3,true,Túc,,,leg; foot; be sufficient; counter for pairs of footwear,,ソク,あし|た.りる|た.る|た.す,7,1,4,343,false,,svg/08db3.svg
+9,14,体,04f53,true,Thể,,,body; substance; object; reality; counter for images,,タイ|テイ,からだ|かたち,7,2,3,88,false,,svg/04f53.svg
+9,15,首,09996,true,Thủ,,Thú,neck; counter for songs and poems,,シュ,くび,9,2,3,98,false,,svg/09996.svg
+9,16,道,09053,true,Đạo,,Đáo,road-way; street; district; journey; course; moral; teachings,,ドウ|トウ,みち|いう,12,2,4,207,false,,svg/09053.svg
+10,1,山,05c71,true,Sơn,,San,mountain,,サン|セン,やま,3,1,4,131,false,,svg/05c71.svg
+10,2,川,05ddd,true,Xuyên,,,stream; river,river or three-stroke river radical (no. 47),セン,かわ,3,1,4,181,false,,svg/05ddd.svg
+10,3,林,06797,true,Lâm,,,grove; forest,,リン,はやし,8,1,3,656,false,,svg/06797.svg
+10,4,森,068ee,true,Sâm,,,forest; woods,,シン,もり,12,1,3,609,false,,svg/068ee.svg
+10,5,空,07a7a,true,Không,,Khống|Khổng,empty; sky; void; vacant; vacuum,,クウ,そら|あ.く|あ.き|あ.ける|から|す.く|す.かす|むな.しい,8,1,4,304,false,,svg/07a7a.svg
+10,6,海,06d77,true,Hải,,,sea; ocean,,カイ,うみ,9,2,3,200,false,,svg/06d77.svg
+10,7,化,05316,true,Hóa,,,change; take the form of; influence; enchant; delude; -ization,,カ|ケ,ば.ける|ば.かす|ふ.ける|け.する,4,3,2,89,false,,svg/05316.svg
+10,8,花,082b1,true,Hoa,,,flower,,カ|ケ,はな,7,1,4,578,false,,svg/082b1.svg
+10,9,天,05929,true,Thiên,,,heavens; sky; imperial,,テン,あまつ|あめ|あま-,4,1,4,512,false,,svg/05929.svg
+10,10,赤,08d64,true,Xích,,Thích,red,,セキ|シャク,あか|あか-|あか.い|あか.らむ|あか.らめる,7,1,3,584,false,,svg/08d64.svg
+10,11,青,09752,true,Thanh,,,blue; green,,セイ|ショウ,あお|あお-|あお.い,8,1,3,589,false,,svg/09752.svg
+10,12,白,0767d,true,Bạch,,,white,,ハク|ビャク,しろ|しら-|しろ.い,5,1,4,483,false,,svg/0767d.svg
+10,13,黒,09ed2,true,Hắc,,,black,,コク,くろ|くろ.ずむ|くろ.い,11,2,3,573,false,,svg/09ed2.svg
+10,14,色,08272,true,Sắc,,,color,,ショク|シキ,いろ,6,2,3,621,false,,svg/08272.svg
+10,15,魚,09b5a,true,Ngư,,,fish,,ギョ,うお|さかな|-ざかな,11,2,4,1208,false,,svg/09b5a.svg
+10,16,犬,072ac,true,Khuyển,,,dog,,ケン,いぬ|いぬ-,4,1,3,1326,false,,svg/072ac.svg
+11,1,料,06599,true,Liệu,,Liêu,fee; materials,,リョウ,,10,4,3,295,false,,svg/06599.svg
+11,2,理,07406,true,Lý,,,logic; arrangement; reason; justice; truth,,リ,ことわり,11,2,3,86,false,,svg/07406.svg
+11,3,反,053cd,true,Phản,,Phiên,anti-,,ハン|ホン|タン|ホ,そ.る|そ.らす|かえ.す|かえ.る|-かえ.る,4,3,2,191,false,,svg/053cd.svg
+11,4,飯,098ef,true,Phạn,,Phãn,meal; boiled rice,,ハン,めし,12,4,3,1046,false,,svg/098ef.svg
+11,5,牛,0725b,true,Ngưu,,,cow,,ギュウ,うし,4,2,3,1202,false,,svg/0725b.svg
+11,6,豚,08c5a,true,Đồn,,Độn,pork; pig,,トン,ぶた,11,8,1,1864,false,,svg/08c5a.svg
+11,7,鳥,09ce5,true,Điểu,,,bird; chicken,,チョウ,とり,11,2,3,1043,false,,svg/09ce5.svg
+11,8,肉,08089,true,Nhục,,Nhụ|Nậu,meat,,ニク,しし,6,2,3,986,false,,svg/08089.svg
+11,9,茶,08336,true,Trà,,,tea,,チャ|サ,,9,2,3,1116,false,,svg/08336.svg
+11,10,予,04e88,true,Dự,Dư,,beforehand; previous; myself; I,,ヨ|シャ,あらかじ.め,4,3,2,180,true,Dự (予約) — KANJIDIC2 chỉ có Dư/Dữ,svg/04e88.svg
+11,11,野,091ce,true,Dã,,,plains; field; rustic; civilian life,,ヤ|ショ,の|の-,11,2,3,120,false,,svg/091ce.svg
+11,12,菜,083dc,true,Thái,,,vegetable; side dish; greens,,サイ,な,11,4,3,1327,false,,svg/083dc.svg
+11,13,切,05207,true,Thiết,,Thế,cut; cutoff; be sharp,,セツ|サイ,き.る|-き.る|き.り|-き.り|-ぎ.り|き.れる|-き.れる|き.れ|-き.れ|-ぎ.れ,4,2,3,324,false,,svg/05207.svg
+11,14,作,04f5c,true,Tác,,,make; production; prepare; build,,サク|サ,つく.る|つく.り|-づく.り,7,2,3,103,false,,svg/04f5c.svg
+11,15,未,0672a,true,Vị,,Mùi,un-; not yet; hitherto; still; even now; sign of the ram; 1-3PM; eighth sign of Chinese zodiac,,ミ|ビ,いま.だ|ま.だ|ひつじ,5,4,2,650,false,,svg/0672a.svg
+11,16,味,05473,true,Vị,,,flavor; taste,,ミ,あじ|あじ.わう,8,3,3,442,false,,svg/05473.svg
+12,1,音,097f3,true,Âm,,,sound; noise,,オン|イン|-ノン,おと|ね,9,1,3,491,false,,svg/097f3.svg
+12,2,楽,0697d,true,Lạc,Nhạc,,music; comfort; ease,,ガク|ラク|ゴウ,たの.しい|たの.しむ|この.む,13,2,3,373,true,Lạc (楽しい) hay Nhạc (音楽),svg/0697d.svg
+12,3,歌,06b4c,true,Ca,,,song; sing,,カ,うた|うた.う,14,2,3,519,false,,svg/06b4c.svg
+12,4,自,081ea,true,Tự,,,oneself,,ジ|シ,みずか.ら|おの.ずから|おの.ずと,6,2,3,19,false,,svg/081ea.svg
+12,5,転,08ee2,true,Chuyển,,,revolve; turn around; change,,テン,ころ.がる|ころ.げる|ころ.がす|ころ.ぶ|まろ.ぶ|うたた|うつ.る|くる.めく,11,3,3,327,false,,svg/08ee2.svg
+12,6,乗,04e57,true,Thừa,,Thặng,ride; power; multiplication; record; counter for vehicles; board; mount; join,,ジョウ|ショウ,の.る|-の.り|の.せる,9,3,3,377,false,,svg/04e57.svg
+12,7,写,05199,true,Tả,,,copy; be photographed; describe,,シャ|ジャ,うつ.す|うつ.る|うつ-|うつ.し,5,3,3,453,false,,svg/05199.svg
+12,8,真,0771f,true,Chân,,,true; reality; Buddhist sect,,シン,ま|ま-|まこと,10,3,3,279,false,,svg/0771f.svg
+12,9,台,053f0,true,Đài,,Thai|Di,pedestal; a stand; counter for machines and vehicles,,ダイ|タイ,うてな|われ|つかさ,5,2,3,262,false,,svg/053f0.svg
+12,10,央,0592e,true,Ương,,,center; middle,,オウ,,5,3,2,582,false,,svg/0592e.svg
+12,11,映,06620,true,Ánh,,,reflect; reflection; projection,,エイ,うつ.る|うつ.す|は.える|-ば.え,9,6,3,404,false,,svg/06620.svg
+12,12,画,0753b,true,Hoạch,Họa,,brush-stroke; picture,,ガ|カク|エ|カイ,えが.く|かく.する|かぎ.る|はかりごと|はか.る,8,2,3,199,true,Hoạch (計画) hay Họa (画家)? KANJIDIC2 chỉ có Hoạch,svg/0753b.svg
+12,13,羊,07f8a,true,Dương,,,sheep,,ヨウ,ひつじ,6,3,1,1852,false,,svg/07f8a.svg
+12,14,洋,06d0b,true,Dương,,,ocean; sea; foreign; Western style,,ヨウ,,9,3,3,763,false,,svg/06d0b.svg
+12,15,服,0670d,true,Phục,,,clothing; admit; obey; discharge,,フク,,8,3,3,873,false,,svg/0670d.svg
+12,16,着,07740,true,Trước,,,don; arrive; wear; counter for suits of clothing,,チャク|ジャク,き.る|き.せる|つ.く|つ.ける,12,3,3,376,true,Sửa tay: KANJIDIC2 sai hoặc thiếu,svg/07740.svg
+13,1,家,05bb6,true,Gia,,Cô,house; home; family; professional; expert; performer,,カ|ケ,いえ|や|うち,10,2,3,133,false,,svg/05bb6.svg
+13,2,矢,077e2,true,Thỉ,,,dart; arrow,,シ,や,5,2,1,1294,false,,svg/077e2.svg
+13,3,族,065cf,true,Tộc,,,tribe; family,,ゾク,,11,3,3,393,false,,svg/065cf.svg
+13,4,親,089aa,true,Thân,,Thấn,parent; intimacy; relative; familiarity; dealer (cards),,シン,おや|おや-|した.しい|した.しむ,16,2,3,406,false,,svg/089aa.svg
+13,5,兄,05144,true,Huynh,,,elder brother; big brother,,ケイ|キョウ,あに,5,2,3,1219,false,,svg/05144.svg
+13,6,姉,059c9,true,Tỷ,Tỉ,Chị,elder sister,,シ,あね|はは,8,2,3,1473,false,,svg/059c9.svg
+13,7,弟,05f1f,true,Đệ,,Đễ,younger brother; faithful service to elders,,テイ|ダイ|デ,おとうと,7,2,3,1161,false,,svg/05f1f.svg
+13,8,妹,059b9,true,Muội,,,younger sister,,マイ,いもうと,8,2,3,1446,false,,svg/059b9.svg
+13,9,私,079c1,true,Tư,,,private; I; me,,シ,わたくし|わたし,7,6,3,242,false,,svg/079c1.svg
+13,10,夫,0592b,true,Phu,,Phù,husband; man,,フ|フウ|ブ,おっと|それ,4,4,2,335,false,,svg/0592b.svg
+13,11,妻,059bb,true,Thê,,Thế,wife; spouse,,サイ,つま,8,5,2,691,false,,svg/059bb.svg
+13,12,主,04e3b,true,Chủ,,,lord; chief; master; main thing; principal,,シュ|ス|シュウ,ぬし|おも|あるじ,5,3,3,95,false,,svg/04e3b.svg
+13,13,住,04f4f,true,Trụ,,,dwell; reside; live; inhabit,,ジュウ|ヂュウ|チュウ,す.む|す.まう|-ず.まい,7,3,3,270,false,,svg/04f4f.svg
+13,14,糸,07cf8,true,Mịch,,,thread,,シ,いと,6,1,2,1488,false,,svg/07cf8.svg
+13,15,氏,06c0f,true,Thị,,Chi,family name; surname; clan,,シ,うじ|-うじ,4,4,1,84,false,,svg/06c0f.svg
+13,16,紙,07d19,true,Chỉ,,,paper,,シ,かみ,10,2,3,559,false,,svg/07d19.svg
+14,1,教,06559,true,Giáo,,,teach; faith; doctrine,,キョウ,おし.える|おそ.わる,11,2,3,166,false,,svg/06559.svg
+14,2,室,05ba4,true,Thất,,,room; apartment; chamber; greenhouse; cellar,,シツ,むろ,9,2,3,550,false,,svg/05ba4.svg
+14,3,羽,07fbd,true,Vũ,,,"feathers; counter for birds, rabbits",,ウ,は|わ|はね,6,2,2,748,false,,svg/07fbd.svg
+14,4,習,07fd2,true,Tập,,,learn,,シュウ|ジュ,なら.う|なら.い,11,3,3,706,false,,svg/07fd2.svg
+14,5,漢,06f22,true,Hán,,,Sino-; China,,カン,,13,3,3,1487,false,,svg/06f22.svg
+14,6,字,05b57,true,Tự,,,character; letter; word; section of village,,ジ,あざ|あざな|-な,6,1,3,485,false,,svg/05b57.svg
+14,7,式,05f0f,true,Thức,,,style; ceremony; rite; function; method; system; form; expression,,シキ,,6,3,2,251,false,,svg/05f0f.svg
+14,8,試,08a66,true,Thí,,,test; try; attempt; experiment; ordeal,,シ,こころ.みる|ため.す,13,4,3,392,false,,svg/08a66.svg
+14,9,験,09a13,true,Nghiệm,,,verification; effect; testing,,ケン|ゲン,あかし|しるし|ため.す|ためし,18,4,3,410,false,,svg/09a13.svg
+14,10,宿,05bbf,true,Túc,,Tú,inn; lodging; relay station; dwell; lodge; be pregnant; home; dwelling,,シュク,やど|やど.る|やど.す,11,3,2,701,false,,svg/05bbf.svg
+14,11,題,0984c,true,Đề,,,topic; subject,,ダイ,,18,3,3,96,false,,svg/0984c.svg
+14,12,文,06587,true,Văn,,Vấn,sentence; literature; style; art; decoration; figures; plan,literary radical (no. 67),ブン|モン,ふみ|あや,4,1,3,190,false,,svg/06587.svg
+14,13,英,082f1,true,Anh,,,England; English; hero; outstanding; calyx,,エイ,はなぶさ,8,4,3,430,false,,svg/082f1.svg
+14,14,質,08cea,true,Chất,,Chí,substance; quality; matter; temperament,,シツ|シチ|チ,たち|ただ.す|もと|わりふ,15,5,3,389,false,,svg/08cea.svg
+14,15,問,0554f,true,Vấn,,,question; ask; problem,,モン,と.う|と.い|とん,11,3,3,64,false,,svg/0554f.svg
+14,16,説,08aac,true,Thuyết,,Duyệt|Thoát|Thuế|Thót|Thốt,opinion; theory; explanation; rumor,,セツ|ゼイ,と.く,14,4,3,326,false,,svg/08aac.svg
+15,1,遠,09060,true,Viễn,,Viển,distant; far,,エン|オン,とお.い,13,2,3,887,false,,svg/09060.svg
+15,2,近,08fd1,true,Cận,,Cấn|Ký,near; early; akin; tantamount,,キン|コン,ちか.い,7,2,3,194,false,,svg/08fd1.svg
+15,3,者,08005,true,Giả,,,someone; person,,シャ,もの,8,3,3,38,false,,svg/08005.svg
+15,4,暑,06691,true,Thử,,,sultry; hot; summer heat,,ショ,あつ.い,12,3,3,1442,false,,svg/06691.svg
+15,5,寒,05bd2,true,Hàn,,,cold,,カン,さむ.い,12,3,3,1456,false,,svg/05bd2.svg
+15,6,重,091cd,true,Trọng,,Trùng,heavy; important; esteem; respect; heap up; pile up; nest of boxes; -fold,,ジュウ|チョウ,え|おも.い|おも.り|おも.なう|かさ.ねる|かさ.なる|おも,9,3,3,193,false,,svg/091cd.svg
+15,7,軽,08efd,true,Khinh,,,lightly; trifling; unimportant,,ケイ|キョウ|キン,かる.い|かろ.やか|かろ.んじる,12,3,3,790,false,,svg/08efd.svg
+15,8,低,04f4e,true,Đê,,,lower; short; humble,,テイ,ひく.い|ひく.める|ひく.まる,7,4,3,435,false,,svg/04f4e.svg
+15,9,弱,05f31,true,Nhược,,,weak; frail,,ジャク,よわ.い|よわ.る|よわ.まる|よわ.める,10,2,3,958,false,,svg/05f31.svg
+15,10,悪,060aa,true,Ác,,Ố|Óc,bad; vice; rascal; false; evil; wrong,,アク|オ,わる.い|わる-|あ.し|にく.い|-にく.い|ああ|いずくに|いずくんぞ|にく.む,11,3,3,530,false,,svg/060aa.svg
+15,11,暗,06697,true,Ám,,,darkness; disappear; shade; informal; grow dark; be blinded,,アン,くら.い|くら.む|くれ.る,13,3,3,1040,false,,svg/06697.svg
+15,12,太,0592a,true,Thái,,,plump; thick; big around,,タイ|タ,ふと.い|ふと.る,4,2,3,552,false,,svg/0592a.svg
+15,13,豆,08c46,true,Đậu,,Dấu,beans; pea; midget,,トウ|ズ,まめ|まめ-,7,3,1,1422,false,,svg/08c46.svg
+15,14,短,077ed,true,Đoản,,,short; brevity; fault; defect; weak point,,タン,みじか.い,12,3,3,689,false,,svg/077ed.svg
+15,15,光,05149,true,Quang,,,ray; light,,コウ,ひか.る|ひかり,6,2,3,527,false,,svg/05149.svg
+15,16,風,098a8,true,Phong,,,wind; air; style; manner,,フウ|フ,かぜ|かざ-,9,2,3,558,false,,svg/098a8.svg
+16,1,運,0904b,true,Vận,,,carry; luck; destiny; fate; lot; transport; progress; advance,,ウン,はこ.ぶ,12,3,3,255,false,,svg/0904b.svg
+16,2,動,052d5,true,Động,,,move; motion; change; confusion; shift; shake,,ドウ,うご.く|うご.かす,11,3,3,73,false,,svg/052d5.svg
+16,3,止,06b62,true,Chỉ,,,stop; halt,,シ,と.まる|-ど.まり|と.める|-と.める|-ど.め|とど.める|とど.め|とど.まる|や.める|や.む|-や.む|よ.す|-さ.す|-さ.し,4,2,3,310,false,,svg/06b62.svg
+16,4,歩,06b69,true,Bộ,,,walk; counter for steps,,ホ|ブ|フ,ある.く|あゆ.む,8,2,3,554,false,,svg/06b69.svg
+16,5,使,04f7f,true,Sử,Sứ,,use; send on a mission; order; messenger; envoy; ambassador; cause,,シ,つか.う|つか.い|-つか.い|-づか.い,8,3,3,219,true,Sử (使う) hay Sứ (大使),svg/04f7f.svg
+16,6,送,09001,true,Tống,,,escort; send,,ソウ,おく.る,9,3,3,311,false,,svg/09001.svg
+16,7,洗,06d17,true,Tẩy,,Tiển,wash; inquire into; probe,,セン,あら.う,9,6,3,1168,false,,svg/06d17.svg
+16,8,急,06025,true,Cấp,,,hurry; emergency; sudden; steep,,キュウ,いそ.ぐ|いそ.ぎ|せ.く,9,3,3,309,false,,svg/06025.svg
+16,9,開,0958b,true,Khai,,,open; unfold; unseal,,カイ,ひら.く|ひら.き|-びら.き|ひら.ける|あ.く|あ.ける,12,3,3,59,false,,svg/0958b.svg
+16,10,閉,09589,true,Bế,,,closed; shut,,ヘイ,と.じる|と.ざす|し.める|し.まる|た.てる,11,6,2,951,false,,svg/09589.svg
+16,11,押,062bc,true,Áp,,,push; stop; check; subdue; attach; seize; weight; shove; press; seal; do in spite of,,オウ,お.す|お.し-|お.っ-|お.さえる|おさ.える,8,8,2,789,false,,svg/062bc.svg
+16,12,引,05f15,true,Dẫn,,Dấn,pull; tug; jerk; admit; install; quote; refer to,,イン,ひ.く|ひ.ける,4,2,3,218,false,,svg/05f15.svg
+16,13,思,0601d,true,Tư,,Tứ|Tai,think,,シ,おも.う|おもえら.く|おぼ.す,9,2,3,132,false,,svg/0601d.svg
+16,14,知,077e5,true,Tri,,,know; wisdom,,チ,し.る|し.らせる,8,2,3,205,false,,svg/077e5.svg
+16,15,考,08003,true,Khảo,,,consider; think over,,コウ,かんが.える|かんが.え,6,2,3,196,false,,svg/08003.svg
+16,16,死,06b7b,true,Tử,,,death; die,,シ,し.ぬ|し.に-,6,3,3,229,false,,svg/06b7b.svg
+17,1,医,0533b,true,Y,,Ế|Ỷ|I|Ỉ,doctor; medicine,,イ,い.やす|い.する|くすし,7,3,3,437,false,,svg/0533b.svg
+17,2,始,059cb,true,Thủy,,Thí,commence; begin,,シ,はじ.める|-はじ.める|はじ.まる,8,3,3,244,false,,svg/059cb.svg
+17,3,終,07d42,true,Chung,,,end; finish,,シュウ,お.わる|-お.わる|おわ.る|お.える|つい|つい.に,11,3,3,256,false,,svg/07d42.svg
+17,4,石,077f3,true,Thạch,,,stone,,セキ|シャク|コク,いし,5,1,2,342,false,,svg/077f3.svg
+17,5,研,07814,true,Nghiên,,Nghiễn|Nghiến|Nghiền|Nghiện,polish; study of; sharpen,,ケン,と.ぐ,9,3,3,336,false,,svg/07814.svg
+17,6,究,07a76,true,Cứu,,,research; study,,キュウ|ク,きわ.める,7,3,3,368,false,,svg/07a76.svg
+17,7,留,07559,true,Lưu,,,detain; fasten; halt; stop,,リュウ|ル,と.める|と.まる|とど.める|とど.まる|るうぶる,10,5,2,731,false,,svg/07559.svg
+17,8,有,06709,true,Hữu,,Dựu,possess; have; exist; happen; occur; approx,,ユウ|ウ,あ.る,6,3,3,282,false,,svg/06709.svg
+17,9,産,07523,true,Sản,,Sẵn|Sởn,products; bear; give birth; yield; childbirth; native; property,,サン,う.む|う.まれる|うぶ-|む.す,11,4,3,161,false,,svg/07523.svg
+17,10,業,0696d,true,Nghiệp,,,business; vocation; arts; performance,,ギョウ|ゴウ,わざ,13,3,3,43,false,,svg/0696d.svg
+17,11,薬,085ac,true,Dược,,Ước,medicine; chemical; enamel; gunpowder; benefit,,ヤク,くすり,16,3,3,702,false,,svg/085ac.svg
+17,12,働,050cd,true,Động,,,work; (kokuji),,ドウ,はたら.く,13,4,3,417,false,,svg/050cd.svg
+17,13,員,054e1,true,Viên,,Vân,employee; member; number; the one in charge,,イン,,10,3,3,54,false,,svg/054e1.svg
+17,14,士,058eb,true,Sĩ,,,gentleman; scholar; samurai,samurai radical (no. 33),シ,さむらい,3,4,1,526,false,,svg/058eb.svg
+17,15,仕,04ed5,true,Sĩ,,,attend; doing; official; serve,,シ|ジ,つか.える,5,3,3,439,false,,svg/04ed5.svg
+17,16,事,04e8b,true,Sự,,,matter; thing; fact; business; reason; possibly,,ジ|ズ,こと|つか.う|つか.える,8,3,3,18,false,,svg/04e8b.svg
+18,1,図,056f3,true,Đồ,,Vi,map; drawing; plan; extraordinary; audacious,,ズ|ト,え|はか.る,7,2,3,539,false,,svg/056f3.svg
+18,2,官,05b98,true,Quan,,,bureaucrat; the government; organ,,カン,,8,4,2,230,false,,svg/05b98.svg
+18,3,館,09928,true,Quán,,,building; mansion; large building; palace,,カン,やかた|たて,16,3,3,613,false,,svg/09928.svg
+18,4,昔,06614,true,Tích,,,once upon a time; antiquity; old times,,セキ|シャク,むかし,8,3,2,1197,false,,svg/06614.svg
+18,5,借,0501f,true,Tá,,,borrow; rent,,シャク,か.りる,10,4,3,932,false,,svg/0501f.svg
+18,6,代,04ee3,true,Đại,,,"substitute; change; convert; replace; period; age; counter for decades of ages, eras, etc.; generation; charge; rate; fee",,ダイ|タイ,か.わる|かわ.る|かわ.り|か.わり|-がわ.り|-が.わり|か.える|よ|しろ,5,3,3,66,false,,svg/04ee3.svg
+18,7,貸,08cb8,true,Thải,,Thắc,lend,,タイ,か.す|か.し-|かし-,12,5,3,995,false,,svg/08cb8.svg
+18,8,地,05730,true,Địa,,,ground; earth,,チ|ジ,,6,2,3,40,false,,svg/05730.svg
+18,9,世,04e16,true,Thế,,,generation; world; society; public,,セイ|セ|ソウ,よ,5,3,3,135,false,,svg/04e16.svg
+18,10,界,0754c,true,Giới,,,world; boundary,,カイ,,9,3,3,158,false,,svg/0754c.svg
+18,11,度,05ea6,true,Độ,Đạc,,degrees; occurrence; time; counter for occurrences; consider; attitude,,ド|ト|タク,たび|-た.い,9,3,3,110,true,Độ hay Đạc,svg/05ea6.svg
+18,12,回,056de,true,Hồi,,Hối,-times; round; game; revolve; counter for occurrences,,カイ|エ,まわ.る|-まわ.る|-まわ.り|まわ.す|-まわ.す|まわ.し-|-まわ.し|もとお.る|か.える,6,2,3,50,false,,svg/056de.svg
+18,13,用,07528,true,Dụng,,,utilize; business; service; use; employ,,ヨウ,もち.いる,5,2,3,107,false,,svg/07528.svg
+18,14,民,06c11,true,Dân,,,people; nation; subjects,,ミン,たみ,5,4,3,28,false,,svg/06c11.svg
+18,15,注,06ce8,true,Chú,,,pour; irrigate; shed (tears); flow into; concentrate on; notes; comment; annotate,,チュウ,そそ.ぐ|さ.す|つ.ぐ,8,3,3,497,false,,svg/06ce8.svg
+18,16,意,0610f,true,Ý,,,idea; mind; heart; taste; thought; desire; care; liking,,イ,,13,3,3,99,false,,svg/0610f.svg
+19,1,頭,0982d,true,Đầu,,,head; counter for large animals,,トウ|ズ|ト,あたま|かしら|-がしら|かぶり,16,2,3,433,false,,svg/0982d.svg
+19,2,顔,09854,true,Nhan,,Nhăn,face; expression,,ガン,かお,18,2,3,676,false,,svg/09854.svg
+19,3,声,058f0,true,Thanh,,,voice,,セイ|ショウ,こえ|こわ-,7,2,3,388,false,,svg/058f0.svg
+19,4,特,07279,true,Đặc,,,special,,トク,,10,4,3,234,false,,svg/07279.svg
+19,5,別,05225,true,Biệt,,,separate; branch off; diverge; fork; another; extra; specially,,ベツ,わか.れる|わ.ける,7,4,3,214,false,,svg/05225.svg
+19,6,竹,07af9,true,Trúc,,,bamboo,,チク,たけ,6,1,2,593,false,,svg/07af9.svg
+19,7,合,05408,true,Hợp,,Cáp,fit; suit; join; 0.1,,ゴウ|ガッ|カッ,あ.う|-あ.う|あ.い|あい-|-あ.い|-あい|あ.わす|あ.わせる|-あ.わせる,6,2,3,41,false,,svg/05408.svg
+19,8,答,07b54,true,Đáp,,,solution; answer,,トウ,こた.える|こた.え,12,2,3,486,false,,svg/07b54.svg
+19,9,正,06b63,true,Chính,Chánh,,correct; justice; righteous; 10**40,,セイ|ショウ,ただ.しい|ただ.す|まさ|まさ.に,5,1,3,143,true,Chính hay Chánh (biến thể),svg/06b63.svg
+19,10,同,0540c,true,Đồng,,,same; agree; equal,,ドウ,おな.じ,6,2,3,15,false,,svg/0540c.svg
+19,11,計,08a08,true,Kế,,Kê,plot; plan; scheme; measure,,ケイ,はか.る|はか.らう,9,2,3,228,false,,svg/08a08.svg
+19,12,京,04eac,true,Kinh,,,capital; 10**16,,キョウ|ケイ|キン,みやこ,8,2,3,74,false,,svg/04eac.svg
+19,13,集,096c6,true,Tập,,,gather; meet; congregate; swarm; flock,,シュウ,あつ.まる|あつ.める|つど.う,12,3,3,210,false,,svg/096c6.svg
+19,14,不,04e0d,true,Bất,,Phầu|Phủ|Phi,negative; non-; bad; ugly; clumsy,,フ|ブ,,4,4,3,101,false,,svg/04e0d.svg
+19,15,便,04fbf,true,Tiện,,,convenience; facility; excrement; feces; letter; chance,,ベン|ビン,たよ.り,9,4,3,729,false,,svg/04fbf.svg
+19,16,以,04ee5,true,Dĩ,,,by means of; because; in view of; compared with,,イ,もっ.て,5,4,3,126,false,,svg/04ee5.svg
+20,1,場,05834,true,Trường,Tràng,,location; place,,ジョウ|チョウ,ば,12,2,3,52,false,,svg/05834.svg
+20,2,戸,06238,true,Hộ,,Họ,door; counter for houses,door radical (no. 63),コ,と,4,2,2,575,false,,svg/06238.svg
+20,3,所,06240,true,Sở,,,place; extent,,ショ,ところ|-ところ|どころ|とこ,8,3,3,221,false,,svg/06240.svg
+20,4,屋,05c4b,true,Ốc,,,roof; house; shop; dealer; seller,,オク,や,9,3,3,616,false,,svg/05c4b.svg
+20,5,県,0770c,true,Huyền,,,prefecture,,ケン,か.ける,9,3,3,140,false,,svg/0770c.svg
+20,6,区,0533a,true,Khu,,Âu,ward; district,,ク|オウ|コウ,,4,3,3,137,false,,svg/0533a.svg
+20,7,池,06c60,true,Trì,,,pond; cistern; pool; reservoir,,チ,いけ,6,2,3,827,false,,svg/06c60.svg
+20,8,発,0767a,true,Phát,,Bát,departure; discharge; publish; emit; start from; disclose; counter for gunshots,,ハツ|ホツ,た.つ|あば.く|おこ.る|つか.わす|はな.つ,9,3,3,32,false,,svg/0767a.svg
+20,9,建,05efa,true,Kiến,,Kiển,build,,ケン|コン,た.てる|た.て|-だ.て|た.つ,9,4,3,300,false,,svg/05efa.svg
+20,10,物,07269,true,Vật,,,thing; object; matter,,ブツ|モツ,もの|もの-,8,3,3,215,false,,svg/07269.svg
+20,11,堂,05802,true,Đường,,,public chamber; hall,,ドウ,,11,4,3,1010,false,,svg/05802.svg
+20,12,都,090fd,true,Đô,,,metropolis; capital; all; everything,,ト|ツ,みやこ,11,3,3,123,false,,svg/090fd.svg
+20,13,品,054c1,true,Phẩm,,,goods; refinement; dignity; article; counter for meal courses,,ヒン|ホン,しな,9,3,3,225,false,,svg/054c1.svg
+20,14,旅,065c5,true,Lữ,,,trip; travel,,リョ,たび,10,3,3,783,false,,svg/065c5.svg
+20,15,通,0901a,true,Thông,,,"traffic; pass through; avenue; commute; counter for letters, notes, documents, etc.",,ツウ|ツ,とお.る|とお.り|-とお.り|-どお.り|とお.す|とお.し|-どお.し|かよ.う,10,2,3,80,false,,svg/0901a.svg
+20,16,進,09032,true,Tiến,,,advance; proceed; progress; promote,,シン,すす.む|すす.める,11,3,3,142,false,,svg/09032.svg
+21,1,丸,04e38,true,Hoàn,,,round; full (month); perfection; -ship; pills; make round; roll up; curl up; seduce; explain away,,ガン,まる|まる.める|まる.い,3,2,2,542,false,,svg/04e38.svg
+21,2,熱,071b1,true,Nhiệt,,,heat; temperature; fever; mania; passion,,ネツ,あつ.い,15,4,2,700,false,,svg/071b1.svg
+21,3,冷,051b7,true,Lãnh,,,"cool; cold (beer, person); chill",,レイ,つめ.たい|ひ.える|ひ.や|ひ.ややか|ひ.やす|ひ.やかす|さ.める|さ.ます,7,4,2,667,false,,svg/051b7.svg
+21,4,甘,07518,true,Cam,,,sweet; coax; pamper; be content; sugary,,カン,あま.い|あま.える|あま.やかす|うま.い,5,8,2,1248,false,,svg/07518.svg
+21,5,汚,06c5a,true,Ô,,Ố|Phiếm,dirty; pollute; disgrace; rape; defile,,オ,けが.す|けが.れる|けが.らわしい|よご.す|よご.れる|きたな.い,6,8,2,908,false,,svg/06c5a.svg
+21,6,果,0679c,true,Quả,,,fruit; reward; carry out; achieve; complete; end; finish; succeed,,カ,は.たす|はた.す|-は.たす|は.てる|-は.てる|は.て,8,4,2,258,false,,svg/0679c.svg
+21,7,卵,05375,true,Noãn,,,egg; ovum; spawn; roe,,ラン,たまご,7,6,2,1342,false,,svg/05375.svg
+21,8,皿,076bf,true,Mãnh,,,dish; a helping; plate,,ベイ,さら,5,3,2,1812,false,,svg/076bf.svg
+21,9,酒,09152,true,Tửu,,,sake; alcohol,,シュ,さけ|さか-,10,3,2,1006,false,,svg/09152.svg
+21,10,塩,05869,true,Diêm,,,salt,,エン,しお,13,4,2,1148,false,,svg/05869.svg
+21,11,付,04ed8,true,Phó,,,adhere; attach; refer to; append,,フ,つ.ける|-つ.ける|-づ.ける|つ.け|つ.け-|-つ.け|-づ.け|-づけ|つ.く|-づ.く|つ.き|-つ.き|-つき|-づ.き|-づき,5,4,2,322,false,,svg/04ed8.svg
+21,12,片,07247,true,Phiến,,,one-sided; leaf; sheet,right-side kata radical (no. 91),ヘン,かた-|かた,4,6,2,1076,false,,svg/07247.svg
+21,13,焼,0713c,true,Thiêu,,,bake; burning,,ショウ,や.く|や.き|や.き-|-や.き|や.ける,12,4,2,982,false,,svg/0713c.svg
+21,14,消,06d88,true,Tiêu,,,extinguish; blow out; turn off; neutralize; cancel,,ショウ,き.える|け.す,10,3,2,345,false,,svg/06d88.svg
+21,15,固,056fa,true,Cố,,,harden; set; clot; curdle,,コ,かた.める|かた.まる|かた.まり|かた.い,8,4,2,750,false,,svg/056fa.svg
+21,16,個,0500b,true,Cá,,,individual; counter for articles,,コ|カ,,10,5,2,451,false,,svg/0500b.svg
+22,1,笑,07b11,true,Tiếu,,,laugh,,ショウ,わら.う|え.む,10,4,2,913,false,,svg/07b11.svg
+22,2,泣,06ce3,true,Khấp,,,cry; weep; moan,,キュウ,な.く,8,4,2,1380,false,,svg/06ce3.svg
+22,3,怒,06012,true,Nộ,,,angry; be offended,,ド|ヌ,いか.る|おこ.る,9,8,2,1221,false,,svg/06012.svg
+22,4,幸,05e78,true,Hạnh,,,happiness; blessing; fortune,,コウ,さいわ.い|さち|しあわ.せ,8,3,2,786,false,,svg/05e78.svg
+22,5,悲,060b2,true,Bi,,,grieve; sad; deplore; regret,,ヒ,かな.しい|かな.しむ,12,3,2,1014,false,,svg/060b2.svg
+22,6,苦,082e6,true,Khổ,,,suffering; trial; worry; hardship; feel bitter; scowl,,ク,くる.しい|-ぐる.しい|くる.しむ|くる.しめる|にが.い|にが.る,8,3,2,623,false,,svg/082e6.svg
+22,7,痛,075db,true,Thống,,,pain; hurt; damage; bruise,,ツウ,いた.い|いた.む|いた.ましい|いた.める,12,6,2,903,false,,svg/075db.svg
+22,8,恥,06065,true,Sỉ,,,shame; dishonor,,チ,は.じる|はじ|は.じらう|は.ずかしい,10,8,2,1575,false,,svg/06065.svg
+22,9,配,0914d,true,Phối,,,distribute; spouse; exile; rationing,,ハイ,くば.る,10,3,2,359,false,,svg/0914d.svg
+22,10,困,056f0,true,Khốn,,,quandary; become distressed; annoyed,,コン,こま.る,7,6,2,843,false,,svg/056f0.svg
+22,11,辛,08f9b,true,Tân,,,spicy; bitter; hot; acrid,,シン,から.い|つら.い|-づら.い|かのと,7,8,2,1607,false,,svg/08f9b.svg
+22,12,眠,07720,true,Miên,,,sleep; die; sleepy,,ミン,ねむ.る|ねむ.い,10,8,2,1315,false,,svg/07720.svg
+22,13,残,06b8b,true,Tàn,,,remainder; leftover; balance,,ザン|サン,のこ.る|のこ.す|そこな.う|のこ.り,10,4,2,380,false,,svg/06b8b.svg
+22,14,念,05ff5,true,Niệm,,,wish; sense; idea; thought; feeling; desire; attention,,ネン,,8,4,2,390,false,,svg/05ff5.svg
+22,15,感,0611f,true,Cảm,,,emotion; feeling; sensation,,カン,,13,3,2,233,false,,svg/0611f.svg
+22,16,情,060c5,true,Tình,,,feelings; emotion; passion; sympathy; circumstances; facts,,ジョウ|セイ,なさ.け,11,5,2,235,false,,svg/060c5.svg
+23,1,覚,0899a,true,Giác,,Giáo|Dác,memorize; learn; remember; awake; sober up,,カク,おぼ.える|さ.ます|さ.める|さと.る,12,4,2,710,false,,svg/0899a.svg
+23,2,忘,05fd8,true,Vong,,,forget,,ボウ,わす.れる,7,6,2,1129,false,,svg/05fd8.svg
+23,3,決,06c7a,true,Quyết,,,decide; fix; agree upon; appoint,,ケツ,き.める|-ぎ.め|き.まる|さ.く,7,3,2,71,false,,svg/06c7a.svg
+23,4,定,05b9a,true,Định,,Đính,determine; fix; establish; decide,,テイ|ジョウ,さだ.める|さだ.まる|さだ.か,8,3,2,48,false,,svg/05b9a.svg
+23,5,比,06bd4,true,Tỉ,Bỉ,Bí|Bì,compare; race; ratio; Philippines,,ヒ,くら.べる,4,5,2,329,true,Tỉ (比較) — KANJIDIC2 có Bỉ/Bí/Bì/Tỉ,svg/06bd4.svg
+23,6,受,053d7,true,Thụ,,,accept; undergo; answer (phone); take; get; catch; receive,,ジュ,う.ける|-う.け|う.かる,8,3,2,136,false,,svg/053d7.svg
+23,7,授,06388,true,Thụ,,,impart; instruct; grant; confer,,ジュ,さず.ける|さず.かる,11,5,2,535,false,,svg/06388.svg
+23,8,徒,05f92,true,Đồ,,,on foot; junior; emptiness; vanity; futility; uselessness; ephemeral thing; gang; set; party; people,,ト,いたずら|あだ,10,4,2,817,false,,svg/05f92.svg
+23,9,練,07df4,true,Luyện,,,practice; gloss; train; drill; polish; refine,,レン,ね.る|ね.り,14,3,2,788,false,,svg/07df4.svg
+23,10,復,05fa9,true,Phục,,Phúc,restore; return to; revert; resume,,フク,また,12,5,2,438,false,,svg/05fa9.svg
+23,11,表,08868,true,Biểu,,,surface; table; chart; diagram,,ヒョウ,おもて|-おもて|あらわ.す|あらわ.れる|あら.わす,8,3,2,77,false,,svg/08868.svg
+23,12,卒,05352,true,Tốt,,Tuất|Thốt,graduate; soldier; private; die,,ソツ|シュツ,そっ.する|お.える|お.わる|ついに|にわか,8,4,2,772,false,,svg/05352.svg
+23,13,違,09055,true,Vi,,,difference; differ,,イ,ちが.う|ちが.い|ちが.える|-ちが.える|たが.う|たが.える,13,8,2,344,false,,svg/09055.svg
+23,14,役,05f79,true,Dịch,,,duty; war; campaign; drafted labor; office; service; role,,ヤク|エキ,,7,3,2,315,false,,svg/05f79.svg
+23,15,皆,07686,true,Giai,,,all; everything,,カイ,みな|みんな,9,8,2,1267,false,,svg/07686.svg
+23,16,彼,05f7c,true,Bỉ,,,he; that; the,,ヒ,かれ|かの|か.の,8,8,2,648,false,,svg/05f7c.svg
+24,1,全,05168,true,Toàn,,,whole; entire; all; complete; fulfill,,ゼン,まった.く|すべ.て,6,3,2,75,false,,svg/05168.svg
+24,2,部,090e8,true,Bộ,,,section; bureau; dept; class; copy; part; portion; counter for copies of a newspaper or magazine,,ブ,-べ,11,3,2,36,false,,svg/090e8.svg
+24,3,必,05fc5,true,Tất,,,invariably; certain; inevitable,,ヒツ,かなら.ず,5,4,2,265,false,,svg/05fc5.svg
+24,4,要,08981,true,Yếu,,Yêu,need; main point; essence; pivot; key to,,ヨウ,い.る|かなめ,9,4,2,106,false,,svg/08981.svg
+24,5,荷,08377,true,Hà,,,baggage; shoulder-pole load; bear (a burden); shoulder (a gun); load; cargo; freight,,カ,に,10,3,2,1230,false,,svg/08377.svg
+24,6,由,07531,true,Do,,,wherefore; a reason,,ユ|ユウ|ユイ,よし|よ.る,5,3,2,325,false,,svg/07531.svg
+24,7,届,05c4a,true,Giới,,,deliver; reach; arrive; report; notify; forward,,カイ,とど.ける|-とど.け|とど.く,8,6,2,939,false,,svg/05c4a.svg
+24,8,利,05229,true,Lợi,,,profit; advantage; benefit,,リ,き.く,7,4,2,203,false,,svg/05229.svg
+24,9,払,06255,true,Phất,,,pay; clear out; prune; banish; dispose of,,フツ|ヒツ|ホツ,はら.う|-はら.い|-ばら.い,5,8,2,813,true,Sửa tay: KANJIDIC2 sai hoặc thiếu,svg/06255.svg
+24,10,濯,06fef,true,Trạc,,,laundry; wash; pour on; rinse,,タク,すす.ぐ|ゆす.ぐ,17,8,2,1698,false,,svg/06fef.svg
+24,11,寝,05bdd,true,Tẩm,,,lie down; sleep; rest; bed; remain unsold,,シン,ね.る|ね.かす|い.ぬ|みたまや|や.める,13,8,2,1034,false,,svg/05bdd.svg
+24,12,踊,08e0a,true,Dũng,,,jump; dance; leap; skip,,ヨウ,おど.る,14,8,2,1308,false,,svg/08e0a.svg
+24,13,活,06d3b,true,Hoạt,,Quạt,lively; resuscitation; being helped; living,,カツ,い.きる|い.かす|い.ける,9,2,2,171,false,,svg/06d3b.svg
+24,14,末,0672b,true,Mạt,,,end; close; tip; powder; posterity,,マツ|バツ,すえ|うら|うれ,5,4,2,456,false,,svg/0672b.svg
+24,15,宅,05b85,true,Trạch,,,home; house; residence; our house; my husband,,タク,,6,6,2,357,false,,svg/05b85.svg
+24,16,祭,0796d,true,Tế,,Sái,ritual; offer prayers; celebrate; deify; enshrine; worship,,サイ,まつ.る|まつ.り|まつり,11,3,2,1124,false,,svg/0796d.svg
+25,1,平,05e73,true,Bình,,Biền,even; flat; peace,,ヘイ|ビョウ|ヒョウ,たい.ら|たい.らげる|ひら,5,3,2,128,false,,svg/05e73.svg
+25,2,和,0548c,true,Hòa,,Họa,harmony; Japanese style; peace; soften; Japan,,ワ|オ|カ,やわ.らぐ|やわ.らげる|なご.む|なご.やか|あ.える,8,3,2,124,false,,svg/0548c.svg
+25,3,戦,06226,true,Chiến,,,war; battle; match,,セン,いくさ|たたか.う|おのの.く|そよ.ぐ|わなな.く,13,4,2,78,true,Sửa tay: KANJIDIC2 sai hoặc thiếu,svg/06226.svg
+25,4,争,04e89,true,Tranh,,Tránh|Chanh|Danh,contend; dispute; argue,,ソウ,あらそ.う|いか.でか,6,4,2,271,false,,svg/04e89.svg
+25,5,政,0653f,true,Chính,Chánh,,politics; government,,セイ|ショウ,まつりごと|まん,9,5,2,17,true,Sửa tay: KANJIDIC2 sai hoặc thiếu,svg/0653f.svg
+25,6,治,06cbb,true,Trị,,Trì,reign; be at peace; calm down; subdue; quell; govt; cure; heal; rule; conserve,,ジ|チ,おさ.める|おさ.まる|なお.る|なお.す,8,4,2,109,false,,svg/06cbb.svg
+25,7,経,07d4c,true,Kinh,,,sutra; longitude; pass thru; expire; warp,,ケイ|キョウ|キン,へ.る|た.つ|たていと|はか.る|のり,11,5,2,79,false,,svg/07d4c.svg
+25,8,済,06e08,true,Tế,,Tề,"settle (debt, etc.); relieve (burden); finish; come to an end; excusable; need not",,サイ|セイ,す.む|-ず.み|-ずみ|す.まない|す.ます|-す.ます|すく.う|な.す|わたし|わた.る,11,6,2,168,false,,svg/06e08.svg
+25,9,法,06cd5,true,Pháp,,,method; law; rule; principle; model; system,,ホウ|ハッ|ホッ|フラン,のり,8,4,2,100,false,,svg/06cd5.svg
+25,10,律,05f8b,true,Luật,,,rhythm; law; regulation; gauge; control,,リツ|リチ|レツ,,9,6,2,992,false,,svg/05f8b.svg
+25,11,際,0969b,true,Tế,,,occasion; side; edge; verge; dangerous; adventurous; indecent; time; when,,サイ,きわ|-ぎわ,14,5,2,183,false,,svg/0969b.svg
+25,12,関,095a2,true,Quan,,,connection; barrier; gateway; involve; concerning,,カン,せき|-ぜき|かか.わる|からくり|かんぬき,14,4,2,70,false,,svg/095a2.svg
+25,13,係,04fc2,true,Hệ,,,person in charge; connection; duty; concern oneself,,ケイ,かか.る|かかり|-がかり|かか.わる,9,3,2,232,false,,svg/04fc2.svg
+25,14,義,07fa9,true,Nghĩa,,,righteousness; justice; morality; honor; loyalty; meaning,,ギ,,13,5,1,415,false,,svg/07fa9.svg
+25,15,議,08b70,true,Nghị,,,deliberation; consultation; debate; consideration,,ギ,,20,4,2,25,false,,svg/08b70.svg
+25,16,党,0515a,true,Đảng,,,party; faction; clique,,トウ,なかま|むら,10,6,2,39,false,,svg/0515a.svg
+26,1,遊,0904a,true,Du,,,play,,ユウ|ユ,あそ.ぶ|あそ.ばす,12,3,2,941,false,,svg/0904a.svg
+26,2,泳,06cf3,true,Vịnh,,,swim,,エイ,およ.ぐ,8,3,2,1223,false,,svg/06cf3.svg
+26,3,疲,075b2,true,Bì,,,exhausted; tire; weary,,ヒ,つか.れる|-づか.れ|つか.らす,10,8,2,1263,false,,svg/075b2.svg
+26,4,暖,06696,true,Noãn,,,warmth,,ダン|ノン,あたた.か|あたた.かい|あたた.まる|あたた.める,13,6,2,1371,false,,svg/06696.svg
+26,5,涼,06dbc,true,Lương,,Lượng,refreshing; nice and cool,,リョウ,すず.しい|すず.む|すず.やか|うす.い|ひや.す|まことに,11,8,2,1783,false,,svg/06dbc.svg
+26,6,静,09759,true,Tĩnh,,Tịnh,quiet,,セイ|ジョウ,しず-|しず.か|しず.まる|しず.める,14,4,2,764,false,,svg/09759.svg
+26,7,公,0516c,true,Công,,,public; prince; official; governmental,,コウ|ク,おおやけ,4,2,2,118,false,,svg/0516c.svg
+26,8,園,05712,true,Viên,,,park; garden; yard; farm,,エン,その,13,2,2,628,false,,svg/05712.svg
+26,9,込,08fbc,true,,,,crowded; mixture; in bulk; included; (kokuji),,,-こ.む|こ.む|こ.み|-こ.み|こ.める,5,8,2,675,true,"Chữ quốc tự (kokuji), không có Hán Việt",svg/08fbc.svg
+26,10,連,09023,true,Liên,,,take along; lead; join; connect; party; gang; clique,,レン,つら.なる|つら.ねる|つ.れる|-づ.れ,10,4,2,30,false,,svg/09023.svg
+26,11,窓,07a93,true,Song,,,window; pane,,ソウ|ス,まど|てんまど|けむだし,11,6,2,1186,false,,svg/07a93.svg
+26,12,側,05074,true,Trắc,,,side; lean; oppose; regret,,ソク,かわ|がわ|そば,11,4,2,216,false,,svg/05074.svg
+26,13,葉,08449,true,Diệp,,,leaf; plane; lobe; needle; blade; spear; counter for flat things; fragment; piece,,ヨウ,は,12,3,2,414,false,,svg/08449.svg
+26,14,景,0666f,true,Cảnh,,,scenery; view,,ケイ,,12,4,2,419,false,,svg/0666f.svg
+26,15,記,08a18,true,Ký,Kí,,scribe; account; narrative,,キ,しる.す,10,2,2,149,true,Ký hay Kí (cách viết),svg/08a18.svg
+26,16,形,05f62,true,Hình,,,shape; form; style,,ケイ|ギョウ,かた|-がた|かたち|なり,7,2,2,418,false,,svg/05f62.svg
+27,1,吉,05409,true,Cát,,,good luck; joy; congratulations,,キチ|キツ,よし,6,8,1,711,false,,svg/05409.svg
+27,2,結,07d50,true,Kết,,,tie; bind; contract; join; organize; do up hair; fasten,,ケツ|ケチ,むす.ぶ|ゆ.う|ゆ.わえる,12,4,2,162,false,,svg/07d50.svg
+27,3,婚,05a5a,true,Hôn,,,marriage,,コン,,11,8,2,767,false,,svg/05a5a.svg
+27,4,共,05171,true,Cộng,,Cung,together; both; neither; all; and; alike; with,,キョウ,とも|とも.に|-ども,6,4,2,174,false,,svg/05171.svg
+27,5,供,04f9b,true,Cung,,,submit; offer; present; serve (meal); accompany,,キョウ|ク|クウ|グ,そな.える|とも|-ども,8,6,2,313,false,,svg/04f9b.svg
+27,6,両,04e21,true,Lưỡng,,,"both; old Japanese coin; counter for carriages (e.g., in a train); two",,リョウ,てる|ふたつ,6,3,2,247,true,Sửa tay: KANJIDIC2 sai hoặc thiếu,svg/04e21.svg
+27,7,若,082e5,true,Nhược,,,young; if; perhaps; possibly; low number; immature,,ジャク|ニャク|ニャ,わか.い|わか-|も.しくわ|も.し|も.しくは|ごと.し,8,6,2,458,false,,svg/082e5.svg
+27,8,老,08001,true,Lão,,,old man; old age; grow old,,ロウ,お.いる|ふ.ける,6,4,2,803,false,,svg/08001.svg
+27,9,息,0606f,true,Tức,,,breath; respiration; son; interest (on money),,ソク,いき,10,3,2,882,false,,svg/0606f.svg
+27,10,娘,05a18,true,Nương,,,daughter; girl,,ジョウ,むすめ|こ,10,8,2,1145,false,,svg/05a18.svg
+27,11,奥,05965,true,Áo,,Úc,heart; interior,,オウ,おく|おく.まる|くま,12,8,2,1018,false,,svg/05965.svg
+27,12,将,05c06,true,Tướng,Tương,Thương,leader; commander; general; admiral; or; and again; soon; from now on; just about,,ショウ|ソウ,まさ.に|はた|まさ|ひきい.る|もって,10,6,2,634,true,"Tương/Tướng đều đúng (将来=tương lai, 将軍=tướng quân)",svg/05c06.svg
+27,13,祖,07956,true,Tổ,,,ancestor; pioneer; founder,,ソ,,9,5,2,1226,false,,svg/07956.svg
+27,14,育,080b2,true,Dục,,,bring up; grow up; raise; rear,,イク,そだ.つ|そだ.ち|そだ.てる|はぐく.む,8,3,2,369,false,,svg/080b2.svg
+27,15,性,06027,true,Tính,,,sex; gender; nature,,セイ|ショウ,さが,8,5,2,104,false,,svg/06027.svg
+27,16,招,062db,true,Chiêu,,Thiêu|Thiều,beckon; invite; summon; engage,,ショウ,まね.く,8,5,2,840,false,,svg/062db.svg
+28,1,取,053d6,true,Thủ,,,take; fetch; take up,,シュ,と.る|と.り|と.り-|とり|-ど.り,8,3,2,122,false,,svg/053d6.svg
+28,2,最,06700,true,Tối,,,utmost; most; extreme,,サイ|シュ,もっと.も|つま,12,4,2,82,false,,svg/06700.svg
+28,3,初,0521d,true,Sơ,,,first time; beginning,,ショ,はじ.め|はじ.めて|はつ|はつ-|うい-|-そ.める|-ぞ.め,7,4,2,152,false,,svg/0521d.svg
+28,4,番,0756a,true,Phiên,,Phan|Ba|Bà,turn; number in a series,,バン,つが.い,12,2,2,348,false,,svg/0756a.svg
+28,5,歳,06b73,true,Tuế,,Tuổi,year-end; age; occasion; opportunity,,サイ|セイ,とし|とせ|よわい,13,8,2,269,false,,svg/06b73.svg
+28,6,枚,0679a,true,Mai,,,sheet of...; counter for flat thin objects or sheets,,マイ|バイ,,8,6,2,911,false,,svg/0679a.svg
+28,7,冊,0518a,true,Sách,,Sạch,tome; counter for books; volume,,サツ|サク,ふみ,5,6,2,1313,false,,svg/0518a.svg
+28,8,億,05104,true,Ức,,,hundred million; 10**8,,オク,,15,4,2,716,false,,svg/05104.svg
+28,9,点,070b9,true,Điểm,,,spot; point; mark; speck; decimal point,,テン,つ.ける|つ.く|た.てる|さ.す|とぼ.す|とも.す|ぼち,9,2,2,165,false,,svg/070b9.svg
+28,10,階,0968e,true,Giai,,,storey; stair; counter for storeys of a building,,カイ,きざはし,12,3,2,513,false,,svg/0968e.svg
+28,11,段,06bb5,true,Đoạn,,,grade; steps; stairs,,ダン|タン,,9,6,2,479,false,,svg/06bb5.svg
+28,12,号,053f7,true,Hiệu,,,nickname; number; item; title; pseudonym; name; call,,ゴウ,さけ.ぶ|よびな,5,3,2,585,false,,svg/053f7.svg
+28,13,倍,0500d,true,Bội,,,double; twice; times; fold,,バイ,,10,3,2,714,false,,svg/0500d.svg
+28,14,次,06b21,true,Thứ,,,next; order; sequence,,ジ|シ,つ.ぐ|つぎ,6,3,2,222,false,,svg/06b21.svg
+28,15,々,03005,false,,,,"iteration mark (repeats the preceding kanji, e.g. 次々)",,,,3,,,,true,Không có trong KANJIDIC2 và không phải kanji. Kiểm tra sách xem chữ thứ 15 của bài 28 là gì.,svg/03005.svg
+28,16,他,04ed6,true,Tha,,,other; another; the others,,タ,ほか,5,3,2,543,false,,svg/04ed6.svg
+29,1,勝,052dd,true,Thắng,,Thăng,victory; win; prevail; excel,,ショウ,か.つ|-が.ち|まさ.る|すぐ.れる|かつ,12,3,2,185,false,,svg/052dd.svg
+29,2,負,08ca0,true,Phụ,,,defeat; negative; -; minus; bear; owe; assume a responsibility,,フ,ま.ける|ま.かす|お.う,9,3,2,443,false,,svg/08ca0.svg
+29,3,賛,08cdb,true,Tán,,,approve; praise; title or inscription on picture; assist; agree with,,サン,たす.ける|たた.える,15,5,2,868,false,,svg/08cdb.svg
+29,4,成,06210,true,Thành,,,turn into; become; get; grow; elapse; reach,,セイ|ジョウ,な.る|な.す|-な.す,6,4,2,116,false,,svg/06210.svg
+29,5,絶,07d76,true,Tuyệt,,Tiệt|Tịt|Toẹt,discontinue; sever; cut off; abstain; interrupt; suppress; be beyond; without match; peerless; unparalleled,,ゼツ,た.える|た.やす|た.つ,12,5,2,784,false,,svg/07d76.svg
+29,6,対,05bfe,true,Đối,,,vis-a-vis; opposite; even; equal; versus; anti-; compare,,タイ|ツイ,あいて|こた.える|そろ.い|つれあ.い|なら.ぶ|むか.う,7,3,2,34,false,,svg/05bfe.svg
+29,7,続,07d9a,true,Tục,,,continue; series; sequel,,ゾク|ショク|コウ|キョウ,つづ.く|つづ.ける|つぐ.ない,13,4,2,141,false,,svg/07d9a.svg
+29,8,辞,08f9e,true,Từ,,,resign; word; term; expression,,ジ,や.める|いな.む,13,4,2,633,false,,svg/08f9e.svg
+29,9,投,06295,true,Đầu,,,throw; discard; abandon; launch into; join; invest in; hurl; give up; sell at a loss,,トウ,な.げる|-な.げ,7,3,2,236,false,,svg/06295.svg
+29,10,選,09078,true,Tuyển,,Tuyến,elect; select; choose; prefer,,セン,えら.ぶ|え.る|よ.る,15,4,2,57,false,,svg/09078.svg
+29,11,約,07d04,true,Ước,,,promise; approximately; shrink,,ヤク,つづ.まる|つづ.める|つづま.やか,9,4,2,94,false,,svg/07d04.svg
+29,12,束,0675f,true,Thúc,,Thú,bundle; sheaf; ream; tie in bundles; govern; manage; control,,ソク,たば|たば.ねる|つか|つか.ねる,7,4,2,918,false,,svg/0675f.svg
+29,13,守,05b88,true,Thủ,,Thú,guard; protect; defend; obey,,シュ|ス,まも.る|まも.り|もり|-もり|かみ,6,3,2,457,false,,svg/05b88.svg
+29,14,過,0904e,true,Quá,,Qua,overdo; exceed; go beyond; error,,カ,す.ぎる|す.ごす|あやま.ち|あやま.つ|よぎ.る|よ.ぎる,12,5,2,285,false,,svg/0904e.svg
+29,15,夢,05922,true,Mộng,,Mông,dream; vision; illusion,,ム|ボウ,ゆめ|ゆめ.みる|くら.い,13,5,2,943,false,,svg/05922.svg
+29,16,的,07684,true,Đích,,Để,bull's eye; mark; target; object; adjective ending,,テキ,まと,8,4,2,105,false,,svg/07684.svg
+30,1,飛,098db,true,Phi,,,fly; skip (pages); scatter,,ヒ,と.ぶ|と.ばす|-と.ばす,9,4,2,580,false,,svg/098db.svg
+30,2,機,06a5f,true,Cơ,,Ky,loom; mechanism; machine; airplane; opportunity; potency; efficacy; occasion,,キ,はた,16,4,2,127,false,,svg/06a5f.svg
+30,3,失,05931,true,Thất,,,lose; error; fault; disadvantage; loss,,シツ,うしな.う|う.せる,5,4,2,447,false,,svg/05931.svg
+30,4,鉄,09244,true,Thiết,,,iron,,テツ,くろがね,13,3,2,672,false,,svg/09244.svg
+30,5,速,0901f,true,Tốc,,,quick; fast,,ソク,はや.い|はや-|はや.める|すみ.やか,10,3,2,576,false,,svg/0901f.svg
+30,6,遅,09045,true,Trì,,,slow; late; back; later,,チ,おく.れる|おく.らす|おそ.い,12,8,2,833,false,,svg/09045.svg
+30,7,駐,099d0,true,Trú,,,stop-over; reside in; resident,,チュウ,,15,8,2,955,false,,svg/099d0.svg
+30,8,泊,06cca,true,Bạc,,Phách,overnight stay; put up at; ride at anchor,,ハク,と.まる|と.める,8,8,2,1233,false,,svg/06cca.svg
+30,9,船,08239,true,Thuyền,,,ship; boat,,セン,ふね|ふな-,11,2,2,713,false,,svg/08239.svg
+30,10,座,05ea7,true,Tọa,,,squat; seat; cushion; gathering; sit,,ザ,すわ.る,10,6,2,588,false,,svg/05ea7.svg
+30,11,席,05e2d,true,Tịch,,,seat; mat; occasion; place,,セキ,むしろ,10,4,2,370,false,,svg/05e2d.svg
+30,12,島,05cf6,true,Đảo,,,island,,トウ,しま,10,3,2,245,false,,svg/05cf6.svg
+30,13,陸,09678,true,Lục,,,land; six,,リク|ロク,おか,11,4,2,736,false,,svg/09678.svg
+30,14,港,06e2f,true,Cảng,,,harbor,,コウ,みなと,12,3,2,495,false,,svg/06e2f.svg
+30,15,橋,06a4b,true,Kiều,,Khiêu|Cao,bridge,,キョウ,はし,16,3,2,553,false,,svg/06a4b.svg
+30,16,交,04ea4,true,Giao,,,mingle; mixing; association; coming & going,,コウ,まじ.わる|まじ.える|ま.じる|まじ.る|ま.ざる|ま.ぜる|-か.う|か.わす|かわ.す|こもごも,6,2,2,178,false,,svg/04ea4.svg
+31,1,申,07533,true,Thân,,,have the honor to; sign of the monkey; 3-5PM; ninth sign of Chinese zodiac,,シン,もう.す|もう.し-|さる,5,3,2,492,false,,svg/07533.svg
+31,2,神,0795e,true,Thần,,,gods; mind; soul,,シン|ジン,かみ|かん-|こう-,9,3,2,347,false,,svg/0795e.svg
+31,3,様,069d8,true,Dạng,,,Esq.; way; manner; situation; polite suffix,,ヨウ|ショウ,さま|さん,14,3,2,493,false,,svg/069d8.svg
+31,4,信,04fe1,true,Tín,,,faith; truth; fidelity; trust,,シン,,9,4,2,208,false,,svg/04fe1.svg
+31,5,調,08abf,true,Điều,,Điệu,tune; tone; meter; key (music); writing style; prepare; exorcise; investigate; harmonize; mediate,,チョウ,しら.べる|しら.べ|ととの.う|ととの.える,15,3,2,87,false,,svg/08abf.svg
+31,6,査,067fb,true,Tra,,,investigate,,サ,,9,5,2,184,false,,svg/067fb.svg
+31,7,相,076f8,true,Tương,,Tướng,inter-; mutual; together; each other; minister of state; councillor; aspect; phase; physiognomy,,ソウ|ショウ,あい-,9,3,2,45,false,,svg/076f8.svg
+31,8,談,08ac7,true,Đàm,,,discuss; talk,,ダン,,15,3,2,272,false,,svg/08ac7.svg
+31,9,案,06848,true,Án,,,plan; suggestion; draft; ponder; fear; proposition; idea; expectation; worry; table; bench,,アン,つくえ,10,4,2,206,false,,svg/06848.svg
+31,10,内,05185,true,Nội,,Nạp|Nói|Nòi|Nồi|Nỗi|Nụi,inside; within; between; among; house; home,,ナイ|ダイ,うち,4,2,2,44,false,,svg/05185.svg
+31,11,君,0541b,true,Quân,,,mister; you; ruler; male name suffix,,クン,きみ|-ぎみ,7,3,2,947,false,,svg/0541b.svg
+31,12,達,09054,true,Đạt,,,accomplished; reach; arrive; attain,,タツ|ダ,-たち,12,4,2,500,false,,svg/09054.svg
+31,13,星,0661f,true,Tinh,,,star; spot; dot; mark,,セイ|ショウ,ほし|-ぼし,9,2,2,844,false,,svg/0661f.svg
+31,14,雪,096ea,true,Tuyết,,,snow,,セツ,ゆき,11,2,2,1131,false,,svg/096ea.svg
+31,15,降,0964d,true,Giáng,Hàng,,descend; precipitate; fall; surrender,,コウ|ゴ,お.りる|お.ろす|ふ.る|ふ.り|くだ.る|くだ.す,10,6,2,596,true,Giáng (降る) hay Hàng (降参),svg/0964d.svg
+31,16,直,076f4,true,Trực,,,straightaway; honesty; frankness; fix; repair,,チョク|ジキ|ジカ,ただ.ちに|なお.す|-なお.す|なお.る|なお.き|す.ぐ,8,2,2,246,false,,svg/076f4.svg
+32,1,危,05371,true,Nguy,,,dangerous; fear; uneasy,,キ,あぶ.ない|あや.うい|あや.ぶむ,6,6,2,606,false,,svg/05371.svg
+32,2,険,0967a,true,Hiểm,,,precipitous; inaccessible place; impregnable position; steep place; sharp eyes,,ケン,けわ.しい,11,5,2,707,false,,svg/0967a.svg
+32,3,拾,062fe,true,Thập,,Thiệp|Kiệp,pick up; gather; find; go on foot; ten,,シュウ|ジュウ,ひろ.う,9,3,2,1479,false,,svg/062fe.svg
+32,4,捨,06368,true,Xả,,,discard; throw away; abandon; resign; reject; sacrifice,,シャ,す.てる,11,6,2,1266,false,,svg/06368.svg
+32,5,戻,0623b,true,Lệ,,,re-; return; revert; resume; restore; go backwards,,レイ,もど.す|もど.る,7,8,2,890,false,,svg/0623b.svg
+32,6,吸,05438,true,Hấp,,,suck; imbibe; inhale; sip,,キュウ,す.う,6,6,2,1054,false,,svg/05438.svg
+32,7,放,0653e,true,Phóng,,Phỏng,set free; release; fire; shoot; emit; banish; liberate,,ホウ,はな.す|-っぱな.し|はな.つ|はな.れる|こ.く|ほう.る,8,3,2,288,false,,svg/0653e.svg
+32,8,変,05909,true,Biến,,Bén|Biếng,unusual; change; strange,,ヘン,か.わる|か.わり|か.える,9,4,2,238,false,,svg/05909.svg
+32,9,歯,06b6f,true,Xỉ,,,tooth; cog,,シ,よわい|は|よわ.い|よわい.する,12,3,2,1106,false,,svg/06b6f.svg
+32,10,髪,09aea,true,Phát,,,hair of the head,,ハツ,かみ,14,8,2,1474,false,,svg/09aea.svg
+32,11,絵,07d75,true,Hội,,Gói|Gối,picture; drawing; painting; sketch,,カイ|エ,,12,2,2,895,false,,svg/07d75.svg
+32,12,横,06a2a,true,Hoành,,Hoạnh|Quáng|Vàng,sideways; side; horizontal; width; woof; unreasonable; perverse,,オウ,よこ,15,3,2,480,false,,svg/06a2a.svg
+32,13,当,05f53,true,Đương,,Đang|Đáng,hit; right; appropriate; himself,,トウ,あ.たる|あ.たり|あ.てる|あ.て|まさ.に|まさ.にべし,6,2,2,91,false,,svg/05f53.svg
+32,14,伝,04f1d,true,Truyền,,,transmit; go along; walk along; follow; report; communicate; legend; tradition,,デン|テン,つた.わる|つた.える|つた.う|つだ.う|-づた.い|つて,6,4,2,416,true,Sửa tay: KANJIDIC2 sai hoặc thiếu,svg/04f1d.svg
+32,15,細,07d30,true,Tế,,,dainty; get thin; taper; slender; narrow; detailed; precise,,サイ,ほそ.い|ほそ.る|こま.か|こま.かい,11,2,2,537,false,,svg/07d30.svg
+32,16,無,07121,true,Vô,,Mô,nothingness; none; ain't; nothing; nil; not,,ム|ブ,な.い,12,4,2,274,false,,svg/07121.svg
