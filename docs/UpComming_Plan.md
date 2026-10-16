@@ -20,6 +20,10 @@
 - [x] **T-010 Nhắc việc** — `buildReminders` + `diffReminders` vào bảng `reminders`; worker gửi (desktop); nút "gửi thông báo thử". Worker chạy nền `syncAllReminders` qua Supabase JS bằng Service Role để tạo outbox nhắc việc tự động. Nhánh `feat/reminders`.
 - [x] **T-011 Rà nội dung template** — thêm "Bộ đề JLPT N3" vào danh mục tài nguyên (task `PH3-TEST01` đang thiếu); điền `source_note`; xem lại giờ ước tính (đặc biệt Soumatome lên 30 giờ). Chạy script tự động nạp thay đổi vào DB mà không làm mất dữ liệu hiện tại của user. Nhánh `feat/template-content`.
 - [ ] **T-012 Dùng thật 2–4 tuần** — ghi giờ thật so với ước tính, ghi chỗ phiền, chỉnh.
+- [ ] **T-013 Module Ôn luyện (Kanji 512, bài 1–12)** — theo `docs/plans/review-feature.plan.md`.
+  - [x] M1a schema + RLS + RPC khung — migration `20261016120000_review_schema.sql` (8 bảng `review_*`, trigger `item_id`, 3 RPC `review_get_quiz_batch`/`review_reveal_answer`/`review_submit_answer`; chấm K2 tự đánh giá chạy thật, K1/E1/E2 báo "chưa hỗ trợ" chờ M2 thay `review_grade_answer`). Khối test review trong `scripts/rls_test.sql`. Nhánh `feat/review-schema`.
+  - [ ] M1b seed 192 kanji + 1.399 ví dụ · [ ] M2 `packages/core/src/review.ts` + mirror SQL chấm · [ ] M3 FE duyệt/list · [ ] M4 FE quiz · [ ] M5 nav + giấy phép
+  - Khi deploy: dán migration `review_*` vào SQL Editor Supabase cloud TRƯỚC khi push `main`.
 
 ## Bị chặn / hoãn
 - [!] **Tùy biến bằng Gemini (P6), thu phí, mục tiêu khác (P7)** — chỉ sau khi có người dùng thật (P5).
