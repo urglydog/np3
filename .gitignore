@@ -18,3 +18,11 @@ npm-debug.log*
 *.pem
 *.key
 .idea/
+
+# Ảnh chụp màn hình nguồn VNJP (bằng chứng đối chiếu dữ liệu Ôn luyện) — không phân phối, chỉ ở máy local.
+# Dữ liệu thật đã trích xuất vào vnjp_kanji.csv/vnjp_examples.csv/vnjp_kanji_examples.json — 3 file này
+# nằm cùng thư mục nên phải loại trừ riêng (!) để vẫn commit được.
+kanji512_review_pack/resources_512_vnjp/*
+!kanji512_review_pack/resources_512_vnjp/vnjp_kanji.csv
+!kanji512_review_pack/resources_512_vnjp/vnjp_examples.csv
+!kanji512_review_pack/resources_512_vnjp/vnjp_kanji_examples.json
