@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CalendarCheck, ListTodo, Map, ShoppingBag, Settings } from 'lucide-react';
+import { CalendarCheck, ListTodo, Map, ShoppingBag, Settings, BookOpenCheck } from 'lucide-react';
 
 const items = [
   { href: '/today', label: 'Hôm nay', title: 'Màn Hôm nay', icon: CalendarCheck },
   { href: '/upcoming', label: 'Sắp tới', title: 'Màn Sắp tới', icon: ListTodo },
   { href: '/roadmap', label: 'Lộ trình', title: 'Màn Lộ trình', icon: Map },
   { href: '/buy', label: 'Cần mua', title: 'Màn Cần mua', icon: ShoppingBag },
+  { href: '/review', label: 'Ôn luyện', title: 'Màn Ôn luyện Kanji', icon: BookOpenCheck },
   { href: '/settings', label: 'Cài đặt', title: 'Màn Cài đặt', icon: Settings },
 ] as const;
 
@@ -28,7 +29,7 @@ export function BottomNav({ badgeCounts = {} }: { badgeCounts?: Partial<Record<(
             key={href}
             href={href}
             title={title}
-            className={`relative flex flex-col items-center gap-1 px-2 text-xs ${
+            className={`relative flex min-w-0 flex-1 flex-col items-center gap-1 px-1 text-[11px] leading-tight ${
               active ? 'text-accent' : 'text-ink-muted'
             }`}
           >

@@ -20,6 +20,16 @@
 - [x] **T-010 Nhắc việc** — `buildReminders` + `diffReminders` vào bảng `reminders`; worker gửi (desktop); nút "gửi thông báo thử". Worker chạy nền `syncAllReminders` qua Supabase JS bằng Service Role để tạo outbox nhắc việc tự động. Nhánh `feat/reminders`.
 - [x] **T-011 Rà nội dung template** — thêm "Bộ đề JLPT N3" vào danh mục tài nguyên (task `PH3-TEST01` đang thiếu); điền `source_note`; xem lại giờ ước tính (đặc biệt Soumatome lên 30 giờ). Chạy script tự động nạp thay đổi vào DB mà không làm mất dữ liệu hiện tại của user. Nhánh `feat/template-content`.
 - [ ] **T-012 Dùng thật 2–4 tuần** — ghi giờ thật so với ước tính, ghi chỗ phiền, chỉnh.
+- [ ] **T-013 Module Ôn luyện (Kanji 512, bài 1–12)** — theo `docs/plans/review-feature.plan.md`.
+  - [x] M1a schema + RLS + RPC khung — migration `20261016120000_review_schema.sql` (8 bảng `review_*`, trigger `item_id`, 3 RPC `review_get_quiz_batch`/`review_reveal_answer`/`review_submit_answer`; chấm K2 tự đánh giá chạy thật, K1/E1/E2 báo "chưa hỗ trợ" chờ M2 thay `review_grade_answer`). Khối test review trong `scripts/rls_test.sql`. Nhánh `feat/review-schema`.
+  - [x] M2 `packages/core/src/review.ts` (63 test) + migration `20261016130000_review_grading.sql` (mirror SQL chấm, `han_viet_parts`, view `review_card_catalog`, RPC `review_home_stats`) + `scripts/test-review.mts` (76 kiểm tra, TS≡SQL).
+  - [x] M1b `scripts/gen-review-seed.ts` → `supabase/seed-review.sql` (idempotent): 192 kanji, 1.399 dòng → 1.244 ví dụ, 994 có đáp án E1; 8 kanji + 21 ví dụ chờ xác nhận. 192 SVG vào `apps/web/public/kanjivg/`.
+  - [x] M3 `/review` (Home 32 ô bài), `/review/browse` (+ chọn nhiều), `/review/browse/[hex]` (nét, ví dụ, bảng tập viết), `/review/lists`.
+  - [x] M4 `/review/quiz/new` (phạm vi bài/danh sách/chọn tay/thông minh, loại câu, số câu) + `/review/quiz` (QuizRunner 4 loại câu, chặn chấm khi IME đang soạn, idempotent khi gửi lại).
+  - [x] M5 mục "Ôn luyện" trên bottom nav, `/review/licenses`.
+  - Lệch plan có chủ đích: không có route `quiz/[sessionId]` (phiên nằm trong URL GET, không lưu server); `masteredRatio` nhận số đếm; copy đủ `kanji_512.csv` (512 chữ) vào `data/review/` chỉ để tra âm Hán Việt cho đáp án E1 — `review_kanji` vẫn chỉ seed bài 1–12.
+  - [ ] Còn nợ: xác nhận 8 kanji + 21 ví dụ (đặt `confirmed_at`); nạp bài 13–32; quyết định phạm vi phát hành dữ liệu VNJP (xem `ATTRIBUTION.md`) trước khi deploy công khai.
+  - Khi deploy: dán theo thứ tự `20261016120000_review_schema.sql` → `20261016130000_review_grading.sql` → `seed-review.sql` vào SQL Editor Supabase cloud TRƯỚC khi push `main` (cả 3 chỉ thêm mới, không xoá dữ liệu cũ).
 
 ## Bị chặn / hoãn
 - [!] **Tùy biến bằng Gemini (P6), thu phí, mục tiêu khác (P7)** — chỉ sau khi có người dùng thật (P5).

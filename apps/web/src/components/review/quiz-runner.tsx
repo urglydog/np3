@@ -1,0 +1,332 @@
+'use client';
+
+import { useRef, useState, useTransition } from 'react';
+import Link from 'next/link';
+import { CheckCircle2, Eye, Eraser, Loader2, XCircle } from 'lucide-react';
+import type { QuestionType } from '@roadmap/core';
+import { revealAnswerAction, submitAnswerAction } from '@/app/(app)/review/actions';
+import { HandwritingCanvas, type HandwritingCanvasHandle } from './handwriting-canvas';
+import type { QuizQuestion } from '@/lib/review-data';
+import type { RevealResult, SubmitAnswerResult } from '@/lib/review-mutations';
+import { newClientId } from '@/lib/client-id';
+import { copy } from '@/lib/copy';
+
+const DONT_KNOW = '(không biết)'; // luôn chấm sai ở cả TS lẫn SQL, vẫn lưu nguyên văn vào attempt_log
+
+interface Answered {
+  q: QuizQuestion;
+  result: SubmitAnswerResult;
+  given: string | null;
+}
+
+function promptLabel(q: QuizQuestion): string {
+  switch (q.question_type) {
+    case 'K1':
+      return q.prompt.kanji ?? '';
+    case 'E1':
+      return q.prompt.term ?? '';
+    case 'E2':
+      return q.prompt.meaning_vi ?? '';
+    case 'K2':
+      return `${q.prompt.han_viet_main ?? ''}${q.prompt.meaning_vi ? ` — ${q.prompt.meaning_vi}` : ''}`;
+  }
+}
+
+function answerSummary(a: Answered): string {
+  const r = a.result.answer;
+  return a.q.item_type === 'kanji'
+    ? `${r.kanji ?? ''} · ${r.han_viet_main ?? ''}`
+    : `${r.term ?? ''} (${r.reading_kana ?? ''})${r.han_viet ? ` · ${r.han_viet}` : ''}`;
+}
+
+export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[]; scopeParam: string }) {
+  const [idx, setIdx] = useState(0);
+  const [attemptId, setAttemptId] = useState(() => newClientId());
+  const [input, setInput] = useState('');
+  const [composing, setComposing] = useState(false);
+  const [result, setResult] = useState<SubmitAnswerResult | null>(null);
+  const [reveal, setReveal] = useState<RevealResult | null>(null);
+  const [strokes, setStrokes] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [answered, setAnswered] = useState<Answered[]>([]);
+  const [finished, setFinished] = useState(false);
+  const [pending, startTransition] = useTransition();
+  const canvas = useRef<HandwritingCanvasHandle>(null);
+
+  const q = questions[idx];
+  if (!q) return null;
+
+  const submit = (answerText: string | null, selfCorrect: boolean | null) => {
+    setError(null);
+    startTransition(async () => {
+      // cùng attemptId cho mọi lần thử lại của câu này → server không tính hai lần
+      const res = await submitAnswerAction({
+        itemType: q.item_type,
+        itemId: q.item_id,
+        questionType: q.question_type,
+        answerText,
+        selfCorrect,
+        clientAttemptId: attemptId,
+      });
+      if (!res.ok) {
+        setError(res.error);
+        return;
+      }
+      setResult(res.data);
+      setAnswered((xs) => [...xs, { q, result: res.data, given: answerText }]);
+    });
+  };
+
+  const doReveal = () => {
+    setError(null);
+    startTransition(async () => {
+      const res = await revealAnswerAction(q.item_id);
+      if (!res.ok) setError(res.error);
+      else setReveal(res.data);
+    });
+  };
+
+  const next = () => {
+    if (idx + 1 >= questions.length) {
+      setFinished(true);
+      return;
+    }
+    setIdx(idx + 1);
+    setAttemptId(newClientId());
+    setInput('');
+    setResult(null);
+    setReveal(null);
+    setStrokes(0);
+    setError(null);
+    canvas.current?.clear();
+  };
+
+  if (finished) {
+    const correct = answered.filter((a) => a.result.is_correct).length;
+    const wrong = answered.filter((a) => !a.result.is_correct);
+    return (
+      <section className="flex flex-col gap-4">
+        <h2 className="text-2xl font-bold text-ink">{copy.reviewQuizResultTitle}</h2>
+        <p className="text-lg text-ink">{copy.reviewQuizResultScore(correct, answered.length)}</p>
+        {wrong.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            <h3 className="text-sm font-semibold text-ink">{copy.reviewQuizResultWrongList}</h3>
+            <ul className="flex flex-col divide-y divide-line rounded-xl border border-line bg-surface-raised">
+              {wrong.map((a, i) => (
+                <li key={i} className="flex flex-col px-3 py-2 text-sm">
+                  <span className="text-xs text-ink-muted">{copy.reviewQuestionTypeLabel[a.q.question_type]}</span>
+                  <span className="text-ink" lang="ja">
+                    {answerSummary(a)}
+                  </span>
+                  {a.given && a.given !== DONT_KNOW ? <span className="text-xs text-danger">{copy.reviewQuizYourAnswer(a.given)}</span> : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <Link
+            href={`/review/quiz/new?scope=${encodeURIComponent(scopeParam)}`}
+            className="rounded-xl bg-brand px-4 py-3 text-center font-semibold text-white"
+          >
+            {copy.reviewQuizAgain}
+          </Link>
+          <Link href="/review" className="rounded-xl border border-line px-4 py-3 text-center text-ink">
+            {copy.reviewQuizBackHome}
+          </Link>
+        </div>
+      </section>
+    );
+  }
+
+  const typed = q.question_type !== 'K2';
+  const isLast = idx + 1 >= questions.length;
+
+  return (
+    <section className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center justify-between text-xs text-ink-muted">
+          <span>{copy.reviewQuizProgress(idx + 1, questions.length)}</span>
+          <span>{copy.reviewQuestionTypeLabel[q.question_type]}</span>
+        </div>
+        <div className="h-1.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
+          <div className="h-full bg-brand transition-all" style={{ width: `${(idx / questions.length) * 100}%` }} />
+        </div>
+      </div>
+
+      <p className="text-xs text-ink-muted">{copy.reviewQuestionTypeHint[q.question_type]}</p>
+
+      {/* Đề */}
+      <div className="flex min-h-[8rem] flex-col items-center justify-center gap-1 rounded-2xl border border-line bg-surface-raised p-4 text-center">
+        {q.question_type === 'K1' || q.question_type === 'E1' ? (
+          <span className={`${q.question_type === 'K1' ? 'text-7xl' : 'text-4xl'} leading-tight text-ink`} lang="ja">
+            {promptLabel(q)}
+          </span>
+        ) : q.question_type === 'E2' ? (
+          <span className="text-2xl font-semibold text-ink">{q.prompt.meaning_vi}</span>
+        ) : (
+          <>
+            <span className="text-3xl font-bold text-ink">{q.prompt.han_viet_main}</span>
+            {q.prompt.meaning_vi ? <span className="text-base text-ink">{q.prompt.meaning_vi}</span> : null}
+            {q.prompt.meaning_en ? <span className="text-xs text-ink-muted">{q.prompt.meaning_en}</span> : null}
+            {q.prompt.stroke_count ? <span className="text-xs text-ink-muted">{copy.reviewQuizStrokeHint(q.prompt.stroke_count)}</span> : null}
+          </>
+        )}
+      </div>
+
+      {/* Trả lời */}
+      {typed ? (
+        <form
+          className="flex flex-col gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (composing || pending || result || input.trim() === '') return;
+            submit(input, null);
+          }}
+        >
+          <input
+            key={idx}
+            autoFocus
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onCompositionStart={() => setComposing(true)}
+            onCompositionEnd={(e) => {
+              setComposing(false);
+              setInput(e.currentTarget.value);
+            }}
+            readOnly={!!result}
+            lang={q.question_type === 'E2' ? 'ja' : 'vi'}
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="off"
+            spellCheck={false}
+            enterKeyHint="done"
+            maxLength={200}
+            placeholder={copy.reviewQuizAnswerPlaceholder[q.question_type as Exclude<QuestionType, 'K2'>]}
+            aria-label={copy.reviewQuestionTypeHint[q.question_type]}
+            className="w-full rounded-xl border border-line bg-surface-raised px-4 py-3 text-base text-ink"
+          />
+          {composing ? <p className="text-xs text-ink-muted">{copy.reviewQuizComposing}</p> : null}
+          {!result ? (
+            <div className="flex gap-2">
+              <button
+                type="submit"
+                disabled={composing || pending || input.trim() === ''}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white disabled:opacity-50"
+              >
+                {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+                {copy.reviewQuizSubmit}
+              </button>
+              <button
+                type="button"
+                disabled={pending}
+                onClick={() => submit(DONT_KNOW, null)}
+                className="rounded-xl border border-line px-4 py-3 text-sm text-ink-muted disabled:opacity-50"
+              >
+                {copy.reviewQuizDontKnow}
+              </button>
+            </div>
+          ) : null}
+        </form>
+      ) : (
+        <div className="flex flex-col gap-3">
+          <HandwritingCanvas ref={canvas} label={copy.reviewQuestionTypeLabel.K2} onStrokeCountChange={setStrokes} />
+          {!reveal ? (
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => canvas.current?.clear()}
+                className="flex items-center gap-1 rounded-xl border border-line px-4 py-3 text-sm text-ink"
+              >
+                <Eraser className="h-4 w-4" aria-hidden="true" />
+                {copy.reviewQuizClear}
+              </button>
+              <button
+                type="button"
+                onClick={doReveal}
+                disabled={pending}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white disabled:opacity-50"
+              >
+                {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
+                {copy.reviewQuizReveal}
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-2 rounded-2xl border border-line bg-surface-raised p-3">
+              {/* eslint-disable-next-line @next/next/no-img-element -- SVG tĩnh tự host */}
+              <img src={reveal.svg_path} alt={copy.reviewDetailStrokeOrderAlt(reveal.kanji)} width={160} height={160} className="h-40 w-40" />
+              {reveal.stroke_count ? <p className="text-sm text-ink-muted">{copy.reviewQuizStrokeCompare(strokes, reveal.stroke_count)}</p> : null}
+              {!result ? (
+                <div className="flex w-full gap-2">
+                  <button
+                    type="button"
+                    disabled={pending}
+                    onClick={() => submit(null, false)}
+                    className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-danger/40 px-3 py-3 text-sm font-semibold text-danger disabled:opacity-50"
+                  >
+                    <XCircle className="h-4 w-4" aria-hidden="true" />
+                    {copy.reviewQuizSelfWrong}
+                  </button>
+                  <button
+                    type="button"
+                    disabled={pending}
+                    onClick={() => submit(null, true)}
+                    className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-success px-3 py-3 text-sm font-semibold text-white disabled:opacity-50"
+                  >
+                    <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+                    {copy.reviewQuizSelfCorrect}
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          )}
+        </div>
+      )}
+
+      {error ? (
+        <div role="alert" className="flex items-center justify-between gap-2 rounded-xl border border-danger bg-danger/5 p-3 text-sm text-danger">
+          <span>{error}</span>
+        </div>
+      ) : null}
+
+      {/* Kết quả + giải thích (chỉ hiện sau khi trả lời) */}
+      {result ? (
+        <div
+          role="status"
+          className={`flex flex-col gap-1 rounded-2xl border p-4 ${result.is_correct ? 'border-success/40 bg-success/5' : 'border-danger/40 bg-danger/5'}`}
+        >
+          <p className={`flex items-center gap-2 font-semibold ${result.is_correct ? 'text-success' : 'text-danger'}`}>
+            {result.is_correct ? <CheckCircle2 className="h-5 w-5" aria-hidden="true" /> : <XCircle className="h-5 w-5" aria-hidden="true" />}
+            {result.is_correct ? copy.reviewQuizCorrect : copy.reviewQuizWrong}
+          </p>
+          {q.item_type === 'kanji' ? (
+            <p className="text-ink">
+              <span className="mr-2 text-3xl" lang="ja">
+                {result.answer.kanji}
+              </span>
+              <span className="font-semibold">{result.answer.han_viet_main}</span>
+              {result.answer.han_viet_accepted?.length ? (
+                <span className="text-xs text-ink-muted"> ({copy.reviewDetailHanVietAccepted(result.answer.han_viet_accepted.join(', '))})</span>
+              ) : null}
+            </p>
+          ) : (
+            <p className="text-ink">
+              <span className="mr-2 text-2xl" lang="ja">
+                {result.answer.term}
+              </span>
+              <span className="text-sm" lang="ja">
+                {result.answer.reading_kana}
+              </span>
+              {result.answer.han_viet ? <span className="ml-2 font-semibold">{result.answer.han_viet}</span> : null}
+            </p>
+          )}
+          {result.answer.meaning_vi ? <p className="text-sm text-ink">{result.answer.meaning_vi}</p> : null}
+          <p className="text-xs text-ink-muted">{copy.reviewQuizMasteryNow(copy.reviewMasteryLabel[result.new_mastery_level])}</p>
+          <button type="button" autoFocus onClick={next} className="mt-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white">
+            {isLast ? copy.reviewQuizFinish : copy.reviewQuizNext}
+          </button>
+        </div>
+      ) : null}
+    </section>
+  );
+}

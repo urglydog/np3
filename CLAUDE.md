@@ -76,7 +76,7 @@ Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói tro
 - Đổi schema → migration MỚI trong `supabase/migrations/` (không sửa migration đã áp dụng) + confirm trước.
 - Bảng mới: bật RLS + policy + cập nhật `rls_test.sql`. Ngày học dùng `DATE`, không `timestamptz`.
 - Đổi response shape/route API → cập nhật type dùng chung cùng lúc.
-- Seed template sinh từ `data/n3-template.json`; số liệu đối chiếu: 4 phase, 113 task, 10 tài nguyên, 99 task gốc = 425 giờ, tổng 566 giờ.
+- Seed template sinh từ `data/n3-template.json`; số liệu đối chiếu: 4 phase, 113 task, 11 tài nguyên (T-011 thêm `RES-11` Bộ đề JLPT N3), 99 task gốc. Nhãn "425 giờ / 566 giờ" ở màn tạo plan là số của file Sheet gốc, GIỮ NGUYÊN (lộ trình không đổi); sau T-011 dữ liệu cộng ra 430/571 giờ — không phải lỗi, đừng "sửa" cho khớp. Test RLS/seed đếm theo dữ liệu thật, không ghi cứng số.
 - Không chạy lệnh nhắm vào Supabase cloud.
 
 ## 7. QUY TẮC WORKER / PUSH / AI
