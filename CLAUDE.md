@@ -36,7 +36,21 @@ Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói tro
 1. **Ngày Start/Due do `packages/core` tính.** Không lưu ngày suy ra vào DB (chỉ lưu `start_date`, `hours_per_day`, `days_per_week`, `status`, `pinned_start`); không để LLM sinh ngày; không cộng/trừ ngày bằng `Date` cục bộ; "hôm nay" lấy từ `todayInTimeZone(tz)` rồi truyền vào hàm thuần.
 2. **Mọi bảng dữ liệu cá nhân có RLS + policy.** Bảng mới → cập nhật `rls_test.sql` và chạy lại. `service_role` chỉ ở server/worker, không bao giờ vào code có thể bundle xuống trình duyệt, không đặt trong `NEXT_PUBLIC_*`.
 3. **LLM chỉ chọn trong danh mục**; mọi đầu ra qua `validateAdjustments` trước khi dùng; lỗi thì quay về template gốc.
-4. **App không chứa nội dung học** (không bài giảng, ngân hàng đề, flashcard, chấm bài, cộng đồng).
+4. **App không chứa nội dung học soạn sẵn kiểu giáo trình** (không bài giảng dạng video/text diễn giải,
+   ngân hàng đề thi, chấm bài tự luận, cộng đồng/thảo luận/bình luận).
+   **Ngoại lệ có điều kiện — công cụ ôn luyện ghi nhớ (flashcard/quiz) cho đơn vị kiến thức rời**
+   (kanji, từ vựng, sau này có thể mở rộng loại khác), được phép khi thoả ĐỦ CẢ BA:
+   (a) Dữ liệu gốc hiển thị (chữ/nghĩa/âm đọc/ví dụ) chỉ là **tham chiếu khách quan** lấy từ nguồn
+       mở hoặc do người dùng tự nhập, không phải bài giảng diễn giải tự soạn của dự án;
+   (b) **Không có "ngân hàng đề" soạn sẵn theo giáo trình để bán/phân phối cho người khác** — tổ
+       chức theo đơn vị có sẵn trong nguồn dữ liệu (ví dụ "theo bài" của một cuốn sách cụ thể) hoặc
+       theo danh sách người dùng tự chọn đều được phép, miễn không đóng gói lại nội dung giáo trình
+       để phân phối ngoài phạm vi cá nhân;
+   (c) **Không chấm bài tự luận, không có cộng đồng/bình luận/thảo luận.** Chấm viết tay (nếu có)
+       chỉ ở mức khoan dung + tự xác nhận (✓/✗ do người dùng bấm), không phải nhận diện/chấm điểm
+       tự động bằng máy cho nội dung tự do.
+   Dữ liệu nguồn mở dùng trong tính năng ôn luyện (vd thứ tự nét KanjiVG, KANJIDIC2) phải ghi rõ
+   giấy phép và nguồn ngay trong app.
 5. **Chữ hiển thị phải trung thực:** giờ học là *ước tính*; giá là "giá tham khảo" kèm ngày; link affiliate ghi rõ; không hứa đậu hay mốc thời gian.
 6. **Không phụ thuộc push:** màn Hôm nay / Sắp tới / Cần mua phải dùng được khi không có thông báo.
 7. **`packages/core/src` là hàm thuần:** không import Next/React/Supabase/DOM/`fs`, không tự đọc đồng hồ.
