@@ -230,21 +230,25 @@ end $$;
 reset role;
 
 -- ==================== MODULE ÔN LUYỆN (review_*) ====================
--- Dữ liệu giả tối thiểu (M1a chưa seed): K_OK đã xác nhận, K_WAIT đang chờ xác nhận, 1 ví dụ đã xác nhận.
+-- Dữ liệu giả riêng (không đụng 192 kanji đã seed): K_OK 鬱 đã xác nhận, K_WAIT 龘 chờ xác nhận, 1 ví dụ đã xác nhận.
+-- Đặt ở bài 32 vị trí 15–16 (đợt 1 không seed bài 32) để không trùng khoá (deck_lesson, deck_order).
 do $$ declare n int; begin
   select count(*) into n from pg_proc p join pg_namespace ns on ns.oid = p.pronamespace
     where ns.nspname = 'public' and p.proname in ('review_get_quiz_batch','review_reveal_answer','review_submit_answer');
   if n <> 3 then raise exception 'Phải có đúng 3 hàm RPC review_*, mỗi hàm 1 chữ ký, hiện có %', n; end if;
+  select count(*) into n from pg_proc p join pg_namespace ns on ns.oid = p.pronamespace
+    where ns.nspname = 'public' and p.proname in ('review_grade_answer','review_home_stats');
+  if n <> 2 then raise exception 'Phải có đúng 1 review_grade_answer + 1 review_home_stats, hiện có %', n; end if;
 end $$;
 
-insert into review_kanji (id, unicode_hex, kanji, deck_lesson, deck_order, han_viet_main, meaning_en, meaning_vi, stroke_count, svg_path, confirmed_at)
+insert into review_kanji (id, unicode_hex, kanji, deck_lesson, deck_order, vnjp_lesson, han_viet_main, han_viet_accepted, meaning_en, meaning_vi, stroke_count, svg_path, confirmed_at)
 values
-  ('00000000-0000-0000-0000-0000000000f1', '04e00', '一', 1, 1, 'Nhất', 'one', 'một', 1, '/kanjivg/04e00.svg', now()),
-  ('00000000-0000-0000-0000-0000000000f2', '04e8c', '二', 1, 2, 'Nhị', 'two', 'hai', 2, '/kanjivg/04e8c.svg', null);
-insert into review_example (id, term, reading_kana, meaning_vi, confirmed_at)
-values ('00000000-0000-0000-0000-0000000000e1', '一つ', 'ひとつ', 'một cái', now());
+  ('00000000-0000-0000-0000-0000000000f1', '09b31', '鬱', 32, 15, 32, 'Uất', array['Úc'], 'gloom', 'u uất', 29, '/kanjivg/09b31.svg', now()),
+  ('00000000-0000-0000-0000-0000000000f2', '09f98', '龘', 32, 16, 32, 'Đạp', '{}', 'dragon', 'rồng bay', 48, '/kanjivg/09f98.svg', null);
+insert into review_example (id, term, reading_kana, meaning_vi, han_viet_parts, confirmed_at)
+values ('00000000-0000-0000-0000-0000000000e1', '鬱つ', 'うつつ', 'ví dụ test', '[["Uất","Úc"]]'::jsonb, now());
 insert into review_example_kanji (example_id, kanji_id, lesson_context)
-values ('00000000-0000-0000-0000-0000000000e1', '00000000-0000-0000-0000-0000000000f1', 1);
+values ('00000000-0000-0000-0000-0000000000e1', '00000000-0000-0000-0000-0000000000f1', 32);
 insert into review_import_batch (source, kanji_count, example_count, needs_review_kanji_count, needs_review_example_count)
 values ('rls-test', 2, 1, 1, 0);
 
@@ -268,8 +272,12 @@ reset role;
 set role authenticated;
 select pg_temp.as_user('00000000-0000-0000-0000-00000000000a');
 do $$ declare v_list uuid; v_batch jsonb; v_ret jsonb; v_attempt uuid := gen_random_uuid(); n int; begin
-  if (select count(*) from review_kanji) <> 2 then raise exception 'A phải thấy cả 2 kanji (kể cả chờ xác nhận)'; end if;
-  if (select count(*) from review_example_kanji) <> 1 then raise exception 'A phải thấy review_example_kanji'; end if;
+  if (select count(*) from review_kanji where id in ('00000000-0000-0000-0000-0000000000f1','00000000-0000-0000-0000-0000000000f2')) <> 2 then
+    raise exception 'A phải thấy cả 2 kanji (kể cả chờ xác nhận)'; end if;
+  if not exists (select 1 from review_example_kanji where example_id = '00000000-0000-0000-0000-0000000000e1') then
+    raise exception 'A phải thấy review_example_kanji'; end if;
+  if (select count(*) from review_card_catalog where item_id = '00000000-0000-0000-0000-0000000000f2') <> 0 then
+    raise exception 'Danh mục thẻ không được chứa kanji chờ xác nhận'; end if;
   if (select count(*) from review_import_batch) <> 0 then raise exception 'RÒ RỈ: người dùng đọc được review_import_batch'; end if;
   begin
     insert into review_kanji (unicode_hex, kanji, deck_lesson, deck_order, svg_path) values ('99999', 'x', 1, 3, '/x.svg');
@@ -296,7 +304,7 @@ do $$ declare v_list uuid; v_batch jsonb; v_ret jsonb; v_attempt uuid := gen_ran
       {"item_type":"kanji","item_id":"00000000-0000-0000-0000-0000000000f2"},
       {"item_type":"example","item_id":"00000000-0000-0000-0000-0000000000e1"}]'::jsonb,
     array['K1','K2','E1','E2'], 50);
-  if jsonb_array_length(v_batch) <> 4 then raise exception 'quiz batch phải có 4 câu (K1,K2 của 一 + E1,E2 của 一つ), có %', jsonb_array_length(v_batch); end if;
+  if jsonb_array_length(v_batch) <> 4 then raise exception 'quiz batch phải có 4 câu (K1,K2 của 鬱 + E1,E2 của 鬱つ), có %', jsonb_array_length(v_batch); end if;
   if exists (select 1 from jsonb_array_elements(v_batch) q where q->>'item_id' = '00000000-0000-0000-0000-0000000000f2') then
     raise exception 'quiz batch không được chứa kanji đang chờ xác nhận';
   end if;
@@ -314,7 +322,7 @@ do $$ declare v_list uuid; v_batch jsonb; v_ret jsonb; v_attempt uuid := gen_ran
   end if;
 
   -- reveal: chỉ K2
-  if (public.review_reveal_answer('kanji', '00000000-0000-0000-0000-0000000000f1', 'K2'))->>'kanji' <> '一' then
+  if (public.review_reveal_answer('kanji', '00000000-0000-0000-0000-0000000000f1', 'K2'))->>'kanji' <> '鬱' then
     raise exception 'review_reveal_answer K2 phải trả kanji';
   end if;
   begin
@@ -332,7 +340,7 @@ do $$ declare v_list uuid; v_batch jsonb; v_ret jsonb; v_attempt uuid := gen_ran
   if (v_ret->>'new_mastery_level') <> 'mastered' then raise exception 'Đúng 3 lần liên tiếp phải mastered, có %', v_ret; end if;
   v_ret := public.review_submit_answer('kanji', '00000000-0000-0000-0000-0000000000f1', 'K2', null, false, gen_random_uuid());
   if (v_ret->>'new_mastery_level') <> 'bad' or (v_ret->>'new_streak')::int <> 0 then raise exception 'Sai sau mastered phải về bad/streak 0, có %', v_ret; end if;
-  if (select count(*) from review_attempt_log) <> 4 then raise exception 'attempt_log phải có 4 dòng (lần gửi lại không ghi), có %', (select count(*) from review_attempt_log); end if;
+  if (select count(*) from review_attempt_log where question_type = 'K2') <> 4 then raise exception 'attempt_log K2 phải có 4 dòng (lần gửi lại không ghi), có %', (select count(*) from review_attempt_log); end if;
   if (select correct_count from review_card_state where question_type = 'K2') <> 3
      or (select wrong_count from review_card_state where question_type = 'K2') <> 1 then
     raise exception 'card_state K2 phải correct=3 wrong=1';
@@ -347,10 +355,25 @@ do $$ declare v_list uuid; v_batch jsonb; v_ret jsonb; v_attempt uuid := gen_ran
     perform public.review_submit_answer('kanji', '00000000-0000-0000-0000-0000000000f2', 'K2', null, true, gen_random_uuid());
     raise exception 'Phải từ chối nộp bài cho kanji đang chờ xác nhận';
   exception when others then if sqlerrm not like '%chờ xác nhận%' then raise; end if; end;
-  begin -- M1a: chấm tự động K1/E1/E2 chưa có (M2 thay review_grade_answer, cập nhật đoạn test này)
-    perform public.review_submit_answer('kanji', '00000000-0000-0000-0000-0000000000f1', 'K1', 'Nhất', null, gen_random_uuid());
-    raise exception 'M1a: K1 phải báo chưa hỗ trợ chấm tự động';
-  exception when feature_not_supported then null; end;
+  -- chấm tự động K1/E1/E2 (mirror packages/core; bảng ca đầy đủ ở scripts/test-review.mts)
+  v_ret := public.review_submit_answer('kanji', '00000000-0000-0000-0000-0000000000f1', 'K1', ' uất ', null, gen_random_uuid());
+  if (v_ret->>'is_correct')::boolean is not true then raise exception 'K1 "uất" phải đúng, có %', v_ret; end if;
+  if (v_ret->'answer'->>'han_viet_main') <> 'Uất' then raise exception 'K1 phải trả đáp án sau khi chấm, có %', v_ret; end if;
+  v_ret := public.review_submit_answer('kanji', '00000000-0000-0000-0000-0000000000f1', 'K1', 'úc', null, gen_random_uuid());
+  if (v_ret->>'is_correct')::boolean is not true then raise exception 'K1 cách viết chấp nhận "úc" phải đúng'; end if;
+  v_ret := public.review_submit_answer('kanji', '00000000-0000-0000-0000-0000000000f1', 'K1', 'uat', null, gen_random_uuid());
+  if (v_ret->>'is_correct')::boolean is not false then raise exception 'K1 gõ không dấu "uat" phải sai'; end if;
+  v_ret := public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E1', 'Uất', null, gen_random_uuid());
+  if (v_ret->>'is_correct')::boolean is not true then raise exception 'E1 phải đúng, có %', v_ret; end if;
+  v_ret := public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E2', 'うつつ', null, gen_random_uuid());
+  if (v_ret->>'is_correct')::boolean is not true then raise exception 'E2 kana phải đúng'; end if;
+  v_ret := public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E2', 'うつ', null, gen_random_uuid());
+  if (v_ret->>'is_correct')::boolean is not false then raise exception 'E2 sai phải sai'; end if;
+  begin
+    perform public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E1', '   ', null, gen_random_uuid());
+    raise exception 'Câu trả lời rỗng phải bị từ chối';
+  exception when others then if sqlerrm not like '%Chưa nhập%' then raise; end if; end;
+  if ((public.review_home_stats())->'overall'->>'seen')::int < 4 then raise exception 'review_home_stats phải đếm thẻ đã làm của A'; end if;
 
   -- attempt_log append-only, card_state không xoá được
   update review_attempt_log set is_correct = true; get diagnostics n = row_count;
@@ -411,6 +434,7 @@ do $$ begin
     raise exception 'RÒ RỈ: B dùng lại được client_attempt_id của A';
   exception when others then if sqlerrm not like '%đã được dùng%' then raise; end if; end;
   if (select count(*) from review_card_state) <> 0 then raise exception 'B không được có card_state sau lần nộp bị từ chối'; end if;
+  if ((public.review_home_stats())->'overall'->>'seen')::int <> 0 then raise exception 'RÒ RỈ: review_home_stats của B đếm cả thẻ của A'; end if;
 end $$;
 reset role;
 
