@@ -61,11 +61,18 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
 
   const q = questions[idx];
 
+  // Đổi câu (item_id/question_type đổi) → reset toạ độ nét tham chiếu NGAY trong lúc render
+  // (mẫu "adjusting state during rendering" của React), không setState đồng bộ trong effect body
+  // để tránh cascading render (react-hooks/set-state-in-effect).
+  const strokeReferenceKey = q ? `${q.item_id}:${q.question_type}` : null;
+  const strokeReferenceKeyRef = useRef<string | null>(null);
+  if (strokeReferenceKeyRef.current !== strokeReferenceKey) {
+    strokeReferenceKeyRef.current = strokeReferenceKey;
+    if (strokeReference !== null) setStrokeReference(null);
+  }
+
   useEffect(() => {
-    if (!q || q.question_type !== 'K2') {
-      setStrokeReference(null);
-      return;
-    }
+    if (!q || q.question_type !== 'K2') return;
     let cancelled = false;
     strokeReferenceAction(q.item_id).then((res) => {
       if (!cancelled && res.ok) setStrokeReference((res.data as StrokePath[] | null) ?? null);
