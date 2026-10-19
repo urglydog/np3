@@ -6,6 +6,8 @@ import {
   compareHanVietAnswer,
   compareJapaneseAnswer,
   EMPTY_CARD_STATE,
+  EXAMPLE_QUESTION_TYPES,
+  KANJI_QUESTION_TYPES,
   hanVietPartsForTerm,
   hanVietSyllableKey,
   masteredRatio,
@@ -165,6 +167,12 @@ eq('ratio 1/4', masteredRatio(1, 4), 0.25);
   const scaledShifted: StrokePath = [{ x: 100, y: 200 }, { x: 150, y: 200 }];
   const r5 = scoreHandwriting([scaledShifted], [line]);
   eq('bất biến theo vị trí/kích thước (chuẩn hoá bounding box)', r5.autoCorrect, true);
+}
+
+{
+  // Việc 1 (phản hồi test thật): ví dụ chỉ còn trắc nghiệm E1, không còn gõ tự do E2 (K1/K2 kanji giữ nguyên).
+  eq('EXAMPLE_QUESTION_TYPES chỉ còn E1 (bỏ E2)', EXAMPLE_QUESTION_TYPES, ['E1']);
+  eq('KANJI_QUESTION_TYPES không đổi', KANJI_QUESTION_TYPES, ['K1', 'K2']);
 }
 
 console.log(`${checks - fails}/${checks} kiểm tra đạt`);

@@ -283,6 +283,9 @@ export interface QuizQuestion {
     meaning_en?: string | null;
     meaning_vi?: string | null;
     stroke_count?: number | null;
+    /** E1 cho item_type='example': trắc nghiệm — term đúng + tối đa 3 nhiễu, đã trộn. Không đánh dấu đáp án
+     * đúng; có thể NGẮN HƠN 4 phần tử khi phạm vi luyện không đủ ví dụ khác (tối thiểu 1 = đáp án đúng). */
+    choices?: string[];
   };
 }
 

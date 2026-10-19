@@ -228,13 +228,13 @@ export const copy = {
 
   reviewQuestionTypeLabel: {
     K1: 'Kanji → Hán Việt',
-    E1: 'Từ ví dụ → Hán Việt',
+    E1: 'Trắc nghiệm: nghĩa → từ ví dụ',
     K2: 'Viết kanji',
     E2: 'Nghĩa → tiếng Nhật',
   },
   reviewQuestionTypeHint: {
     K1: 'Nhìn chữ, gõ âm Hán Việt (phải đúng dấu thanh)',
-    E1: 'Nhìn từ, gõ âm Hán Việt từng chữ, cách nhau dấu cách',
+    E1: 'Nhìn nghĩa tiếng Việt, bấm chọn từ tiếng Nhật đúng trong các lựa chọn',
     K2: 'Nhìn âm và nghĩa, tự viết kanji rồi tự chấm',
     E2: 'Nhìn nghĩa tiếng Việt, gõ từ tiếng Nhật (kana hoặc kanji)',
   },
