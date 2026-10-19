@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { loadLists, loadLoadedLessons, loadScopeCandidates } from '@/lib/review-data';
 import { countByType, MAX_QUIZ_QUESTIONS, parseScope, scopeToParam, type ReviewScope } from '@/lib/review-scope';
