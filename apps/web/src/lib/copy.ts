@@ -40,6 +40,12 @@ export const copy = {
   todayFinishLabel: (date: string) => `Ngày dự kiến hoàn thành: ${date}`,
   todayRequiredHoursLabel: (hours: number) => `Cần khoảng ${hours} giờ/ngày để xong trong 365 ngày`,
 
+  // Hôm nay — tóm tắt Ôn luyện
+  todayReviewTitle: 'Ôn luyện Kanji',
+  todayReviewViewDetail: 'Xem chi tiết →',
+  todayReviewEmptyState: 'Chưa luyện kanji nào.',
+  todayReviewStart: 'Bắt đầu ôn luyện',
+
   // Cập nhật tiến độ (đã học đến đâu)
   updateProgressTitle: 'Cập nhật tiến độ',
   updateProgressSelectLabel: 'Mình đã học XONG đến hết task…',
