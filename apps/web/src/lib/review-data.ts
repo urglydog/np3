@@ -204,6 +204,84 @@ export async function loadReviewListsWithItems(): Promise<ReviewListDetail[] | n
   });
 }
 
+export interface QuizBuilderKanjiRow {
+  id: string;
+  deckLesson: number;
+  isKanji: boolean;
+  hanVietMain: string | null;
+  confirmedAt: string | null;
+  k1State: CardState | null;
+  k2State: CardState | null;
+}
+
+export interface QuizBuilderExampleRow {
+  id: string;
+  meaningVi: string | null;
+  confirmedAt: string | null;
+  lessons: number[];
+  e1State: CardState | null;
+  e2State: CardState | null;
+}
+
+export interface QuizBuilderData {
+  kanji: QuizBuilderKanjiRow[];
+  examples: QuizBuilderExampleRow[];
+}
+
+/**
+ * Toàn bộ kanji/ví dụ (đã seed) + review_card_state của user hiện tại — dùng để dựng QuizCandidate[]
+ * (packages/core) ở màn `review/quiz/new`. KHÔNG tính toán gì ở đây (xem lib/review-quiz-candidates.ts).
+ */
+export async function loadQuizBuilderData(): Promise<QuizBuilderData | null> {
+  const user = await getCurrentUser();
+  if (!user) return null;
+  const supabase = await createClient();
+
+  const [{ data: kanjiRows }, { data: exampleRows }, { data: exLinks }, { data: cardStates }] = await Promise.all([
+    supabase.from('review_kanji').select('id, deck_lesson, is_kanji, han_viet_main, confirmed_at'),
+    supabase.from('review_example').select('id, meaning_vi, confirmed_at'),
+    supabase.from('review_example_kanji').select('example_id, lesson_context'),
+    supabase
+      .from('review_card_state')
+      .select('item_type, item_id, question_type, correct_count, wrong_count, streak, mastery_level, last_reviewed_at'),
+  ]);
+
+  const lessonsByExample = new Map<string, Set<number>>();
+  for (const l of exLinks ?? []) {
+    const id = l.example_id as string;
+    const set = lessonsByExample.get(id) ?? new Set<number>();
+    set.add(l.lesson_context as number);
+    lessonsByExample.set(id, set);
+  }
+
+  // key = `${itemType}:${itemId}:${questionType}`
+  const stateMap = new Map<string, CardState>();
+  for (const s of cardStates ?? []) {
+    stateMap.set(`${s.item_type}:${s.item_id}:${s.question_type}`, toCardState(s));
+  }
+
+  const kanji: QuizBuilderKanjiRow[] = (kanjiRows ?? []).map((k) => ({
+    id: k.id as string,
+    deckLesson: k.deck_lesson as number,
+    isKanji: k.is_kanji as boolean,
+    hanVietMain: k.han_viet_main as string | null,
+    confirmedAt: k.confirmed_at as string | null,
+    k1State: stateMap.get(`kanji:${k.id}:K1`) ?? null,
+    k2State: stateMap.get(`kanji:${k.id}:K2`) ?? null,
+  }));
+
+  const examples: QuizBuilderExampleRow[] = (exampleRows ?? []).map((e) => ({
+    id: e.id as string,
+    meaningVi: e.meaning_vi as string | null,
+    confirmedAt: e.confirmed_at as string | null,
+    lessons: Array.from(lessonsByExample.get(e.id as string) ?? []),
+    e1State: stateMap.get(`example:${e.id}:E1`) ?? null,
+    e2State: stateMap.get(`example:${e.id}:E2`) ?? null,
+  }));
+
+  return { kanji, examples };
+}
+
 export interface KanjiDetail {
   id: string;
   unicodeHex: string;
