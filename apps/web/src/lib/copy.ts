@@ -188,6 +188,24 @@ export const copy = {
   reviewLicenseDisclaimer:
     'Dữ liệu chữ Hán, âm Hán Việt và thứ tự nét lấy từ nguồn mở (KanjiVG, CC BY-SA) và tài liệu tự học của tác giả — chỉ dùng để tham chiếu, không phải bài giảng diễn giải.',
 
+  reviewLicensesTitle: 'Nguồn dữ liệu và giấy phép',
+  reviewLicensesIntro:
+    'Gói dữ liệu kanji dùng cho tính năng Ôn luyện được tổng hợp từ các nguồn mở và tài liệu tự học sau. Danh sách dưới đây để tham khảo, không phải tư vấn pháp lý.',
+  reviewLicensesKanjidicTitle: 'Nghĩa, âm on/kun, số nét',
+  reviewLicensesKanjidicBody:
+    'Lấy từ KANJIDIC2 © Electronic Dictionary Research and Development Group (EDRDG), dùng theo giấy phép Creative Commons Attribution-ShareAlike. Một số âm Hán Việt đã được dự án chỉnh sửa lại.',
+  reviewLicensesKanjivgTitle: 'Hình thứ tự nét',
+  reviewLicensesKanjivgBody:
+    'KanjiVG © 2009–2026 Ulrich Apel, giấy phép Creative Commons Attribution-ShareAlike 3.0 (kanjivg.tagaini.net). Hình đã được tô màu theo nét bằng kịch bản kanji-colorize.',
+  reviewLicensesVnjpTitle: 'Nghĩa tiếng Việt và ví dụ',
+  reviewLicensesVnjpBody:
+    'Do tác giả tự tổng hợp trong lúc học theo app VNJP (© VNJPCLUB) và giáo trình Kanji Look and Learn (© The Japan Times). Chỉ dùng cá nhân, không phân phối lại.',
+  reviewLicensesListOrderTitle: 'Danh sách 512 chữ và thứ tự bài',
+  reviewLicensesListOrderBody:
+    'Theo giáo trình Kanji Look and Learn (The Japan Times). App không chứa hình minh họa, lời gợi nhớ hay nội dung giải thích của giáo trình.',
+  reviewLicensesDisclaimerFull:
+    'Đây là dữ liệu tham khảo cá nhân, không phải nội dung phân phối lại cho người khác. App không đảm bảo tính đầy đủ hoặc chính xác tuyệt đối của dữ liệu ghi công ở trên.',
+
   reviewStatsTitle: 'Thống kê Ôn luyện',
   reviewStatsOverallLabel: 'Tổng % đã thuộc',
   reviewStatsTotalAttemptsLabel: (n: number) => `${n} lần trả lời`,
