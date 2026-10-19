@@ -322,6 +322,44 @@ export async function loadKanjiStrokeReference(supabase: SupabaseClient, itemId:
   return (data?.stroke_points as unknown[] | null) ?? null;
 }
 
+// ---------- Đọc (K1) vs Viết (K2) — tile tóm tắt ở Home ----------
+export interface ReadWriteStat {
+  mastered: number;
+  total: number;
+}
+export interface ReadWriteStats {
+  k1: ReadWriteStat; // Kanji → Hán Việt (đọc)
+  k2: ReadWriteStat; // Viết kanji
+}
+
+async function countRows(
+  q: PromiseLike<{ count: number | null; error: { message: string } | null }>
+): Promise<number> {
+  const { count, error } = await q;
+  if (error) throw new AppError(`Không đọc được thống kê: ${error.message}`, 'review_stats_failed');
+  return count ?? 0;
+}
+
+/**
+ * % thuộc (mastered) riêng cho câu Đọc (K1) và Viết (K2) — chỉ áp dụng cho kanji (K1/K2 không sinh cho
+ * example). Đọc trực tiếp review_card_catalog (tổng thẻ áp dụng) + review_card_state (thẻ đã mastered),
+ * cùng nguồn dữ liệu loadHomeStats đang dùng, chỉ lọc hẹp hơn theo question_type — không query trùng mục đích.
+ */
+export async function loadReadWriteStats(supabase: SupabaseClient): Promise<ReadWriteStats> {
+  const base = (table: 'review_card_catalog' | 'review_card_state', q: QuestionType, masteredOnly: boolean) => {
+    let query = supabase.from(table).select('item_id', { count: 'exact', head: true }).eq('item_type', 'kanji').eq('question_type', q);
+    if (masteredOnly) query = query.eq('mastery_level', 'mastered');
+    return query;
+  };
+  const [k1Total, k2Total, k1Mastered, k2Mastered] = await Promise.all([
+    countRows(base('review_card_catalog', 'K1', false)),
+    countRows(base('review_card_catalog', 'K2', false)),
+    countRows(base('review_card_state', 'K1', true)),
+    countRows(base('review_card_state', 'K2', true)),
+  ]);
+  return { k1: { mastered: k1Mastered, total: k1Total }, k2: { mastered: k2Mastered, total: k2Total } };
+}
+
 // ---------- Thống kê (trang /review/stats) ----------
 export interface AttemptRow {
   question_type: QuestionType;
