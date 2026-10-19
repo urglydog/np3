@@ -119,7 +119,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
   // hoặc giữ kết quả auto-grade) vì cả hai đều đi qua cùng state `result`.
   useEffect(() => {
     if (!result || !result.is_correct) return;
-    const t = setTimeout(goNext, 900);
+    const t = setTimeout(goNext, 1400);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- goNext đọc idx/questions mới nhất qua closure mỗi render, không cần liệt kê
   }, [result, idx]);
@@ -480,9 +480,15 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
           )}
           {result.answer.meaning_vi ? <p className="text-sm text-ink">{result.answer.meaning_vi}</p> : null}
           <p className="text-xs text-ink-muted">{copy.reviewQuizMasteryNow(copy.reviewMasteryLabel[result.new_mastery_level])}</p>
-          <button type="button" autoFocus onClick={goNext} className="mt-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white">
-            {isLast ? copy.reviewQuizFinish : copy.reviewQuizNext}
-          </button>
+          {result.is_correct ? (
+            // Trả lời đúng → tự nhảy câu sau ~1.4s (effect ở trên), KHÔNG render nút "Câu tiếp" nữa (nó sẽ
+            // xuất hiện-rồi-biến-mất trong lúc chờ, tạo cảm giác giật). Thay bằng dòng chữ tĩnh, không bấm được.
+            <p className="mt-2 text-center text-sm text-ink-muted">{copy.reviewQuizAutoAdvancing}</p>
+          ) : (
+            <button type="button" autoFocus onClick={goNext} className="mt-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white">
+              {isLast ? copy.reviewQuizFinish : copy.reviewQuizNext}
+            </button>
+          )}
         </div>
       ) : null}
     </section>
