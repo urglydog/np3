@@ -17,12 +17,13 @@ import {
  */
 export type ReviewScope =
   | { kind: 'lesson'; lesson: number }
-  | { kind: 'list'; listId: string }
+  | { kind: 'list'; listIds: string[] }
   | { kind: 'kanji'; hexes: string[] }
   | { kind: 'smart'; strategy: SmartStrategy };
 
 export const MAX_QUIZ_QUESTIONS = 200; // khớp trần p_limit của RPC review_get_quiz_batch
 export const MAX_SCOPE_KANJI = 64;
+export const MAX_SCOPE_LISTS = 20; // luyện gộp nhiều danh sách cùng lúc — trần hợp lý cho một phiên
 const HEX_RE = /^[0-9a-f]{4,6}$/;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
@@ -37,8 +38,13 @@ export function parseScope(raw: string | undefined | null): ReviewScope | null {
       const n = Number(value);
       return Number.isInteger(n) && n >= 1 && n <= 32 ? { kind: 'lesson', lesson: n } : null;
     }
-    case 'list':
-      return UUID_RE.test(value) ? { kind: 'list', listId: value } : null;
+    case 'list': {
+      // Tương thích ngược: "list:<uuid>" (1 danh sách) vẫn hoạt động, parse thành mảng 1 phần tử.
+      // Mới: "list:<uuid1>,<uuid2>,..." — nhiều danh sách luyện gộp, tối đa MAX_SCOPE_LISTS.
+      const listIds = value.split(',').filter(Boolean);
+      if (listIds.length === 0 || listIds.length > MAX_SCOPE_LISTS || !listIds.every((id) => UUID_RE.test(id))) return null;
+      return { kind: 'list', listIds };
+    }
     case 'kanji': {
       const hexes = [...new Set(value.split('.').map((h) => h.toLowerCase()))];
       if (hexes.length === 0 || hexes.length > MAX_SCOPE_KANJI || !hexes.every((h) => HEX_RE.test(h))) return null;
@@ -56,7 +62,7 @@ export function scopeToParam(scope: ReviewScope): string {
     case 'lesson':
       return `lesson:${scope.lesson}`;
     case 'list':
-      return `list:${scope.listId}`;
+      return `list:${scope.listIds.join(',')}`;
     case 'kanji':
       return `kanji:${scope.hexes.join('.')}`;
     case 'smart':

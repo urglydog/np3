@@ -250,6 +250,8 @@ export const copy = {
   reviewListsTitle: 'Danh sách của tôi',
   reviewListsEmpty: 'Chưa có danh sách nào. Tạo danh sách rồi thêm chữ từ màn Duyệt kanji.',
   reviewListItemCount: (n: number) => `${n} mục`,
+  reviewListsSelectHint: 'Chọn nhiều danh sách để luyện gộp',
+  reviewListsPracticeSelected: (n: number) => (n > 0 ? `Luyện ${n} danh sách đã chọn` : 'Luyện các danh sách đã chọn'),
   reviewListNameLabel: 'Tên danh sách',
   reviewListNamePlaceholder: 'vd: Chữ hay nhầm',
   reviewListCreate: 'Tạo',
@@ -272,6 +274,7 @@ export const copy = {
   reviewQuizScopeLabel: {
     lesson: (lesson: number) => `Bài ${lesson}`,
     kanji: (n: number) => `${n} chữ đã chọn`,
+    lists: (n: number) => `${n} danh sách`,
   },
   reviewSmartLabel: {
     least_streak: 'Chuỗi đúng thấp nhất',

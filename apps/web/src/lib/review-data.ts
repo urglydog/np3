@@ -247,7 +247,7 @@ export async function loadScopeCandidates(supabase: SupabaseClient, scope: Revie
     }
     case 'list': {
       const items = await fetchAll<{ item_type: ItemType; item_id: string }>((from, to) =>
-        supabase.from('review_list_item').select('item_type, item_id').eq('list_id', scope.listId).order('added_at').range(from, to)
+        supabase.from('review_list_item').select('item_type, item_id').in('list_id', scope.listIds).order('added_at').range(from, to)
       );
       return candidatesForRefs(supabase, items);
     }

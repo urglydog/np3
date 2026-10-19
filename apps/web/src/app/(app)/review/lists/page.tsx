@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import { ChevronRight, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { loadLists } from '@/lib/review-data';
 import { createListAction } from '../actions';
 import { SubmitButton } from '@/components/submit-button';
 import { FlashMessage } from '@/components/review/flash-message';
+import { ListsMultiSelect } from '@/components/review/lists-multi-select';
 import { copy } from '@/lib/copy';
 
 export const dynamic = 'force-dynamic';
@@ -43,19 +44,7 @@ export default async function ReviewListsPage({ searchParams }: { searchParams: 
       {lists.length === 0 ? (
         <p className="rounded-xl border border-dashed border-line p-6 text-center text-sm text-ink-muted">{copy.reviewListsEmpty}</p>
       ) : (
-        <ul className="flex flex-col gap-2">
-          {lists.map((l) => (
-            <li key={l.id}>
-              <Link href={`/review/lists/${l.id}`} className="flex items-center gap-3 rounded-xl border border-line bg-surface-raised p-4 active:bg-brand/5">
-                <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="truncate font-semibold text-ink">{l.name}</span>
-                  <span className="text-xs text-ink-muted">{copy.reviewListItemCount(l.item_count)}</span>
-                </span>
-                <ChevronRight className="h-5 w-5 text-ink-faint" aria-hidden="true" />
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ListsMultiSelect lists={lists} />
       )}
     </main>
   );
