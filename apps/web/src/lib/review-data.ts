@@ -289,17 +289,26 @@ export interface QuizQuestion {
   };
 }
 
-/** Dựng đề cho một phiên: lọc theo loại câu, chiến lược thông minh chọn mục cần ôn trước, rồi RPC trộn + cắt. */
+/**
+ * Dựng đề cho một phiên: lọc theo loại câu, LUÔN ưu tiên mục có tỉ lệ đúng thấp/ít luyện (không còn chỉ áp
+ * dụng cho scope 'smart' — mọi phạm vi lesson/list/kanji đều được ưu tiên ngầm, không có UI chọn chiến lược
+ * riêng), rồi RPC trộn + cắt theo số câu người dùng chọn.
+ */
 export async function loadQuizBatch(
   supabase: SupabaseClient,
   scope: ReviewScope,
   types: QuestionType[],
   n: number
 ): Promise<QuizQuestion[]> {
-  let candidates = restrictToTypes(await loadScopeCandidates(supabase, scope), types);
-  if (scope.kind === 'smart') candidates = pickQuizCandidates(candidates, scope.strategy, n);
+  const restricted = restrictToTypes(await loadScopeCandidates(supabase, scope), types);
+  // Sắp lại toàn bộ theo độ ưu tiên "hay sai nhất" (limit = độ dài mảng → chỉ đổi thứ tự, không cắt bớt).
+  const candidates = pickQuizCandidates(restricted, 'least_accuracy', restricted.length);
   if (candidates.length === 0) return [];
-  const refs = candidates.slice(0, 2000).map((c) => ({ item_type: c.itemType, item_id: c.itemId }));
+  // RPC tự "order by random() limit p_limit" trên các refs được gửi — nếu gửi nguyên candidates đã sắp (có
+  // thể rất dài) thì bước random sẽ xoá sạch ưu tiên vừa sắp. Thu hẹp về một pool nhỏ hơn LẤY TỪ ĐẦU mảng đã
+  // sắp (nghiêng hẳn về mục yếu) rồi mới để RPC random trong pool đó, vừa giữ ưu tiên vừa có đa dạng mỗi lần.
+  const poolSize = Math.min(candidates.length, Math.max(n * 3, 40));
+  const refs = candidates.slice(0, poolSize).map((c) => ({ item_type: c.itemType, item_id: c.itemId }));
   const { data, error } = await supabase.rpc('review_get_quiz_batch', { p_item_refs: refs, p_question_types: types, p_limit: n });
   if (error) throw new AppError(`Không tạo được đề: ${error.message}`, 'review_quiz_failed');
   return (data ?? []) as QuizQuestion[];
