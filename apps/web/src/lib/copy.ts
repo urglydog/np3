@@ -189,6 +189,7 @@ export const copy = {
   reviewLicensesLink: 'Nguồn dữ liệu và giấy phép',
   reviewStatsLink: 'Xem thống kê',
   reviewBack: '← Quay lại',
+  reviewQuizExitConfirm: 'Thoát khỏi phiên luyện? Các câu đã làm đã được lưu, nhưng phiên sẽ kết thúc tại đây.',
 
   reviewStatsTitle: 'Thống kê ôn luyện',
   reviewStatsOverallAccuracy: 'Tỉ lệ đúng chung',
