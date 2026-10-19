@@ -304,7 +304,9 @@ do $$ declare v_list uuid; v_batch jsonb; v_ret jsonb; v_attempt uuid := gen_ran
       {"item_type":"kanji","item_id":"00000000-0000-0000-0000-0000000000f2"},
       {"item_type":"example","item_id":"00000000-0000-0000-0000-0000000000e1"}]'::jsonb,
     array['K1','K2','E1','E2'], 50);
-  if jsonb_array_length(v_batch) <> 4 then raise exception 'quiz batch phải có 4 câu (K1,K2 của 鬱 + E1,E2 của 鬱つ), có %', jsonb_array_length(v_batch); end if;
+  -- Việc 1: E2 không còn được sinh ra cho ví dụ (review_card_catalog dừng tạo thẻ E2) → chỉ còn 3 câu
+  -- (K1,K2 của 鬱 + E1 trắc nghiệm của 鬱つ), không phải 4 như trước.
+  if jsonb_array_length(v_batch) <> 3 then raise exception 'quiz batch phải có 3 câu (K1,K2 của 鬱 + E1 của 鬱つ), có %', jsonb_array_length(v_batch); end if;
   if exists (select 1 from jsonb_array_elements(v_batch) q where q->>'item_id' = '00000000-0000-0000-0000-0000000000f2') then
     raise exception 'quiz batch không được chứa kanji đang chờ xác nhận';
   end if;
@@ -314,8 +316,11 @@ do $$ declare v_list uuid; v_batch jsonb; v_ret jsonb; v_attempt uuid := gen_ran
   if exists (select 1 from jsonb_array_elements(v_batch) q where q->>'question_type' = 'K2' and q->'prompt' ? 'kanji') then
     raise exception 'LỘ ĐÁP ÁN: đề K2 chứa kanji';
   end if;
-  if exists (select 1 from jsonb_array_elements(v_batch) q where q->>'question_type' = 'E2' and (q->'prompt' ? 'term' or q->'prompt' ? 'reading_kana')) then
-    raise exception 'LỘ ĐÁP ÁN: đề E2 chứa term/reading_kana';
+  if exists (select 1 from jsonb_array_elements(v_batch) q where q->>'question_type' = 'E1' and q->>'item_type' = 'example' and (q->'prompt' ? 'term')) then
+    raise exception 'LỘ ĐÁP ÁN: đề E1 ví dụ chứa term trực tiếp (phải qua choices, không lộ đáp án đúng)';
+  end if;
+  if exists (select 1 from jsonb_array_elements(v_batch) q where q->>'question_type' = 'E1' and q->>'item_type' = 'example' and not (q->'prompt' ? 'choices')) then
+    raise exception 'Đề E1 ví dụ phải có mảng choices (trắc nghiệm)';
   end if;
   if jsonb_array_length(public.review_get_quiz_batch(v_batch, array['K1'], 1)) <> 1 then
     raise exception 'p_limit phải cắt số câu';
@@ -363,17 +368,22 @@ do $$ declare v_list uuid; v_batch jsonb; v_ret jsonb; v_attempt uuid := gen_ran
   if (v_ret->>'is_correct')::boolean is not true then raise exception 'K1 cách viết chấp nhận "úc" phải đúng'; end if;
   v_ret := public.review_submit_answer('kanji', '00000000-0000-0000-0000-0000000000f1', 'K1', 'uat', null, gen_random_uuid());
   if (v_ret->>'is_correct')::boolean is not false then raise exception 'K1 gõ không dấu "uat" phải sai'; end if;
-  v_ret := public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E1', 'Uất', null, gen_random_uuid());
-  if (v_ret->>'is_correct')::boolean is not true then raise exception 'E1 phải đúng, có %', v_ret; end if;
-  v_ret := public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E2', 'うつつ', null, gen_random_uuid());
-  if (v_ret->>'is_correct')::boolean is not true then raise exception 'E2 kana phải đúng'; end if;
-  v_ret := public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E2', 'うつ', null, gen_random_uuid());
-  if (v_ret->>'is_correct')::boolean is not false then raise exception 'E2 sai phải sai'; end if;
+  -- Việc 1: E1 ví dụ giờ là trắc nghiệm, chấm bằng so khớp CHÍNH XÁC với term (bấm nút, không phải gõ
+  -- Hán Việt) — term thật của e1 là '鬱つ'.
+  v_ret := public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E1', '鬱つ', null, gen_random_uuid());
+  if (v_ret->>'is_correct')::boolean is not true then raise exception 'E1 bấm đúng term phải đúng, có %', v_ret; end if;
+  v_ret := public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E1', 'không phải 鬱つ', null, gen_random_uuid());
+  if (v_ret->>'is_correct')::boolean is not false then raise exception 'E1 bấm nhiễu phải sai'; end if;
   begin
     perform public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E1', '   ', null, gen_random_uuid());
     raise exception 'Câu trả lời rỗng phải bị từ chối';
   exception when others then if sqlerrm not like '%Chưa nhập%' then raise; end if; end;
-  if ((public.review_home_stats())->'overall'->>'seen')::int < 4 then raise exception 'review_home_stats phải đếm thẻ đã làm của A'; end if;
+  -- E2 không còn trong danh mục thẻ của ví dụ (review_card_catalog dừng sinh) → nộp bị từ chối.
+  begin
+    perform public.review_submit_answer('example', '00000000-0000-0000-0000-0000000000e1', 'E2', 'うつつ', null, gen_random_uuid());
+    raise exception 'Phải từ chối nộp E2 cho ví dụ (không còn trong danh mục thẻ)';
+  exception when others then if sqlerrm not like '%chờ xác nhận%' then raise; end if; end;
+  if ((public.review_home_stats())->'overall'->>'seen')::int < 3 then raise exception 'review_home_stats phải đếm thẻ đã làm của A'; end if;
 
   -- attempt_log append-only, card_state không xoá được
   update review_attempt_log set is_correct = true; get diagnostics n = row_count;

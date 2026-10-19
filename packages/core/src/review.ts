@@ -14,7 +14,12 @@ export type QuestionType = 'K1' | 'E1' | 'K2' | 'E2';
 export type ItemType = 'kanji' | 'example';
 export const QUESTION_TYPES: readonly QuestionType[] = ['K1', 'E1', 'K2', 'E2'];
 export const KANJI_QUESTION_TYPES: readonly QuestionType[] = ['K1', 'K2'];
-export const EXAMPLE_QUESTION_TYPES: readonly QuestionType[] = ['E1', 'E2'];
+/**
+ * E1 cho item_type='example' = trắc nghiệm 4 lựa chọn (nghĩa tiếng Việt → chọn từ tiếng Nhật đúng), KHÔNG
+ * còn là gõ Hán Việt. E2 dừng sinh câu (giữ trong QUESTION_TYPES/schema để không phải đổi CHECK constraint,
+ * nhưng review_card_catalog phía SQL không bao giờ tạo thẻ 'E2' nữa — xem 20261019100000_review_example_mc.sql).
+ */
+export const EXAMPLE_QUESTION_TYPES: readonly QuestionType[] = ['E1'];
 
 export interface CardState {
   correctCount: number;

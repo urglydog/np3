@@ -86,7 +86,7 @@ export const HandwritingCanvas = forwardRef<
     };
 
     return (
-      <div className="relative mx-auto aspect-square w-full max-w-[320px] select-none rounded-xl border border-line bg-surface-raised">
+      <div className="relative mx-auto aspect-square w-full max-w-[360px] select-none rounded-xl border border-line bg-surface-raised">
         {/* Lưới ô vuông 4 phần như vở tập viết */}
         <div className="pointer-events-none absolute inset-x-0 top-1/2 border-t border-dashed border-line" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-y-0 left-1/2 border-l border-dashed border-line" aria-hidden="true" />

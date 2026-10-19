@@ -24,7 +24,6 @@ function promptLabel(q: QuizQuestion): string {
     case 'K1':
       return q.prompt.kanji ?? '';
     case 'E1':
-      return q.prompt.term ?? '';
     case 'E2':
       return q.prompt.meaning_vi ?? '';
     case 'K2':
@@ -58,6 +57,8 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
   const [strokeReference, setStrokeReference] = useState<StrokePath[] | null>(null);
   const [drawnStrokes, setDrawnStrokes] = useState<NormalizedPoint[][]>([]);
   const [manualOverride, setManualOverride] = useState(false);
+  // Trắc nghiệm ví dụ (E1): từ đã bấm chọn, để tô màu đúng/sai sau khi có kết quả.
+  const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
 
   const q = questions[idx];
 
@@ -134,6 +135,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
     setError(null);
     setDrawnStrokes([]);
     setManualOverride(false);
+    setSelectedChoice(null);
     canvas.current?.clear();
   };
 
@@ -175,7 +177,9 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
     );
   }
 
-  const typed = q.question_type !== 'K2';
+  // Việc 1: E1 cho item_type='example' là trắc nghiệm (bấm = nộp luôn), không còn gõ tự do.
+  const isExampleMC = q.question_type === 'E1' && q.item_type === 'example';
+  const typed = q.question_type !== 'K2' && !isExampleMC;
   const isLast = idx + 1 >= questions.length;
 
   return (
@@ -192,14 +196,14 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
 
       <p className="text-xs text-ink-muted">{copy.reviewQuestionTypeHint[q.question_type]}</p>
 
-      {/* Đề */}
-      <div className="flex min-h-[8rem] flex-col items-center justify-center gap-1 rounded-2xl border border-line bg-surface-raised p-4 text-center">
-        {q.question_type === 'K1' || q.question_type === 'E1' ? (
-          <span className={`${q.question_type === 'K1' ? 'text-7xl' : 'text-4xl'} leading-tight text-ink`} lang="ja">
+      {/* Đề — thu nhỏ để chừa chỗ cho khung trả lời (trắc nghiệm/viết tay) */}
+      <div className="flex min-h-[5rem] flex-col items-center justify-center gap-1 rounded-2xl border border-line bg-surface-raised px-4 py-3 text-center">
+        {q.question_type === 'K1' ? (
+          <span className="text-6xl leading-tight text-ink" lang="ja">
             {promptLabel(q)}
           </span>
-        ) : q.question_type === 'E2' ? (
-          <span className="text-2xl font-semibold text-ink">{q.prompt.meaning_vi}</span>
+        ) : q.question_type === 'E1' || q.question_type === 'E2' ? (
+          <span className="text-xl font-semibold text-ink">{promptLabel(q)}</span>
         ) : (
           <>
             <span className="text-3xl font-bold text-ink">{q.prompt.han_viet_main}</span>
@@ -211,7 +215,37 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
       </div>
 
       {/* Trả lời */}
-      {typed ? (
+      {isExampleMC ? (
+        <div className="flex flex-col gap-2">
+          {(q.prompt.choices ?? []).map((choice) => {
+            const isChosen = selectedChoice === choice;
+            // Chỉ biết đâu là đáp án đúng sau khi có result (server trả result.answer.term) — không lộ trước.
+            const isCorrectChoice = !!result && result.answer.term === choice;
+            const stateClass = !result
+              ? 'border-line bg-surface-raised text-ink active:bg-brand/5'
+              : isCorrectChoice
+                ? 'border-success bg-success/10 text-success'
+                : isChosen
+                  ? 'border-danger bg-danger/10 text-danger'
+                  : 'border-line bg-surface-raised text-ink-muted';
+            return (
+              <button
+                key={choice}
+                type="button"
+                lang="ja"
+                disabled={!!result || pending}
+                onClick={() => {
+                  setSelectedChoice(choice);
+                  submit(choice, null);
+                }}
+                className={`flex items-center justify-center rounded-xl border px-4 py-4 text-xl font-semibold transition-colors disabled:opacity-90 ${stateClass}`}
+              >
+                {choice}
+              </button>
+            );
+          })}
+        </div>
+      ) : typed ? (
         <form
           className="flex flex-col gap-2"
           onSubmit={(e) => {

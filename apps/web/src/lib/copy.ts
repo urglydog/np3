@@ -228,13 +228,13 @@ export const copy = {
 
   reviewQuestionTypeLabel: {
     K1: 'Kanji → Hán Việt',
-    E1: 'Từ ví dụ → Hán Việt',
+    E1: 'Trắc nghiệm: nghĩa → từ ví dụ',
     K2: 'Viết kanji',
     E2: 'Nghĩa → tiếng Nhật',
   },
   reviewQuestionTypeHint: {
     K1: 'Nhìn chữ, gõ âm Hán Việt (phải đúng dấu thanh)',
-    E1: 'Nhìn từ, gõ âm Hán Việt từng chữ, cách nhau dấu cách',
+    E1: 'Nhìn nghĩa tiếng Việt, bấm chọn từ tiếng Nhật đúng trong các lựa chọn',
     K2: 'Nhìn âm và nghĩa, tự viết kanji rồi tự chấm',
     E2: 'Nhìn nghĩa tiếng Việt, gõ từ tiếng Nhật (kana hoặc kanji)',
   },
@@ -250,6 +250,8 @@ export const copy = {
   reviewListsTitle: 'Danh sách của tôi',
   reviewListsEmpty: 'Chưa có danh sách nào. Tạo danh sách rồi thêm chữ từ màn Duyệt kanji.',
   reviewListItemCount: (n: number) => `${n} mục`,
+  reviewListsSelectHint: 'Chọn nhiều danh sách để luyện gộp',
+  reviewListsPracticeSelected: (n: number) => (n > 0 ? `Luyện ${n} danh sách đã chọn` : 'Luyện các danh sách đã chọn'),
   reviewListNameLabel: 'Tên danh sách',
   reviewListNamePlaceholder: 'vd: Chữ hay nhầm',
   reviewListCreate: 'Tạo',
@@ -272,6 +274,7 @@ export const copy = {
   reviewQuizScopeLabel: {
     lesson: (lesson: number) => `Bài ${lesson}`,
     kanji: (n: number) => `${n} chữ đã chọn`,
+    lists: (n: number) => `${n} danh sách`,
   },
   reviewSmartLabel: {
     least_streak: 'Chuỗi đúng thấp nhất',

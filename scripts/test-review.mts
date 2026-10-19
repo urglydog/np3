@@ -75,11 +75,18 @@ try {
   eq('Bài 1: candidates kanji đứng trước ví dụ', cands[0]?.itemType, 'kanji');
   eq('Bài 1: maxQuestions = Σ loại áp dụng', maxQuestionsFor(cands) >= 32, true);
 
+  // Việc 1 (phản hồi test thật): ví dụ chỉ còn trắc nghiệm E1, E2 không còn được sinh ra nữa — số câu
+  // phụ thuộc dữ liệu seed thật (catalog E1 nới điều kiện so với trước), nên chỉ kiểm tra có câu và ≤ 40.
   const batch = await loadQuizBatch(a, { kind: 'lesson', lesson: 1 }, ['K1', 'K2', 'E1', 'E2'], 40);
-  eq('Đề bài 1 có 40 câu', batch.length, 40);
+  eq('Đề bài 1 có câu, tối đa 40', batch.length > 0 && batch.length <= 40, true);
   eq('Đề K1 không có han_viet_main', batch.filter((q) => q.question_type === 'K1').every((q) => !('han_viet_main' in q.prompt)), true);
   eq('Đề K2 không có kanji', batch.filter((q) => q.question_type === 'K2').every((q) => !('kanji' in q.prompt)), true);
-  eq('Đề E2 không có term/reading', batch.filter((q) => q.question_type === 'E2').every((q) => !('term' in q.prompt) && !('reading_kana' in q.prompt)), true);
+  eq('Đề không còn câu E2 (đã dừng sinh)', batch.some((q) => q.question_type === 'E2'), false);
+  eq(
+    'Đề E1 ví dụ có meaning_vi + choices (không có term)',
+    batch.filter((q) => q.question_type === 'E1').every((q) => typeof q.prompt.meaning_vi === 'string' && Array.isArray(q.prompt.choices) && q.prompt.choices.length >= 1 && !('term' in q.prompt)),
+    true
+  );
 
   // ---------- 4) Nộp bài thật trên dữ liệu seed ----------
   const ichi = lesson1[0]!;
@@ -93,14 +100,20 @@ try {
   const r3 = await submitReviewAnswer(a, { itemType: 'kanji', itemId: hon.id, questionType: 'K1', answerText: 'Bổn', selfCorrect: null, clientAttemptId: randomUUID() });
   eq('K1 本 "Bổn" (cách viết chấp nhận) đúng', r3.is_correct, true);
 
-  // E1 + E2 trên ví dụ 一つ
+  // E1 trên ví dụ 一つ — Việc 1: giờ là trắc nghiệm, chấm bằng so khớp CHÍNH XÁC với term (không phải Hán Việt).
   const hitotsu = detail!.examples.find((e) => e.term === '一つ')!;
-  const r4 = await submitReviewAnswer(a, { itemType: 'example', itemId: hitotsu.id, questionType: 'E1', answerText: 'Nhất', selfCorrect: null, clientAttemptId: randomUUID() });
-  eq('E1 一つ "Nhất" đúng', [r4.is_correct, r4.answer.han_viet], [true, 'Nhất']);
-  const r5 = await submitReviewAnswer(a, { itemType: 'example', itemId: hitotsu.id, questionType: 'E2', answerText: 'ひとつ', selfCorrect: null, clientAttemptId: randomUUID() });
-  eq('E2 一つ "ひとつ" đúng', [r5.is_correct, r5.answer.reading_kana], [true, 'ひとつ']);
-  const r5b = await submitReviewAnswer(a, { itemType: 'example', itemId: hitotsu.id, questionType: 'E2', answerText: '一つ', selfCorrect: null, clientAttemptId: randomUUID() });
-  eq('E2 gõ IME ra "一つ" cũng đúng', r5b.is_correct, true);
+  const r4 = await submitReviewAnswer(a, { itemType: 'example', itemId: hitotsu.id, questionType: 'E1', answerText: hitotsu.term, selfCorrect: null, clientAttemptId: randomUUID() });
+  eq('E1 一つ bấm đúng từ (term) → đúng', [r4.is_correct, r4.answer.term], [true, '一つ']);
+  const r4b = await submitReviewAnswer(a, { itemType: 'example', itemId: hitotsu.id, questionType: 'E1', answerText: 'không phải 一つ', selfCorrect: null, clientAttemptId: randomUUID() });
+  eq('E1 bấm nhiễu (không khớp term) → sai', r4b.is_correct, false);
+  // E2 không còn được sinh ra (review_card_catalog dừng tạo thẻ E2 cho ví dụ) → nộp E2 bị từ chối.
+  let e2Blocked = false;
+  try {
+    await submitReviewAnswer(a, { itemType: 'example', itemId: hitotsu.id, questionType: 'E2', answerText: 'ひとつ', selfCorrect: null, clientAttemptId: randomUUID() });
+  } catch {
+    e2Blocked = true;
+  }
+  eq('Nộp E2 cho ví dụ bị từ chối (không còn trong catalog)', e2Blocked, true);
 
   // K2: reveal không ghi gì, self-assess + idempotent
   const reveal = await revealKanjiAnswer(a, ichi.id);
@@ -110,7 +123,8 @@ try {
   const r6b = await submitReviewAnswer(a, { itemType: 'kanji', itemId: ichi.id, questionType: 'K2', answerText: null, selfCorrect: true, clientAttemptId: attempt });
   eq('K2 gửi lại cùng mã không tính 2 lần', [r6.new_streak, r6b.new_streak, r6b.duplicate], [1, 1, true]);
   const { count: logCount } = await a.from('review_attempt_log').select('id', { count: 'exact', head: true });
-  eq('attempt_log có đúng 7 lần (lần gửi lại không ghi)', logCount, 7);
+  // r1,r2 (K1 一), r3 (K1 本), r4,r4b (E1 一つ), r6 (K2 一) = 6 (E2 bị chặn không ghi, r6b gửi lại không ghi).
+  eq('attempt_log có đúng 6 lần (E2 bị chặn, gửi lại không ghi)', logCount, 6);
 
   // kanji chờ xác nhận không nộp được
   const { data: pending } = await a.from('review_kanji').select('id').is('confirmed_at', null).limit(1).single();
@@ -123,7 +137,7 @@ try {
   eq('Kanji chờ xác nhận bị từ chối khi nộp', rejected, true);
 
   const homeAfter = await loadHomeStats(a);
-  eq('Home sau khi làm: đã làm 5 thẻ (K1/K2 一, K1 本, E1/E2 一つ)', homeAfter.overall.seen, 5);
+  eq('Home sau khi làm: đã làm 4 thẻ (K1/K2 一, K1 本, E1 一つ)', homeAfter.overall.seen, 4);
 
   // ---------- 5) Danh sách ----------
   const listId = await createReviewList(a, userA.id, 'Chữ khó');
@@ -140,8 +154,8 @@ try {
   eq('loadLists đếm đúng số mục', lists.map((l) => [l.name, l.item_count]), [['Chữ khó', 2]]);
   const listDetail = await loadListDetail(a, listId);
   eq('Chi tiết danh sách', listDetail?.items.map((i) => [i.label, i.hex]), [['一', '04e00'], ['一つ', null]]);
-  const listBatch = await loadQuizBatch(a, { kind: 'list', listId }, ['K1', 'E2'], 10);
-  eq('Đề từ danh sách: đúng 2 câu (K1 一, E2 一つ)', listBatch.map((q) => q.question_type).sort(), ['E2', 'K1']);
+  const listBatch = await loadQuizBatch(a, { kind: 'list', listIds: [listId] }, ['K1', 'E1'], 10);
+  eq('Đề từ danh sách: đúng 2 câu (K1 一, E1 一つ)', listBatch.map((q) => q.question_type).sort(), ['E1', 'K1']);
 
   // B không thấy / không thêm được vào danh sách của A
   const b = userB.client;

@@ -19,7 +19,8 @@
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
     "db:seed:gen": "tsx scripts/gen-seed.ts",
-    "db:seed:review:gen": "tsx scripts/gen-review-seed.ts"
+    "db:seed:review:gen": "tsx scripts/gen-review-seed.ts",
+    "review:extract-strokes": "tsx scripts/extract-stroke-points.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

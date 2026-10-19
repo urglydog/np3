@@ -4,7 +4,9 @@ import { useState } from 'react';
 import type { QuestionType } from '@roadmap/core';
 import { copy } from '@/lib/copy';
 
-const ORDER: QuestionType[] = ['K1', 'E1', 'K2', 'E2'];
+// E2 không còn được sinh ra (review_card_catalog dừng tạo thẻ E2 cho ví dụ) nên bỏ khỏi danh sách chọn —
+// count[E2] luôn 0, hiện checkbox disable vô nghĩa. Xem 20261019100000_review_example_mc.sql.
+const ORDER: QuestionType[] = ['K1', 'E1', 'K2'];
 
 /**
  * Chọn loại câu + số câu. Trần thanh trượt = tổng số câu có thể hỏi của các loại đang bật (≤ maxCap).

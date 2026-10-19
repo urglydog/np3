@@ -9,14 +9,14 @@ import { copy } from '@/lib/copy';
 
 export const dynamic = 'force-dynamic';
 
-function scopeTitle(scope: ReviewScope, listName: string | undefined): string {
+function scopeTitle(scope: ReviewScope, listNames: string[]): string {
   switch (scope.kind) {
     case 'lesson':
       return copy.reviewQuizScopeLabel.lesson(scope.lesson);
     case 'kanji':
       return copy.reviewQuizScopeLabel.kanji(scope.hexes.length);
     case 'list':
-      return listName ?? copy.reviewQuizScopeLists;
+      return listNames.length === 1 ? listNames[0]! : listNames.length > 1 ? copy.reviewQuizScopeLabel.lists(listNames.length) : copy.reviewQuizScopeLists;
     case 'smart':
       return copy.reviewSmartLabel[scope.strategy];
   }
@@ -81,7 +81,7 @@ export default async function QuizNewPage({ searchParams }: { searchParams: Prom
 
   const [candidates, lists] = await Promise.all([loadScopeCandidates(supabase, scope), scope.kind === 'list' ? loadLists(supabase) : Promise.resolve([])]);
   const counts = countByType(candidates);
-  const listName = scope.kind === 'list' ? lists.find((l) => l.id === scope.listId)?.name : undefined;
+  const listNames = scope.kind === 'list' ? lists.filter((l) => scope.listIds.includes(l.id)).map((l) => l.name) : [];
   const total = counts.K1 + counts.E1 + counts.K2 + counts.E2;
 
   return (
@@ -90,7 +90,7 @@ export default async function QuizNewPage({ searchParams }: { searchParams: Prom
         <Link href="/review/quiz/new" className="w-fit text-sm text-ink-muted">
           {copy.reviewQuizChangeScope}
         </Link>
-        <h1 className="break-words text-2xl font-bold tracking-tight text-ink">{scopeTitle(scope, listName)}</h1>
+        <h1 className="break-words text-2xl font-bold tracking-tight text-ink">{scopeTitle(scope, listNames)}</h1>
       </div>
       {total === 0 ? (
         <p className="rounded-xl border border-dashed border-line p-6 text-center text-sm text-ink-muted">{copy.reviewQuizNothing}</p>
