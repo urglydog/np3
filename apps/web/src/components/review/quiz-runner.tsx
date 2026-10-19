@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { CheckCircle2, Eye, Eraser, Loader2, Pencil, XCircle } from 'lucide-react';
-import { scoreHandwriting, type QuestionType, type StrokePath } from '@roadmap/core';
+import { CheckCircle2, Eraser, Loader2, Pencil, Send, XCircle } from 'lucide-react';
+import { scoreHandwriting, type HandwritingScore, type QuestionType, type StrokePath } from '@roadmap/core';
 import { revealAnswerAction, strokeReferenceAction, submitAnswerAction } from '@/app/(app)/review/actions';
 import { HandwritingCanvas, type HandwritingCanvasHandle, type NormalizedPoint } from './handwriting-canvas';
 import type { QuizQuestion } from '@/lib/review-data';
@@ -59,6 +59,10 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
   const [strokeReference, setStrokeReference] = useState<StrokePath[] | null>(null);
   const [drawnStrokes, setDrawnStrokes] = useState<NormalizedPoint[][]>([]);
   const [manualOverride, setManualOverride] = useState(false);
+  // K2 (Việc 2): chỉ chấm sau khi bấm "Nộp bài", không chấm liên tục khi đang vẽ — score đóng băng tại lúc
+  // bấm nộp (không tính lại theo drawnStrokes sống) để không đổi kết quả nếu người dùng vẽ thêm sau đó.
+  const [submitted, setSubmitted] = useState(false);
+  const [frozenAutoScore, setFrozenAutoScore] = useState<HandwritingScore | null>(null);
   // Trắc nghiệm ví dụ (E1): từ đã bấm chọn, để tô màu đúng/sai sau khi có kết quả.
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
 
@@ -103,6 +107,8 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
     setError(null);
     setDrawnStrokes([]);
     setManualOverride(false);
+    setSubmitted(false);
+    setFrozenAutoScore(null);
     setSelectedChoice(null);
     canvas.current?.clear();
   };
@@ -113,7 +119,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
   // hoặc giữ kết quả auto-grade) vì cả hai đều đi qua cùng state `result`.
   useEffect(() => {
     if (!result || !result.is_correct) return;
-    const t = setTimeout(goNext, 900);
+    const t = setTimeout(goNext, 1400);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- goNext đọc idx/questions mới nhất qua closure mỗi render, không cần liệt kê
   }, [result, idx]);
@@ -125,9 +131,9 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
 
   if (!q) return null;
 
-  const autoScore =
-    strokeReference && drawnStrokes.length > 0 ? scoreHandwriting(drawnStrokes, strokeReference) : null;
-  const autoSuggested = !manualOverride && !!autoScore?.autoCorrect;
+  // Banner "Tự chấm ĐÚNG" chỉ được xét SAU khi đã bấm "Nộp bài" (submitted), dùng frozenAutoScore (đóng
+  // băng tại lúc nộp), không phải tính sống theo drawnStrokes — tránh hiện banner giữa chừng khi đang vẽ.
+  const autoSuggested = submitted && !manualOverride && !!frozenAutoScore?.autoCorrect;
 
   const submit = (answerText: string | null, selfCorrect: boolean | null, autoGraded = false) => {
     setError(null);
@@ -240,7 +246,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
 
       {/* Trả lời */}
       {isExampleMC ? (
-        <div className="flex flex-col gap-2">
+        <div className="grid grid-cols-2 gap-2">
           {(q.prompt.choices ?? []).map((choice) => {
             const isChosen = selectedChoice === choice;
             // Chỉ biết đâu là đáp án đúng sau khi có result (server trả result.answer.term) — không lộ trước.
@@ -330,9 +336,42 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
             onStrokeCountChange={setStrokes}
             onStrokesChange={setDrawnStrokes}
           />
-          {autoSuggested && !reveal && !result ? (
+          {!submitted ? (
+            // Chưa bấm "Nộp bài": chỉ Xoá/Nộp bài, KHÔNG tính/hiện autoScore (Việc 2 — tránh chấm giữa
+            // chừng khi mới vẽ xong đúng-số-nét nhưng chưa báo "xong").
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  canvas.current?.clear();
+                  setManualOverride(false);
+                }}
+                className="flex items-center gap-1 rounded-xl border border-line px-4 py-3 text-sm text-ink"
+              >
+                <Eraser className="h-4 w-4" aria-hidden="true" />
+                {copy.reviewQuizClear}
+              </button>
+              <button
+                type="button"
+                disabled={pending}
+                onClick={() => {
+                  // Đóng băng score tại đúng lúc nộp — không tính lại theo drawnStrokes sống sau đó.
+                  const score =
+                    strokeReference && drawnStrokes.length > 0 ? scoreHandwriting(drawnStrokes, strokeReference) : null;
+                  setFrozenAutoScore(score);
+                  setSubmitted(true);
+                  // Không tự tin (không autoCorrect) → gộp luôn bước xem đáp án, không cần bấm thêm.
+                  if (!score?.autoCorrect) doReveal();
+                }}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white disabled:opacity-50"
+              >
+                {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
+                {copy.reviewQuizSubmitHandwriting}
+              </button>
+            </div>
+          ) : autoSuggested && !result ? (
             // Tự chấm ĐÚNG (score cao + đúng số nét) — không bao giờ tự chấm SAI bằng máy (CLAUDE.md #4c).
-            // Người dùng vẫn có quyền quyết định cuối: giữ kết quả hoặc tự sửa qua luồng xem đáp án cũ.
+            // Người dùng vẫn có quyền quyết định cuối: giữ kết quả hoặc tự sửa (chuyển sang luồng reveal).
             <div className="flex flex-col items-center gap-2 rounded-2xl border border-success/40 bg-success/5 p-3">
               <p className="flex items-center gap-2 font-semibold text-success">
                 <CheckCircle2 className="h-5 w-5" aria-hidden="true" />
@@ -342,7 +381,10 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
                 <button
                   type="button"
                   disabled={pending}
-                  onClick={() => setManualOverride(true)}
+                  onClick={() => {
+                    setManualOverride(true);
+                    doReveal();
+                  }}
                   className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-line px-3 py-3 text-sm font-semibold text-ink disabled:opacity-50"
                 >
                   <Pencil className="h-4 w-4" aria-hidden="true" />
@@ -359,30 +401,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
                 </button>
               </div>
             </div>
-          ) : !reveal ? (
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  canvas.current?.clear();
-                  setManualOverride(false);
-                }}
-                className="flex items-center gap-1 rounded-xl border border-line px-4 py-3 text-sm text-ink"
-              >
-                <Eraser className="h-4 w-4" aria-hidden="true" />
-                {copy.reviewQuizClear}
-              </button>
-              <button
-                type="button"
-                onClick={doReveal}
-                disabled={pending}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white disabled:opacity-50"
-              >
-                {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
-                {copy.reviewQuizReveal}
-              </button>
-            </div>
-          ) : (
+          ) : reveal ? (
             <div className="flex flex-col items-center gap-2 rounded-2xl border border-line bg-surface-raised p-3">
               {/* eslint-disable-next-line @next/next/no-img-element -- SVG tĩnh tự host */}
               <img src={reveal.svg_path} alt={copy.reviewDetailStrokeOrderAlt(reveal.kanji)} width={160} height={160} className="h-40 w-40" />
@@ -411,6 +430,12 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
                   </button>
                 </div>
               ) : null}
+            </div>
+          ) : (
+            // Đã bấm Nộp bài, đang chờ doReveal() trả svg thứ tự nét (Server Action).
+            <div className="flex items-center justify-center gap-2 rounded-2xl border border-line bg-surface-raised p-3 text-sm text-ink-muted">
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+              {copy.reviewQuizCheckingAnswer}
             </div>
           )}
         </div>
@@ -455,9 +480,15 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
           )}
           {result.answer.meaning_vi ? <p className="text-sm text-ink">{result.answer.meaning_vi}</p> : null}
           <p className="text-xs text-ink-muted">{copy.reviewQuizMasteryNow(copy.reviewMasteryLabel[result.new_mastery_level])}</p>
-          <button type="button" autoFocus onClick={goNext} className="mt-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white">
-            {isLast ? copy.reviewQuizFinish : copy.reviewQuizNext}
-          </button>
+          {result.is_correct ? (
+            // Trả lời đúng → tự nhảy câu sau ~1.4s (effect ở trên), KHÔNG render nút "Câu tiếp" nữa (nó sẽ
+            // xuất hiện-rồi-biến-mất trong lúc chờ, tạo cảm giác giật). Thay bằng dòng chữ tĩnh, không bấm được.
+            <p className="mt-2 text-center text-sm text-ink-muted">{copy.reviewQuizAutoAdvancing}</p>
+          ) : (
+            <button type="button" autoFocus onClick={goNext} className="mt-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white">
+              {isLast ? copy.reviewQuizFinish : copy.reviewQuizNext}
+            </button>
+          )}
         </div>
       ) : null}
     </section>
