@@ -305,6 +305,9 @@ export const copy = {
   reviewQuizClear: 'Xoá',
   reviewQuizSelfCorrect: 'Mình viết đúng',
   reviewQuizSelfWrong: 'Mình viết sai',
+  reviewQuizAutoCorrect: 'Máy tự nhận: nét vẽ khớp — Đúng',
+  reviewQuizEditResult: 'Sửa kết quả',
+  reviewQuizKeepResult: 'Giữ kết quả',
   reviewQuizStrokeCompare: (drawn: number, expected: number) =>
     drawn === expected ? `Bạn vẽ ${drawn} nét, đúng bằng số nét chuẩn.` : `Bạn vẽ ${drawn} nét, chữ chuẩn có ${expected} nét.`,
   reviewQuizStrokeHint: (n: number) => `Gợi ý: ${n} nét`,

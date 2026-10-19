@@ -302,6 +302,14 @@ export async function loadQuizBatch(
   return (data ?? []) as QuizQuestion[];
 }
 
+// ---------- Nét chuẩn cho tự chấm K2 (CLAUDE.md #4c: heuristic client-side, không OCR/ML) ----------
+/** Toạ độ nét chuẩn KanjiVG của một kanji, dùng để scoreHandwriting ở client. null = chưa seed (script M-sau). */
+export async function loadKanjiStrokeReference(supabase: SupabaseClient, itemId: string): Promise<unknown[] | null> {
+  const { data, error } = await supabase.from('review_kanji').select('stroke_points').eq('id', itemId).maybeSingle();
+  if (error) throw new AppError(`Không đọc được toạ độ nét chuẩn: ${error.message}`, 'review_read_failed');
+  return (data?.stroke_points as unknown[] | null) ?? null;
+}
+
 // ---------- Thống kê (trang /review/stats) ----------
 export interface AttemptRow {
   question_type: QuestionType;

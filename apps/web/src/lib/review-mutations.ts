@@ -14,6 +14,8 @@ export interface SubmitAnswerInput {
   answerText: string | null;
   selfCorrect: boolean | null;
   clientAttemptId: string;
+  /** true chỉ khi K2 được máy tự chấm ĐÚNG qua scoreHandwriting — xem CLAUDE.md #4c. */
+  autoGraded?: boolean;
 }
 
 export interface SubmitAnswerResult {
@@ -42,6 +44,7 @@ export async function submitReviewAnswer(supabase: SupabaseClient, input: Submit
     p_answer_text: input.answerText,
     p_self_correct: input.selfCorrect,
     p_client_attempt_id: input.clientAttemptId,
+    p_auto_graded: input.autoGraded ?? false,
   });
   if (error) throw new AppError(error.message, 'review_submit_failed', 400);
   return data as SubmitAnswerResult;
