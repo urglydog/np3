@@ -16,7 +16,11 @@ eq('lesson:3', parseScope('lesson:3'), { kind: 'lesson', lesson: 3 });
 eq('lesson:0 → null', parseScope('lesson:0'), null);
 eq('lesson:33 → null', parseScope('lesson:33'), null);
 eq('lesson:1.5 → null', parseScope('lesson:1.5'), null);
-eq('list uuid', parseScope('list:00000000-0000-0000-0000-00000000000a'), { kind: 'list', listId: '00000000-0000-0000-0000-00000000000a' });
+eq('list uuid', parseScope('list:00000000-0000-0000-0000-00000000000a'), { kind: 'list', listIds: ['00000000-0000-0000-0000-00000000000a'] });
+eq('list nhiều uuid', parseScope('list:00000000-0000-0000-0000-00000000000a,00000000-0000-0000-0000-00000000000b'), {
+  kind: 'list',
+  listIds: ['00000000-0000-0000-0000-00000000000a', '00000000-0000-0000-0000-00000000000b'],
+});
 eq('list rác → null', parseScope("list:1' or 1=1"), null);
 eq('kanji nhiều mã, bỏ trùng, hạ chữ thường', parseScope('kanji:04E00.04e8c.04e00'), { kind: 'kanji', hexes: ['04e00', '04e8c'] });
 eq('kanji mã rác → null', parseScope('kanji:04e00.zz'), null);
