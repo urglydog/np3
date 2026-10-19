@@ -233,4 +233,96 @@ do $$ begin
   if (select count(*) from template_tasks) <> 0 then raise exception 'RÒ RỈ: đọc được template chưa xuất bản'; end if;
 end $$;
 reset role;
+
+-- ========== Module "Ôn luyện" (review_*) — M1a: test tối thiểu theo docs/plans/review-feature.plan.md §3.4 ==========
+-- Seed tối thiểu 2 kanji + 1 ví dụ đã xác nhận (confirmed_at not null) để A/B có dữ liệu thao tác.
+reset role;
+insert into review_kanji (unicode_hex, kanji, deck_lesson, deck_order, han_viet_main, han_viet_accepted, meaning_en, stroke_count, svg_path, confirmed_at)
+values
+  ('test001', '試', 1, 1, 'thí', '{}', 'test', 9, '/kanjivg/test001.svg', now()),
+  ('test002', '験', 1, 2, 'nghiệm', '{}', 'test', 18, '/kanjivg/test002.svg', now());
+insert into review_example (term, reading_kana, meaning_vi, confirmed_at)
+values ('試験', 'しけん', 'kỳ thi', now());
+insert into review_example_kanji (example_id, kanji_id, lesson_context)
+select e.id, k.id, 1 from review_example e, review_kanji k where e.term = '試験' and k.kanji = '試';
+
+-- ========== Chữ ký hàm: đúng mỗi hàm 1 bản ==========
+do $$ declare n int; begin
+  select count(*) into n from pg_proc p join pg_namespace ns on ns.oid = p.pronamespace
+    where ns.nspname = 'public' and p.proname = 'review_submit_answer';
+  if n <> 1 then raise exception 'Phải có đúng 1 hàm public.review_submit_answer, hiện có %', n; end if;
+end $$;
+
+-- ========== anon không select được review_kanji (chỉ role authenticated có policy) ==========
+set role anon;
+do $$ begin
+  begin
+    perform count(*) from review_kanji;
+    raise exception 'RÒ RỈ: anon select được review_kanji';
+  exception when insufficient_privilege then null; end;
+end $$;
+reset role;
+
+-- ========== A tạo review_list + review_list_item hợp lệ ==========
+set role authenticated;
+select pg_temp.as_user('00000000-0000-0000-0000-00000000000a');
+insert into review_list (user_id, name) values ('00000000-0000-0000-0000-00000000000a', 'Danh sách của A');
+insert into review_list_item (list_id, item_type, item_id)
+  select l.id, 'kanji', k.id from review_list l, review_kanji k
+  where l.user_id = '00000000-0000-0000-0000-00000000000a' and l.name = 'Danh sách của A' and k.kanji = '試';
+
+-- insert item_id rác (không tồn tại trong review_kanji) -> trigger phải chặn
+do $$ declare v_list_id uuid; begin
+  select id into v_list_id from review_list where user_id = '00000000-0000-0000-0000-00000000000a' and name = 'Danh sách của A';
+  begin
+    insert into review_list_item (list_id, item_type, item_id)
+      values (v_list_id, 'kanji', '11111111-1111-1111-1111-111111111111');
+    raise exception 'RÒ RỈ: trigger không chặn item_id rác trong review_list_item';
+  exception when others then
+    if sqlerrm not like '%không tồn tại%' then raise; end if;
+  end;
+end $$;
+
+-- ========== B không insert được vào review_card_state của A, không update được review_list của A ==========
+select pg_temp.as_user('00000000-0000-0000-0000-00000000000b');
+do $$ declare v_kanji_id uuid; n int; begin
+  select id into v_kanji_id from review_kanji where kanji = '試';
+  begin
+    insert into review_card_state (user_id, item_type, item_id, question_type)
+      values ('00000000-0000-0000-0000-00000000000a', 'kanji', v_kanji_id, 'K1');
+    raise exception 'RÒ RỈ: B chèn được review_card_state cho A';
+  exception when insufficient_privilege then null; end;
+
+  update review_list set name = 'Bị B đổi' where user_id = '00000000-0000-0000-0000-00000000000a';
+  get diagnostics n = row_count;
+  if n <> 0 then raise exception 'RÒ RỈ: B update được review_list của A'; end if;
+end $$;
+reset role;
+
+-- ========== A gọi review_submit_answer sai (item_type, question_type) -> bị từ chối ==========
+set role authenticated;
+select pg_temp.as_user('00000000-0000-0000-0000-00000000000a');
+do $$ declare v_kanji_id uuid; begin
+  select id into v_kanji_id from review_kanji where kanji = '試';
+  begin
+    perform review_submit_answer('kanji', v_kanji_id, 'E1', 'bất kỳ', null, gen_random_uuid());
+    raise exception 'RÒ RỈ: review_submit_answer nhận question_type E1 cho item_type kanji';
+  exception when others then
+    if sqlerrm not like '%không áp dụng cho item_type%' then raise; end if;
+  end;
+end $$;
+
+-- ========== A trả lời đúng K1 bằng RPC -> is_correct=true, streak tăng ==========
+do $$ declare v_kanji_id uuid; v_result jsonb; begin
+  select id into v_kanji_id from review_kanji where kanji = '試';
+  select review_submit_answer('kanji', v_kanji_id, 'K1', 'thí', null, gen_random_uuid()) into v_result;
+  if (v_result->>'is_correct')::boolean is not true then
+    raise exception 'review_submit_answer: trả lời đúng Hán Việt phải is_correct=true, có %', v_result;
+  end if;
+  if (v_result->>'new_streak')::int <> 1 then
+    raise exception 'review_submit_answer: streak lần đầu đúng phải =1, có %', v_result->>'new_streak';
+  end if;
+end $$;
+reset role;
+
 \echo RLS OK
