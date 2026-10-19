@@ -335,19 +335,21 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
                     type="button"
                     disabled={pending}
                     onClick={() => submit(null, false)}
-                    className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-danger/40 px-3 py-3 text-sm font-semibold text-danger disabled:opacity-50"
+                    title={copy.reviewQuizSelfWrong}
+                    aria-label={copy.reviewQuizSelfWrong}
+                    className="flex flex-1 items-center justify-center rounded-xl border border-danger/40 px-3 py-3 text-danger disabled:opacity-50"
                   >
-                    <XCircle className="h-4 w-4" aria-hidden="true" />
-                    {copy.reviewQuizSelfWrong}
+                    <XCircle className="h-7 w-7" aria-hidden="true" />
                   </button>
                   <button
                     type="button"
                     disabled={pending}
                     onClick={() => submit(null, true)}
-                    className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-success px-3 py-3 text-sm font-semibold text-white disabled:opacity-50"
+                    title={copy.reviewQuizSelfCorrect}
+                    aria-label={copy.reviewQuizSelfCorrect}
+                    className="flex flex-1 items-center justify-center rounded-xl bg-success px-3 py-3 text-white disabled:opacity-50"
                   >
-                    <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                    {copy.reviewQuizSelfCorrect}
+                    <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
                   </button>
                 </div>
               ) : null}
