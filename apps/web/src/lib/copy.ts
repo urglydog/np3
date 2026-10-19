@@ -189,6 +189,11 @@ export const copy = {
   reviewLicensesLink: 'Nguồn dữ liệu và giấy phép',
   reviewStatsLink: 'Xem thống kê',
   reviewBack: '← Quay lại',
+  reviewReadWriteTitle: 'Theo kiểu câu hỏi',
+  reviewReadWriteK1Label: 'Đọc (K1)',
+  reviewReadWriteK2Label: 'Viết (K2)',
+  reviewReadWriteHint: (mastered: number, total: number) => `${mastered}/${total} đã thuộc`,
+  reviewQuizExitConfirm: 'Thoát khỏi phiên luyện? Các câu đã làm đã được lưu, nhưng phiên sẽ kết thúc tại đây.',
 
   reviewStatsTitle: 'Thống kê ôn luyện',
   reviewStatsOverallAccuracy: 'Tỉ lệ đúng chung',
@@ -197,8 +202,11 @@ export const copy = {
   reviewStatsByType: 'Theo loại câu hỏi',
   reviewStatsByTypeEmpty: 'Chưa có lần trả lời nào cho loại này.',
   reviewStatsChartTitle: 'Tỉ lệ đúng theo ngày',
+  reviewStatsChartLegend: '% câu trả lời đúng mỗi ngày (tất cả loại câu gộp lại)',
   reviewStatsChartEmpty: 'Chưa có dữ liệu để vẽ biểu đồ — luyện vài câu rồi quay lại.',
   reviewStatsAttemptsOn: (n: number) => `${n} lần`,
+  reviewStatsTotalQuestionsTitle: 'Tổng số câu đã luyện',
+  reviewStatsTotalQuestionsHint: 'Toàn bộ lịch sử (mọi loại câu)',
 
   reviewBrowseTitle: 'Duyệt kanji',
   reviewBrowseSelect: 'Chọn nhiều',

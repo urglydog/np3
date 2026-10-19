@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { CheckCircle2, Eye, Eraser, Loader2, Pencil, XCircle } from 'lucide-react';
 import { scoreHandwriting, type QuestionType, type StrokePath } from '@roadmap/core';
 import { revealAnswerAction, strokeReferenceAction, submitAnswerAction } from '@/app/(app)/review/actions';
@@ -39,6 +40,7 @@ function answerSummary(a: Answered): string {
 }
 
 export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[]; scopeParam: string }) {
+  const router = useRouter();
   const [idx, setIdx] = useState(0);
   const [attemptId, setAttemptId] = useState(() => newClientId());
   const [input, setInput] = useState('');
@@ -84,6 +86,43 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
     // eslint-disable-next-line react-hooks/exhaustive-deps -- chỉ phụ thuộc câu hiện tại, không phải cả object q
   }, [q?.item_id, q?.question_type]);
 
+  // Dùng chung cho nút "Câu tiếp" bấm thủ công VÀ tự động nhảy câu khi trả lời đúng (Việc 3) — phải reset
+  // y hệt mọi state của câu cũ trước khi sang câu mới, không phân biệt K1/E1/K2. Định nghĩa trước early
+  // return `if (!q) return null` để hook useEffect bên dưới (phụ thuộc goNext) không vi phạm rules-of-hooks.
+  const goNext = () => {
+    if (idx + 1 >= questions.length) {
+      setFinished(true);
+      return;
+    }
+    setIdx(idx + 1);
+    setAttemptId(newClientId());
+    setInput('');
+    setResult(null);
+    setReveal(null);
+    setStrokes(0);
+    setError(null);
+    setDrawnStrokes([]);
+    setManualOverride(false);
+    setSelectedChoice(null);
+    canvas.current?.clear();
+  };
+
+  // Trả lời ĐÚNG → tự động nhảy câu tiếp sau một khoảng trễ ngắn để người dùng kịp thấy kết quả, không cần
+  // tự bấm "Câu tiếp". Trả lời SAI vẫn phải tự bấm (để có thời gian đọc đáp án đúng) — xem CLAUDE.md Việc 3.
+  // Áp dụng cho cả K1/E1 (result có ngay sau submit) lẫn K2 (result chỉ có sau khi người dùng tự đánh giá
+  // hoặc giữ kết quả auto-grade) vì cả hai đều đi qua cùng state `result`.
+  useEffect(() => {
+    if (!result || !result.is_correct) return;
+    const t = setTimeout(goNext, 900);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- goNext đọc idx/questions mới nhất qua closure mỗi render, không cần liệt kê
+  }, [result, idx]);
+
+  const handleExit = () => {
+    if (answered.length > 0 && !finished && !window.confirm(copy.reviewQuizExitConfirm)) return;
+    router.push(`/review/quiz/new?scope=${encodeURIComponent(scopeParam)}`);
+  };
+
   if (!q) return null;
 
   const autoScore =
@@ -119,24 +158,6 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
       if (!res.ok) setError(res.error);
       else setReveal(res.data);
     });
-  };
-
-  const next = () => {
-    if (idx + 1 >= questions.length) {
-      setFinished(true);
-      return;
-    }
-    setIdx(idx + 1);
-    setAttemptId(newClientId());
-    setInput('');
-    setResult(null);
-    setReveal(null);
-    setStrokes(0);
-    setError(null);
-    setDrawnStrokes([]);
-    setManualOverride(false);
-    setSelectedChoice(null);
-    canvas.current?.clear();
   };
 
   if (finished) {
@@ -184,6 +205,9 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
 
   return (
     <section className="flex flex-col gap-4">
+      <button type="button" onClick={handleExit} className="w-fit text-sm text-ink-muted">
+        {copy.reviewBack}
+      </button>
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-between text-xs text-ink-muted">
           <span>{copy.reviewQuizProgress(idx + 1, questions.length)}</span>
@@ -431,7 +455,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
           )}
           {result.answer.meaning_vi ? <p className="text-sm text-ink">{result.answer.meaning_vi}</p> : null}
           <p className="text-xs text-ink-muted">{copy.reviewQuizMasteryNow(copy.reviewMasteryLabel[result.new_mastery_level])}</p>
-          <button type="button" autoFocus onClick={next} className="mt-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white">
+          <button type="button" autoFocus onClick={goNext} className="mt-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white">
             {isLast ? copy.reviewQuizFinish : copy.reviewQuizNext}
           </button>
         </div>

@@ -289,17 +289,26 @@ export interface QuizQuestion {
   };
 }
 
-/** Dựng đề cho một phiên: lọc theo loại câu, chiến lược thông minh chọn mục cần ôn trước, rồi RPC trộn + cắt. */
+/**
+ * Dựng đề cho một phiên: lọc theo loại câu, LUÔN ưu tiên mục có tỉ lệ đúng thấp/ít luyện (không còn chỉ áp
+ * dụng cho scope 'smart' — mọi phạm vi lesson/list/kanji đều được ưu tiên ngầm, không có UI chọn chiến lược
+ * riêng), rồi RPC trộn + cắt theo số câu người dùng chọn.
+ */
 export async function loadQuizBatch(
   supabase: SupabaseClient,
   scope: ReviewScope,
   types: QuestionType[],
   n: number
 ): Promise<QuizQuestion[]> {
-  let candidates = restrictToTypes(await loadScopeCandidates(supabase, scope), types);
-  if (scope.kind === 'smart') candidates = pickQuizCandidates(candidates, scope.strategy, n);
+  const restricted = restrictToTypes(await loadScopeCandidates(supabase, scope), types);
+  // Sắp lại toàn bộ theo độ ưu tiên "hay sai nhất" (limit = độ dài mảng → chỉ đổi thứ tự, không cắt bớt).
+  const candidates = pickQuizCandidates(restricted, 'least_accuracy', restricted.length);
   if (candidates.length === 0) return [];
-  const refs = candidates.slice(0, 2000).map((c) => ({ item_type: c.itemType, item_id: c.itemId }));
+  // RPC tự "order by random() limit p_limit" trên các refs được gửi — nếu gửi nguyên candidates đã sắp (có
+  // thể rất dài) thì bước random sẽ xoá sạch ưu tiên vừa sắp. Thu hẹp về một pool nhỏ hơn LẤY TỪ ĐẦU mảng đã
+  // sắp (nghiêng hẳn về mục yếu) rồi mới để RPC random trong pool đó, vừa giữ ưu tiên vừa có đa dạng mỗi lần.
+  const poolSize = Math.min(candidates.length, Math.max(n * 3, 40));
+  const refs = candidates.slice(0, poolSize).map((c) => ({ item_type: c.itemType, item_id: c.itemId }));
   const { data, error } = await supabase.rpc('review_get_quiz_batch', { p_item_refs: refs, p_question_types: types, p_limit: n });
   if (error) throw new AppError(`Không tạo được đề: ${error.message}`, 'review_quiz_failed');
   return (data ?? []) as QuizQuestion[];
@@ -311,6 +320,44 @@ export async function loadKanjiStrokeReference(supabase: SupabaseClient, itemId:
   const { data, error } = await supabase.from('review_kanji').select('stroke_points').eq('id', itemId).maybeSingle();
   if (error) throw new AppError(`Không đọc được toạ độ nét chuẩn: ${error.message}`, 'review_read_failed');
   return (data?.stroke_points as unknown[] | null) ?? null;
+}
+
+// ---------- Đọc (K1) vs Viết (K2) — tile tóm tắt ở Home ----------
+export interface ReadWriteStat {
+  mastered: number;
+  total: number;
+}
+export interface ReadWriteStats {
+  k1: ReadWriteStat; // Kanji → Hán Việt (đọc)
+  k2: ReadWriteStat; // Viết kanji
+}
+
+async function countRows(
+  q: PromiseLike<{ count: number | null; error: { message: string } | null }>
+): Promise<number> {
+  const { count, error } = await q;
+  if (error) throw new AppError(`Không đọc được thống kê: ${error.message}`, 'review_stats_failed');
+  return count ?? 0;
+}
+
+/**
+ * % thuộc (mastered) riêng cho câu Đọc (K1) và Viết (K2) — chỉ áp dụng cho kanji (K1/K2 không sinh cho
+ * example). Đọc trực tiếp review_card_catalog (tổng thẻ áp dụng) + review_card_state (thẻ đã mastered),
+ * cùng nguồn dữ liệu loadHomeStats đang dùng, chỉ lọc hẹp hơn theo question_type — không query trùng mục đích.
+ */
+export async function loadReadWriteStats(supabase: SupabaseClient): Promise<ReadWriteStats> {
+  const base = (table: 'review_card_catalog' | 'review_card_state', q: QuestionType, masteredOnly: boolean) => {
+    let query = supabase.from(table).select('item_id', { count: 'exact', head: true }).eq('item_type', 'kanji').eq('question_type', q);
+    if (masteredOnly) query = query.eq('mastery_level', 'mastered');
+    return query;
+  };
+  const [k1Total, k2Total, k1Mastered, k2Mastered] = await Promise.all([
+    countRows(base('review_card_catalog', 'K1', false)),
+    countRows(base('review_card_catalog', 'K2', false)),
+    countRows(base('review_card_state', 'K1', true)),
+    countRows(base('review_card_state', 'K2', true)),
+  ]);
+  return { k1: { mastered: k1Mastered, total: k1Total }, k2: { mastered: k2Mastered, total: k2Total } };
 }
 
 // ---------- Thống kê (trang /review/stats) ----------

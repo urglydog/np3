@@ -53,7 +53,12 @@ export default async function ReviewStatsPage() {
         <h1 className="text-2xl font-bold tracking-tight text-ink">{copy.reviewStatsTitle}</h1>
       </div>
 
-      <section className="grid grid-cols-2 gap-3">
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="flex flex-col gap-1 rounded-xl border border-brand/30 bg-brand/10 p-3">
+          <span className="text-xs text-ink-muted">{copy.reviewStatsTotalQuestionsTitle}</span>
+          <span className="text-2xl font-bold text-ink">{attempts.length}</span>
+          <span className="text-[11px] text-ink-muted">{copy.reviewStatsTotalQuestionsHint}</span>
+        </div>
         <div className="flex flex-col gap-1 rounded-xl border border-line bg-surface-raised p-3">
           <span className="text-xs text-ink-muted">{copy.reviewStatsOverallAccuracy}</span>
           <span className="text-2xl font-bold text-ink">{overallPct}%</span>
@@ -89,6 +94,10 @@ export default async function ReviewStatsPage() {
         <h2 className="text-sm font-semibold text-ink">{copy.reviewStatsChartTitle}</h2>
         <div className="rounded-xl border border-line bg-surface-raised p-3">
           <AccuracyChart points={byDay.map((d) => ({ day: d.day, pct: d.pct }))} />
+          <div className="mt-2 flex items-center gap-1.5 text-[11px] text-ink-muted">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+            {copy.reviewStatsChartLegend}
+          </div>
         </div>
       </section>
     </main>

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import { SMART_STRATEGIES } from '@roadmap/core';
 import { createClient } from '@/lib/supabase/server';
 import { loadLists, loadLoadedLessons, loadScopeCandidates } from '@/lib/review-data';
 import { countByType, MAX_QUIZ_QUESTIONS, parseScope, scopeToParam, type ReviewScope } from '@/lib/review-scope';
@@ -40,18 +39,6 @@ export default async function QuizNewPage({ searchParams }: { searchParams: Prom
           <h1 className="text-2xl font-bold tracking-tight text-ink">{copy.reviewQuizNewTitle}</h1>
           <p className="text-sm text-ink-muted">{copy.reviewQuizChooseScope}</p>
         </div>
-
-        <section className="flex flex-col gap-2">
-          <h2 className="text-sm font-semibold text-ink">{copy.reviewQuizScopeSmart}</h2>
-          <div className="grid grid-cols-2 gap-2">
-            {SMART_STRATEGIES.map((s) => (
-              <Link key={s} href={`/review/quiz/new?scope=smart:${s}`} className={chip}>
-                {copy.reviewSmartLabel[s]}
-                <ChevronRight className="h-4 w-4 shrink-0 text-ink-faint" aria-hidden="true" />
-              </Link>
-            ))}
-          </div>
-        </section>
 
         <section className="flex flex-col gap-2">
           <h2 className="text-sm font-semibold text-ink">{copy.reviewQuizScopeLessons}</h2>

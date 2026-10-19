@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { BookOpen, ChevronRight, Dumbbell, ListChecks, Lock } from 'lucide-react';
 import { masteredRatio, TOTAL_BOOK_LESSONS } from '@roadmap/core';
 import { createClient } from '@/lib/supabase/server';
-import { loadHomeStats } from '@/lib/review-data';
+import { loadHomeStats, loadReadWriteStats } from '@/lib/review-data';
 import { copy } from '@/lib/copy';
 
 export const dynamic = 'force-dynamic';
@@ -12,10 +12,12 @@ const C = 2 * Math.PI * R;
 
 export default async function ReviewHomePage() {
   const supabase = await createClient();
-  const stats = await loadHomeStats(supabase);
+  const [stats, readWrite] = await Promise.all([loadHomeStats(supabase), loadReadWriteStats(supabase)]);
   const byLesson = new Map(stats.lessons.map((l) => [l.lesson, l]));
   const ratio = masteredRatio(stats.overall.mastered, stats.overall.total);
   const pct = Math.round(ratio * 100);
+  const k1Pct = Math.round(masteredRatio(readWrite.k1.mastered, readWrite.k1.total) * 100);
+  const k2Pct = Math.round(masteredRatio(readWrite.k2.mastered, readWrite.k2.total) * 100);
 
   const entries = [
     { href: '/review/browse', icon: BookOpen, label: copy.reviewEntryBrowse, hint: copy.reviewEntryBrowseHint },
@@ -52,6 +54,34 @@ export default async function ReviewHomePage() {
           </div>
         </div>
         <p className="text-sm text-ink-muted">{copy.reviewOverallHint(stats.overall.mastered, stats.overall.total, stats.overall.seen)}</p>
+      </section>
+
+      {/* Đưa thẳng lên Home thay vì giấu sau link "Xem thống kê" — tương đương 2 thanh Hiragana/Katakana của
+          app mẫu, áp cho module này là Đọc (K1) vs Viết (K2). */}
+      <section className="flex flex-col gap-2 rounded-2xl border border-line bg-surface-raised p-4">
+        <h2 className="text-sm font-semibold text-ink">{copy.reviewReadWriteTitle}</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-semibold text-brand">{copy.reviewReadWriteK1Label}</span>
+              <span className="text-sm font-bold text-ink">{k1Pct}%</span>
+            </div>
+            <div className="h-1.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
+              <div className="h-full bg-brand" style={{ width: `${k1Pct}%` }} />
+            </div>
+            <span className="text-[11px] text-ink-muted">{copy.reviewReadWriteHint(readWrite.k1.mastered, readWrite.k1.total)}</span>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-semibold text-success">{copy.reviewReadWriteK2Label}</span>
+              <span className="text-sm font-bold text-ink">{k2Pct}%</span>
+            </div>
+            <div className="h-1.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
+              <div className="h-full bg-success" style={{ width: `${k2Pct}%` }} />
+            </div>
+            <span className="text-[11px] text-ink-muted">{copy.reviewReadWriteHint(readWrite.k2.mastered, readWrite.k2.total)}</span>
+          </div>
+        </div>
       </section>
 
       <nav className="flex flex-col gap-2" aria-label={copy.reviewTitle}>
