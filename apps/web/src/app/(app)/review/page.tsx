@@ -111,6 +111,9 @@ export default async function ReviewHomePage() {
         {stats.overall.pending_kanji + stats.overall.pending_examples > 0 ? (
           <p>{copy.reviewPendingNote(stats.overall.pending_kanji, stats.overall.pending_examples)}</p>
         ) : null}
+        <Link href="/review/stats" className="w-fit underline">
+          {copy.reviewStatsLink}
+        </Link>
         <Link href="/review/licenses" className="w-fit underline">
           {copy.reviewLicensesLink}
         </Link>

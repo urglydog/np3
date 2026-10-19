@@ -301,3 +301,17 @@ export async function loadQuizBatch(
   if (error) throw new AppError(`Không tạo được đề: ${error.message}`, 'review_quiz_failed');
   return (data ?? []) as QuizQuestion[];
 }
+
+// ---------- Thống kê (trang /review/stats) ----------
+export interface AttemptRow {
+  question_type: QuestionType;
+  is_correct: boolean;
+  answered_at: string;
+}
+
+/** Toàn bộ lịch sử trả lời của người dùng (RLS tự giới hạn theo user_id) — dùng cho trang thống kê. */
+export async function loadReviewAttempts(supabase: SupabaseClient): Promise<AttemptRow[]> {
+  return fetchAll<AttemptRow>((from, to) =>
+    supabase.from('review_attempt_log').select('question_type, is_correct, answered_at').order('answered_at').range(from, to)
+  );
+}
