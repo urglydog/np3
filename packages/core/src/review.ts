@@ -197,3 +197,104 @@ export function pickQuizCandidates(candidates: readonly QuizCandidate[], strateg
 export function masteredRatio(mastered: number, total: number): number {
   return total <= 0 ? 0 : Math.min(1, mastered / total);
 }
+
+// ---------------- Chấm viết tay (K2, heuristic hình học, không OCR/ML) ----------------
+// CLAUDE.md bất biến #4(c): chỉ tự đánh dấu ĐÚNG khi độ khớp rất cao; dưới ngưỡng luôn rơi về
+// tự xác nhận (✓/✗ do người dùng bấm) — tuyệt đối không tự đánh dấu SAI bằng máy.
+/** Một điểm trên canvas, đã chuẩn hoá về khung 0..1 (không phụ thuộc kích thước màn hình thật). */
+export interface StrokePoint {
+  x: number;
+  y: number;
+}
+/** Một nét vẽ = dãy điểm theo thứ tự vẽ. */
+export type StrokePath = StrokePoint[];
+export interface HandwritingScore {
+  /** Độ khớp trung bình 0..1 giữa các nét đã resample, theo thứ tự nét. */
+  score: number;
+  /** Số nét người dùng vẽ có khớp số nét chuẩn không — sai số nét thì không bao giờ autoCorrect. */
+  strokeCountMatch: boolean;
+  /** true chỉ khi score vượt ngưỡng cao VÀ số nét khớp — điều kiện duy nhất được tự đánh dấu ĐÚNG. */
+  autoCorrect: boolean;
+}
+
+/** Ngưỡng tin cậy cao để tự đánh dấu ĐÚNG (K2). Dưới ngưỡng này: rơi về tự xác nhận, không tự chấm. */
+export const K2_AUTO_CORRECT_THRESHOLD = 0.85;
+
+/** Lấy đúng `count` điểm cách đều theo độ dài cung của nét (nội suy tuyến tính giữa 2 điểm gần nhất). */
+function resamplePath(path: readonly StrokePoint[], count: number): StrokePoint[] {
+  if (path.length === 0) return Array.from({ length: count }, () => ({ x: 0, y: 0 }));
+  if (path.length === 1) return Array.from({ length: count }, () => ({ x: path[0].x, y: path[0].y }));
+  const segLens: number[] = [];
+  let total = 0;
+  for (let i = 1; i < path.length; i++) {
+    const d = Math.hypot(path[i].x - path[i - 1].x, path[i].y - path[i - 1].y);
+    segLens.push(d);
+    total += d;
+  }
+  if (total === 0) return Array.from({ length: count }, () => ({ x: path[0].x, y: path[0].y }));
+  const out: StrokePoint[] = [];
+  for (let k = 0; k < count; k++) {
+    const target = count === 1 ? 0 : (total * k) / (count - 1);
+    let acc = 0;
+    let seg = 0;
+    while (seg < segLens.length - 1 && acc + segLens[seg] < target) {
+      acc += segLens[seg];
+      seg++;
+    }
+    const segLen = segLens[seg] || 1;
+    const t = Math.max(0, Math.min(1, (target - acc) / segLen));
+    const a = path[seg];
+    const b = path[seg + 1];
+    out.push({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
+  }
+  return out;
+}
+
+/** Chuẩn hoá bounding box của toàn bộ nét về khung 0..1 (co giãn đều, giữ tỉ lệ khung vuông chuẩn KanjiVG). */
+function normalizeBounds(paths: readonly StrokePath[]): StrokePath[] {
+  let minX = Infinity,
+    minY = Infinity,
+    maxX = -Infinity,
+    maxY = -Infinity;
+  for (const p of paths) for (const pt of p) {
+    if (pt.x < minX) minX = pt.x;
+    if (pt.y < minY) minY = pt.y;
+    if (pt.x > maxX) maxX = pt.x;
+    if (pt.y > maxY) maxY = pt.y;
+  }
+  const w = maxX - minX;
+  const h = maxY - minY;
+  const scale = Math.max(w, h);
+  if (!Number.isFinite(scale) || scale <= 0) return paths.map((p) => p.map((pt) => ({ ...pt })));
+  return paths.map((p) => p.map((pt) => ({ x: (pt.x - minX) / scale, y: (pt.y - minY) / scale })));
+}
+
+const RESAMPLE_POINTS = 16;
+
+/**
+ * So khớp các nét người dùng vẽ (`strokes`) với toạ độ nét chuẩn (`reference`, vd từ KanjiVG).
+ * Cả hai được chuẩn hoá bounding box độc lập trước khi so (vị trí/kích thước vẽ trên canvas không quan trọng).
+ * Resample mỗi nét về RESAMPLE_POINTS điểm rồi lấy khoảng cách Euclid trung bình → similarity = 1 - khoảng cách.
+ */
+export function scoreHandwriting(strokes: readonly StrokePath[], reference: readonly StrokePath[]): HandwritingScore {
+  const strokeCountMatch = strokes.length === reference.length && strokes.length > 0;
+  if (!strokeCountMatch) {
+    return { score: 0, strokeCountMatch: false, autoCorrect: false };
+  }
+  const normStrokes = normalizeBounds(strokes);
+  const normRef = normalizeBounds(reference);
+  let totalSim = 0;
+  for (let i = 0; i < normStrokes.length; i++) {
+    const a = resamplePath(normStrokes[i], RESAMPLE_POINTS);
+    const b = resamplePath(normRef[i], RESAMPLE_POINTS);
+    let dist = 0;
+    for (let k = 0; k < RESAMPLE_POINTS; k++) {
+      dist += Math.hypot(a[k].x - b[k].x, a[k].y - b[k].y);
+    }
+    const avgDist = dist / RESAMPLE_POINTS;
+    totalSim += Math.max(0, 1 - avgDist);
+  }
+  const score = totalSim / normStrokes.length;
+  const autoCorrect = score >= K2_AUTO_CORRECT_THRESHOLD && strokeCountMatch;
+  return { score, strokeCountMatch, autoCorrect };
+}

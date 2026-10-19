@@ -11,8 +11,11 @@ import {
   masteredRatio,
   maxQuestionsFor,
   pickQuizCandidates,
+  scoreHandwriting,
+  K2_AUTO_CORRECT_THRESHOLD,
   type CardState,
   type QuizCandidate,
+  type StrokePath,
 } from '../src/review';
 
 let fails = 0,
@@ -137,6 +140,32 @@ eq('loại mục không có loại câu nào', ids(pickQuizCandidates(cands, 'le
 // ---------- masteredRatio ----------
 eq('ratio total 0 → 0', masteredRatio(0, 0), 0);
 eq('ratio 1/4', masteredRatio(1, 4), 0.25);
+
+// ---------- scoreHandwriting ----------
+{
+  const line: StrokePath = [{ x: 0, y: 0 }, { x: 10, y: 0 }];
+  const sameLine: StrokePath = [{ x: 0, y: 0 }, { x: 5, y: 0 }, { x: 10, y: 0 }];
+  const r1 = scoreHandwriting([sameLine], [line]);
+  eq('nét giống nhau (chỉ khác số điểm trung gian) → score cao, autoCorrect', r1.autoCorrect, true);
+  eq('score vượt ngưỡng', r1.score >= K2_AUTO_CORRECT_THRESHOLD, true);
+
+  const perpendicular: StrokePath = [{ x: 5, y: -10 }, { x: 5, y: 10 }];
+  const r2 = scoreHandwriting([perpendicular], [line]);
+  eq('nét vuông góc với nét chuẩn → không autoCorrect', r2.autoCorrect, false);
+
+  const r3 = scoreHandwriting([line], [line, line]);
+  eq('số nét không khớp → strokeCountMatch false', r3.strokeCountMatch, false);
+  eq('số nét không khớp → tuyệt đối không autoCorrect, dù hình giống', r3.autoCorrect, false);
+  eq('số nét không khớp → score 0 (không đoán)', r3.score, 0);
+
+  const r4 = scoreHandwriting([], []);
+  eq('không có nét nào → không autoCorrect', r4.autoCorrect, false);
+
+  // Vị trí/kích thước vẽ khác nhau trên canvas nhưng cùng hình dạng tương đối → vẫn khớp cao
+  const scaledShifted: StrokePath = [{ x: 100, y: 200 }, { x: 150, y: 200 }];
+  const r5 = scoreHandwriting([scaledShifted], [line]);
+  eq('bất biến theo vị trí/kích thước (chuẩn hoá bounding box)', r5.autoCorrect, true);
+}
 
 console.log(`${checks - fails}/${checks} kiểm tra đạt`);
 process.exit(fails ? 1 : 0);
