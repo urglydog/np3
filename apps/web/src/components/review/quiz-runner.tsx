@@ -1,11 +1,11 @@
 'use client';
 
-import { useRef, useState, useTransition } from 'react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
-import { CheckCircle2, Eye, Eraser, Loader2, XCircle } from 'lucide-react';
-import type { QuestionType } from '@roadmap/core';
-import { revealAnswerAction, submitAnswerAction } from '@/app/(app)/review/actions';
-import { HandwritingCanvas, type HandwritingCanvasHandle } from './handwriting-canvas';
+import { CheckCircle2, Eye, Eraser, Loader2, Pencil, XCircle } from 'lucide-react';
+import { scoreHandwriting, type QuestionType, type StrokePath } from '@roadmap/core';
+import { revealAnswerAction, strokeReferenceAction, submitAnswerAction } from '@/app/(app)/review/actions';
+import { HandwritingCanvas, type HandwritingCanvasHandle, type NormalizedPoint } from './handwriting-canvas';
 import type { QuizQuestion } from '@/lib/review-data';
 import type { RevealResult, SubmitAnswerResult } from '@/lib/review-mutations';
 import { newClientId } from '@/lib/client-id';
@@ -53,10 +53,36 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
   const [pending, startTransition] = useTransition();
   const canvas = useRef<HandwritingCanvasHandle>(null);
 
+  // ---- Tự chấm K2 (CLAUDE.md #4c): heuristic hình học client-side, chỉ tự đánh dấu ĐÚNG khi rất chắc.
+  // reference null = chưa seed stroke_points cho kanji này → luôn rơi về luồng reveal + tự xác nhận cũ.
+  const [strokeReference, setStrokeReference] = useState<StrokePath[] | null>(null);
+  const [drawnStrokes, setDrawnStrokes] = useState<NormalizedPoint[][]>([]);
+  const [manualOverride, setManualOverride] = useState(false);
+
   const q = questions[idx];
+
+  useEffect(() => {
+    if (!q || q.question_type !== 'K2') {
+      setStrokeReference(null);
+      return;
+    }
+    let cancelled = false;
+    strokeReferenceAction(q.item_id).then((res) => {
+      if (!cancelled && res.ok) setStrokeReference((res.data as StrokePath[] | null) ?? null);
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- chỉ phụ thuộc câu hiện tại, không phải cả object q
+  }, [q?.item_id, q?.question_type]);
+
   if (!q) return null;
 
-  const submit = (answerText: string | null, selfCorrect: boolean | null) => {
+  const autoScore =
+    strokeReference && drawnStrokes.length > 0 ? scoreHandwriting(drawnStrokes, strokeReference) : null;
+  const autoSuggested = !manualOverride && !!autoScore?.autoCorrect;
+
+  const submit = (answerText: string | null, selfCorrect: boolean | null, autoGraded = false) => {
     setError(null);
     startTransition(async () => {
       // cùng attemptId cho mọi lần thử lại của câu này → server không tính hai lần
@@ -67,6 +93,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
         answerText,
         selfCorrect,
         clientAttemptId: attemptId,
+        autoGraded,
       });
       if (!res.ok) {
         setError(res.error);
@@ -98,6 +125,8 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
     setReveal(null);
     setStrokes(0);
     setError(null);
+    setDrawnStrokes([]);
+    setManualOverride(false);
     canvas.current?.clear();
   };
 
@@ -230,12 +259,49 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
         </form>
       ) : (
         <div className="flex flex-col gap-3">
-          <HandwritingCanvas ref={canvas} label={copy.reviewQuestionTypeLabel.K2} onStrokeCountChange={setStrokes} />
-          {!reveal ? (
+          <HandwritingCanvas
+            ref={canvas}
+            label={copy.reviewQuestionTypeLabel.K2}
+            onStrokeCountChange={setStrokes}
+            onStrokesChange={setDrawnStrokes}
+          />
+          {autoSuggested && !reveal && !result ? (
+            // Tự chấm ĐÚNG (score cao + đúng số nét) — không bao giờ tự chấm SAI bằng máy (CLAUDE.md #4c).
+            // Người dùng vẫn có quyền quyết định cuối: giữ kết quả hoặc tự sửa qua luồng xem đáp án cũ.
+            <div className="flex flex-col items-center gap-2 rounded-2xl border border-success/40 bg-success/5 p-3">
+              <p className="flex items-center gap-2 font-semibold text-success">
+                <CheckCircle2 className="h-5 w-5" aria-hidden="true" />
+                {copy.reviewQuizAutoCorrect}
+              </p>
+              <div className="flex w-full gap-2">
+                <button
+                  type="button"
+                  disabled={pending}
+                  onClick={() => setManualOverride(true)}
+                  className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-line px-3 py-3 text-sm font-semibold text-ink disabled:opacity-50"
+                >
+                  <Pencil className="h-4 w-4" aria-hidden="true" />
+                  {copy.reviewQuizEditResult}
+                </button>
+                <button
+                  type="button"
+                  disabled={pending}
+                  onClick={() => submit(null, true, true)}
+                  className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-success px-3 py-3 text-sm font-semibold text-white disabled:opacity-50"
+                >
+                  {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <CheckCircle2 className="h-4 w-4" aria-hidden="true" />}
+                  {copy.reviewQuizKeepResult}
+                </button>
+              </div>
+            </div>
+          ) : !reveal ? (
             <div className="flex gap-2">
               <button
                 type="button"
-                onClick={() => canvas.current?.clear()}
+                onClick={() => {
+                  canvas.current?.clear();
+                  setManualOverride(false);
+                }}
                 className="flex items-center gap-1 rounded-xl border border-line px-4 py-3 text-sm text-ink"
               >
                 <Eraser className="h-4 w-4" aria-hidden="true" />

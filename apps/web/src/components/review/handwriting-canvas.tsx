@@ -8,16 +8,26 @@ export interface HandwritingCanvasHandle {
 
 const MIN_STROKE_PX = 4; // dưới ngưỡng này coi là chạm nhầm, không tính là một nét
 
+/** Một điểm chuẩn hoá 0..1 theo khung vẽ — dùng cho scoreHandwriting (packages/core), không gửi lên server. */
+export interface NormalizedPoint {
+  x: number;
+  y: number;
+}
+
 /**
  * Bảng viết tay thuần Canvas 2D, dùng Pointer Events (chạy đúng chuột, bút, ngón tay trên iOS Safari/Android Chrome).
  * touch-action: none để vuốt khi viết không cuộn trang. Không gửi ảnh đi đâu — chỉ đếm số nét cho người dùng tự so.
- * guide: chữ mẫu mờ phía sau (chế độ tập viết).
+ * guide: chữ mẫu mờ phía sau (chế độ tập viết). onStrokesChange (tuỳ chọn): trả về toạ độ từng nét đã chuẩn
+ * hoá 0..1 theo khung vẽ, để nơi gọi tự chấm bằng scoreHandwriting — hoàn toàn cục bộ, không gửi đi đâu.
  */
-export const HandwritingCanvas = forwardRef<HandwritingCanvasHandle, { guide?: string | null; onStrokeCountChange?: (n: number) => void; label: string }>(
-  function HandwritingCanvas({ guide, onStrokeCountChange, label }, ref) {
+export const HandwritingCanvas = forwardRef<
+  HandwritingCanvasHandle,
+  { guide?: string | null; onStrokeCountChange?: (n: number) => void; onStrokesChange?: (strokes: NormalizedPoint[][]) => void; label: string }
+>(function HandwritingCanvas({ guide, onStrokeCountChange, onStrokesChange, label }, ref) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const drawing = useRef<{ x: number; y: number; dist: number } | null>(null);
+    const drawing = useRef<{ x: number; y: number; dist: number; points: NormalizedPoint[] } | null>(null);
     const [strokes, setStrokes] = useState(0);
+    const strokePaths = useRef<NormalizedPoint[][]>([]);
 
     const setup = useCallback(() => {
       const canvas = canvasRef.current;
@@ -45,7 +55,9 @@ export const HandwritingCanvas = forwardRef<HandwritingCanvasHandle, { guide?: s
         ctx.restore();
       }
       setStrokes(0);
-    }, []);
+      strokePaths.current = [];
+      onStrokesChange?.([]);
+    }, [onStrokesChange]);
 
     useImperativeHandle(ref, () => ({ clear }), [clear]);
     useEffect(() => onStrokeCountChange?.(strokes), [strokes, onStrokeCountChange]);
@@ -65,6 +77,12 @@ export const HandwritingCanvas = forwardRef<HandwritingCanvasHandle, { guide?: s
     const point = (e: React.PointerEvent<HTMLCanvasElement>) => {
       const rect = e.currentTarget.getBoundingClientRect();
       return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    };
+
+    /** Chuẩn hoá về 0..1 theo khung vẽ hiện tại (bất biến theo kích thước màn hình thật). */
+    const normalized = (e: React.PointerEvent<HTMLCanvasElement>, p: { x: number; y: number }): NormalizedPoint => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      return { x: rect.width > 0 ? p.x / rect.width : 0, y: rect.height > 0 ? p.y / rect.height : 0 };
     };
 
     return (
@@ -89,7 +107,7 @@ export const HandwritingCanvas = forwardRef<HandwritingCanvasHandle, { guide?: s
           onPointerDown={(e) => {
             e.currentTarget.setPointerCapture(e.pointerId);
             const p = point(e);
-            drawing.current = { ...p, dist: 0 };
+            drawing.current = { ...p, dist: 0, points: [normalized(e, p)] };
             const ctx = e.currentTarget.getContext('2d');
             ctx?.beginPath();
             ctx?.moveTo(p.x, p.y);
@@ -104,9 +122,15 @@ export const HandwritingCanvas = forwardRef<HandwritingCanvasHandle, { guide?: s
             d.dist += Math.hypot(p.x - d.x, p.y - d.y);
             d.x = p.x;
             d.y = p.y;
+            d.points.push(normalized(e, p));
           }}
           onPointerUp={() => {
-            if (drawing.current && drawing.current.dist >= MIN_STROKE_PX) setStrokes((n) => n + 1);
+            const d = drawing.current;
+            if (d && d.dist >= MIN_STROKE_PX) {
+              setStrokes((n) => n + 1);
+              strokePaths.current = [...strokePaths.current, d.points];
+              onStrokesChange?.(strokePaths.current);
+            }
             drawing.current = null;
           }}
           onPointerCancel={() => {

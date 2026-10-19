@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { AppError, toUserMessage } from '@/lib/errors';
 import { copy } from '@/lib/copy';
+import { loadKanjiStrokeReference } from '@/lib/review-data';
 import {
   addReviewListItems,
   createReviewList,
@@ -52,6 +53,8 @@ const submitSchema = z.object({
   answerText: z.string().max(200).nullable(),
   selfCorrect: z.boolean().nullable(),
   clientAttemptId: uuid,
+  // true chỉ khi K2 được máy tự chấm ĐÚNG qua scoreHandwriting (score cao + đúng số nét) — xem CLAUDE.md #4c.
+  autoGraded: z.boolean().optional(),
 });
 
 export async function submitAnswerAction(input: z.input<typeof submitSchema>): Promise<ActionResult<SubmitAnswerResult>> {
@@ -71,6 +74,20 @@ export async function revealAnswerAction(itemId: string): Promise<ActionResult<R
     if (!uuid.safeParse(itemId).success) throw new AppError('Mã kanji không hợp lệ', 'invalid_input', 400);
     const { supabase } = await getSupabaseAndUser();
     return { ok: true, data: await revealKanjiAnswer(supabase, itemId) };
+  } catch (err) {
+    return { ok: false, error: toUserMessage(err) };
+  }
+}
+
+/**
+ * Toạ độ nét chuẩn (KanjiVG) để QuizRunner tự chấm K2 bằng scoreHandwriting (heuristic client-side).
+ * null = chưa có dữ liệu (script seed điền sau) → UI phải rơi về luồng reveal + tự xác nhận ✓/✗ cũ.
+ */
+export async function strokeReferenceAction(itemId: string): Promise<ActionResult<unknown[] | null>> {
+  try {
+    if (!uuid.safeParse(itemId).success) throw new AppError('Mã kanji không hợp lệ', 'invalid_input', 400);
+    const { supabase } = await getSupabaseAndUser();
+    return { ok: true, data: await loadKanjiStrokeReference(supabase, itemId) };
   } catch (err) {
     return { ok: false, error: toUserMessage(err) };
   }

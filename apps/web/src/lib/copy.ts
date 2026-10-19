@@ -187,7 +187,18 @@ export const copy = {
   reviewPendingNote: (kanji: number, examples: number) =>
     `${kanji} chữ và ${examples} ví dụ đang chờ xác nhận lại nên chưa đưa vào bài luyện.`,
   reviewLicensesLink: 'Nguồn dữ liệu và giấy phép',
+  reviewStatsLink: 'Xem thống kê',
   reviewBack: '← Quay lại',
+
+  reviewStatsTitle: 'Thống kê ôn luyện',
+  reviewStatsOverallAccuracy: 'Tỉ lệ đúng chung',
+  reviewStatsTotalAttempts: (n: number) => `${n} lần trả lời`,
+  reviewStatsMasteredOverall: 'Đã thuộc (tổng)',
+  reviewStatsByType: 'Theo loại câu hỏi',
+  reviewStatsByTypeEmpty: 'Chưa có lần trả lời nào cho loại này.',
+  reviewStatsChartTitle: 'Tỉ lệ đúng theo ngày',
+  reviewStatsChartEmpty: 'Chưa có dữ liệu để vẽ biểu đồ — luyện vài câu rồi quay lại.',
+  reviewStatsAttemptsOn: (n: number) => `${n} lần`,
 
   reviewBrowseTitle: 'Duyệt kanji',
   reviewBrowseSelect: 'Chọn nhiều',
@@ -294,6 +305,9 @@ export const copy = {
   reviewQuizClear: 'Xoá',
   reviewQuizSelfCorrect: 'Mình viết đúng',
   reviewQuizSelfWrong: 'Mình viết sai',
+  reviewQuizAutoCorrect: 'Máy tự nhận: nét vẽ khớp — Đúng',
+  reviewQuizEditResult: 'Sửa kết quả',
+  reviewQuizKeepResult: 'Giữ kết quả',
   reviewQuizStrokeCompare: (drawn: number, expected: number) =>
     drawn === expected ? `Bạn vẽ ${drawn} nét, đúng bằng số nét chuẩn.` : `Bạn vẽ ${drawn} nét, chữ chuẩn có ${expected} nét.`,
   reviewQuizStrokeHint: (n: number) => `Gợi ý: ${n} nét`,

@@ -46,9 +46,12 @@ Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói tro
        chức theo đơn vị có sẵn trong nguồn dữ liệu (ví dụ "theo bài" của một cuốn sách cụ thể) hoặc
        theo danh sách người dùng tự chọn đều được phép, miễn không đóng gói lại nội dung giáo trình
        để phân phối ngoài phạm vi cá nhân;
-   (c) **Không chấm bài tự luận, không có cộng đồng/bình luận/thảo luận.** Chấm viết tay (nếu có)
-       chỉ ở mức khoan dung + tự xác nhận (✓/✗ do người dùng bấm), không phải nhận diện/chấm điểm
-       tự động bằng máy cho nội dung tự do.
+   (c) **Không chấm bài tự luận, không có cộng đồng/bình luận/thảo luận.** Chấm viết tay (nếu có) được
+       phép dùng **heuristic hình học đơn giản, chạy hoàn toàn phía client, không OCR/ML, không gửi ảnh
+       lên server** (vd so khớp số nét + hình dạng nét vẽ với toạ độ nét chuẩn KanjiVG) để tự đánh dấu
+       ĐÚNG khi độ khớp vượt ngưỡng tin cậy cao; dưới ngưỡng đó BẮT BUỘC rơi về tự xác nhận (✓/✗ do
+       người dùng bấm) — không bao giờ tự đánh dấu SAI bằng máy, chỉ tự đánh dấu ĐÚNG khi rất chắc,
+       nghi ngờ luôn nhường quyền quyết định cho người dùng.
    Dữ liệu nguồn mở dùng trong tính năng ôn luyện (vd thứ tự nét KanjiVG, KANJIDIC2) phải ghi rõ
    giấy phép và nguồn ngay trong app.
 5. **Chữ hiển thị phải trung thực:** giờ học là *ước tính*; giá là "giá tham khảo" kèm ngày; link affiliate ghi rõ; không hứa đậu hay mốc thời gian.
