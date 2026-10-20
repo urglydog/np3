@@ -3,15 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CalendarCheck, ListTodo, Map, ShoppingBag, Settings, BookOpenCheck } from 'lucide-react';
-import { copy } from '@/lib/copy';
 
 const items = [
-  { href: '/today', label: copy.navTodayLabel, title: copy.navTodayTitle, icon: CalendarCheck },
-  { href: '/upcoming', label: copy.navUpcomingLabel, title: copy.navUpcomingTitle, icon: ListTodo },
-  { href: '/roadmap', label: copy.navRoadmapLabel, title: copy.navRoadmapTitle, icon: Map },
-  { href: '/buy', label: copy.navBuyLabel, title: copy.navBuyTitle, icon: ShoppingBag },
-  { href: '/review', label: copy.navReviewLabel, title: copy.navReviewTitle, icon: BookOpenCheck },
-  { href: '/settings', label: copy.navSettingsLabel, title: copy.navSettingsTitle, icon: Settings },
+  { href: '/today', label: 'Hôm nay', title: 'Màn Hôm nay', icon: CalendarCheck },
+  { href: '/upcoming', label: 'Sắp tới', title: 'Màn Sắp tới', icon: ListTodo },
+  { href: '/roadmap', label: 'Lộ trình', title: 'Màn Lộ trình', icon: Map },
+  { href: '/buy', label: 'Cần mua', title: 'Màn Cần mua', icon: ShoppingBag },
+  { href: '/review', label: 'Ôn luyện', title: 'Màn Ôn luyện Kanji', icon: BookOpenCheck },
+  { href: '/settings', label: 'Cài đặt', title: 'Màn Cài đặt', icon: Settings },
 ] as const;
 
 export function BottomNav({ badgeCounts = {} }: { badgeCounts?: Partial<Record<(typeof items)[number]['href'], number>> }) {
@@ -20,7 +19,7 @@ export function BottomNav({ badgeCounts = {} }: { badgeCounts?: Partial<Record<(
   return (
     <nav
       className="sticky bottom-0 flex justify-around border-t border-line bg-surface pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2"
-      aria-label={copy.navMainLabel}
+      aria-label="Điều hướng chính"
     >
       {items.map(({ href, label, title, icon: Icon }) => {
         const active = pathname?.startsWith(href);

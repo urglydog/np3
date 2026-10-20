@@ -70,18 +70,18 @@ export function TodayCarousel({ tasks, startIndex }: { tasks: CarouselTask[]; st
                 >
                   {t.milestone ? <p className="text-xs font-semibold uppercase tracking-wider text-brand">{t.milestone}</p> : null}
                   <h2 className="text-lg font-bold text-ink">{t.name}</h2>
-                  {t.due ? <p className="text-sm text-ink-muted">{copy.todayCarouselDueLabel(t.due)}</p> : null}
+                  {t.due ? <p className="text-sm text-ink-muted">Hạn chót: <span className="font-medium text-ink">{t.due}</span></p> : null}
 
                   {t.isCurrent ? (
                     <form action={markTaskDone} className="flex flex-col gap-3 mt-1">
                       <input type="hidden" name="taskId" value={t.id} />
                       <div className="grid grid-cols-2 gap-3">
                         <label className="flex flex-col gap-1 text-xs text-ink font-medium">
-                          {copy.todayCarouselWritingRepsLabel}
+                          Số lần viết
                           <input type="number" name="writingReps" min="0" placeholder="50" className="input-premium" />
                         </label>
                         <label className="flex flex-col gap-1 text-xs text-ink font-medium">
-                          {copy.todayCarouselSpeakingMinutesLabel}
+                          Phút nói
                           <input type="number" name="speakingMinutes" min="0" placeholder="15" className="input-premium" />
                         </label>
                       </div>

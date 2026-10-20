@@ -4,17 +4,16 @@ import { useState, useId } from 'react';
 import type { RoadmapRow } from '@/lib/roadmap';
 import { TaskRow } from './task-row';
 import { TaskActions } from '@/components/task-actions';
-import { copy } from '@/lib/copy';
 
 type Phase = { code: string; title: string; tasks: RoadmapRow[] };
 
 const STATUS_FILTERS = [
-  { value: '', label: copy.roadmapFilterAll },
-  { value: 'in_progress', label: copy.roadmapStatusInProgress },
-  { value: 'todo', label: copy.roadmapStatusTodo },
-  { value: 'done', label: copy.roadmapStatusDone },
-  { value: 'skipped', label: copy.roadmapStatusSkipped },
-  { value: 'optional_off', label: copy.roadmapFilterOptionalOff },
+  { value: '', label: 'Tất cả' },
+  { value: 'in_progress', label: 'Đang làm' },
+  { value: 'todo', label: 'Chưa làm' },
+  { value: 'done', label: 'Đã xong' },
+  { value: 'skipped', label: 'Bỏ qua' },
+  { value: 'optional_off', label: 'Tùy chọn đang tắt' },
 ] as const;
 
 export function RoadmapFilter({
@@ -62,7 +61,7 @@ export function RoadmapFilter({
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={copy.roadmapFilterSearchPlaceholder}
+            placeholder="Tìm kiếm task..."
             className="input-premium w-full pl-9"
           />
         </div>
@@ -70,7 +69,7 @@ export function RoadmapFilter({
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
           className="input-premium min-w-[120px]"
-          aria-label={copy.roadmapFilterAriaLabel}
+          aria-label="Lọc theo trạng thái"
         >
           {STATUS_FILTERS.map((f) => (
             <option key={f.value} value={f.value}>{f.label}</option>
@@ -82,18 +81,22 @@ export function RoadmapFilter({
             onClick={() => { setQuery(''); setStatusFilter(''); }}
             className="btn-premium text-xs py-1.5 px-3 text-danger border-danger/30 hover:bg-danger/5"
           >
-            {copy.roadmapFilterClear}
+            ✕ Xoá bộ lọc
           </button>
         )}
       </div>
 
-      {isFiltering && <p className="text-sm text-ink-muted">{copy.roadmapFilterFoundCount(totalFiltered)}</p>}
+      {isFiltering && (
+        <p className="text-sm text-ink-muted">
+          Tìm thấy <span className="font-semibold text-ink">{totalFiltered}</span> task
+        </p>
+      )}
 
       {/* Task list */}
       {filteredGroups.length === 0 ? (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-line bg-surface-raised p-12 text-center">
           <span className="text-4xl">🔍</span>
-          <p className="text-ink-muted">{copy.roadmapFilterNoResults}</p>
+          <p className="text-ink-muted">Không tìm thấy task nào phù hợp</p>
         </div>
       ) : (
         <div className="flex flex-col gap-4">

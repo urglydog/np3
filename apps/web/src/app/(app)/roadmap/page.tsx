@@ -26,7 +26,7 @@ export default async function RoadmapPage({
     loadProgressStats(),
   ]);
   if (!plan) redirect('/create-plan');
-  if (!outline) throw new AppError(copy.noTemplatePublishedError, 'no_template', 500);
+  if (!outline) throw new AppError('Chưa có template nào được xuất bản', 'no_template', 500);
 
   const rows = buildRoadmapRows(outline.tasks, plan.schedule.tasks, plan.pinnedStartById);
   const currentId = currentTaskId(plan.schedule.tasks);
