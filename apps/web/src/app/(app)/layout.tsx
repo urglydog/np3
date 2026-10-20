@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { createClient, getCurrentUser } from '@/lib/supabase/server';
 import { loadRecentNotifications } from '@/lib/notifications';
 import { NotificationBell } from '@/components/notification-bell';
+import { copy } from '@/lib/copy';
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
@@ -36,7 +37,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       {/* Back to top FAB */}
       <a
         href="#"
-        aria-label="Về đầu trang"
+        aria-label={copy.backToTopLabel}
         className="fixed bottom-20 right-5 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface-raised shadow-lg transition-all hover:bg-brand hover:text-white hover:border-brand opacity-70 hover:opacity-100"
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

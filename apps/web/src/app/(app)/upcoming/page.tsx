@@ -46,7 +46,7 @@ export default async function UpcomingPage({
         <h1 className="pb-1 text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand to-success">
           {copy.upcomingTitle}
         </h1>
-        <p className="text-sm text-ink-muted">30 ngày tới</p>
+        <p className="text-sm text-ink-muted">{copy.upcomingHorizonNote}</p>
       </div>
 
       <div className="flex gap-2">
@@ -74,10 +74,12 @@ export default async function UpcomingPage({
         <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line bg-surface-raised p-12 text-center">
           <span className="text-5xl">🎯</span>
           <div>
-            <p className="text-lg font-semibold text-ink">Không có gì trong 30 ngày tới</p>
+            <p className="text-lg font-semibold text-ink">{copy.upcomingEmptyTitle}</p>
             <p className="mt-1 text-sm text-ink-muted">
-              Task tiếp theo của bạn có thể bắt đầu sau hơn 30 ngày nữa.{' '}
-              <Link href="/roadmap" className="text-brand underline">Xem toàn bộ lộ trình →</Link>
+              {copy.upcomingEmptyHint}{' '}
+              <Link href="/roadmap" className="text-brand underline">
+                {copy.upcomingViewRoadmapLink}
+              </Link>
             </p>
           </div>
         </div>
@@ -91,9 +93,9 @@ export default async function UpcomingPage({
               <div className="flex flex-col gap-1 min-w-0">
                 <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-ink-faint mb-0.5">
                   {entry.type === 'task' ? (
-                    <><svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg> Task học</>
+                    <><svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg> {copy.upcomingTypeTaskLabel}</>
                   ) : (
-                    <><svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg> Cần mua</>
+                    <><svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg> {copy.upcomingTypePurchaseLabel}</>
                   )}
                 </span>
                 {entry.type === 'task' ? (

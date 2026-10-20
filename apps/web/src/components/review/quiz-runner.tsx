@@ -12,7 +12,7 @@ import type { RevealResult, SubmitAnswerResult } from '@/lib/review-mutations';
 import { newClientId } from '@/lib/client-id';
 import { copy } from '@/lib/copy';
 
-const DONT_KNOW = '(không biết)'; // luôn chấm sai ở cả TS lẫn SQL, vẫn lưu nguyên văn vào attempt_log
+const DONT_KNOW = "(don't know)"; // luôn chấm sai ở cả TS lẫn SQL, vẫn lưu nguyên văn vào attempt_log
 
 interface Answered {
   q: QuizQuestion;
@@ -294,9 +294,12 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
       {isExampleMC ? (
         <div className="grid grid-cols-2 gap-2">
           {(q.prompt.choices ?? []).map((choice) => {
-            const isChosen = selectedChoice === choice;
+            const isChosen = selectedChoice === choice.term;
             // Chỉ biết đâu là đáp án đúng sau khi có result (server trả result.answer.term) — không lộ trước.
-            const isCorrectChoice = !!result && result.answer.term === choice;
+            const isCorrectChoice = !!result && result.answer.term === choice.term;
+            // Trả lời SAI → hiện nghĩa/phát âm của CẢ 4 lựa chọn (không chỉ đáp án đúng) để học luôn thể —
+            // trả lời ĐÚNG thì không cần, đã có khối "Kết quả" bên dưới nêu đủ.
+            const showInfo = !!result && !result.is_correct;
             const stateClass = !result
               ? isChosen
                 ? 'border-brand bg-brand/10 text-brand' // phản hồi tức thì khi vừa bấm, trước khi có kết quả server
@@ -308,17 +311,24 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
                   : 'border-line bg-surface-raised text-ink-muted';
             return (
               <button
-                key={choice}
+                key={choice.term}
                 type="button"
-                lang="ja"
                 disabled={!!result || pending}
                 onClick={() => {
-                  setSelectedChoice(choice);
-                  submit(choice, null);
+                  setSelectedChoice(choice.term);
+                  submit(choice.term, null);
                 }}
-                className={`flex items-center justify-center rounded-xl border px-4 py-4 text-xl font-semibold transition-colors active:scale-95 disabled:opacity-90 ${stateClass}`}
+                className={`flex flex-col items-center justify-center gap-1 rounded-xl border px-4 py-4 transition-colors active:scale-95 disabled:opacity-90 ${stateClass}`}
               >
-                {choice}
+                <span className="text-xl font-semibold" lang="ja">
+                  {choice.term}
+                </span>
+                {showInfo ? (
+                  <span className="text-xs font-normal">
+                    <span lang="ja">{choice.reading_kana}</span>
+                    {choice.meaning_vi ? <> · {choice.meaning_vi}</> : null}
+                  </span>
+                ) : null}
               </button>
             );
           })}

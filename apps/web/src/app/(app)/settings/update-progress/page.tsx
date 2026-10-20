@@ -6,6 +6,7 @@ import { copy } from '@/lib/copy';
 import { AppError } from '@/lib/errors';
 import { applyProgressUpdate } from './actions';
 import { SubmitButton } from '@/components/submit-button';
+import { BackLink } from '@/components/back-link';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,6 +20,7 @@ export default async function UpdateProgressPage({
   if (updated !== undefined) {
     return (
       <main className="mx-auto flex max-w-screen-sm flex-col gap-4 p-4">
+        <BackLink label={copy.updateProgressBackLink} />
         <h1 className="text-xl font-semibold text-ink">{copy.updateProgressTitle}</h1>
         <p className="text-sm text-ink">{copy.updateProgressResult(Number(updated) || 0)}</p>
         <Link href="/today" className="text-sm text-accent underline">
@@ -29,7 +31,7 @@ export default async function UpdateProgressPage({
   }
 
   const outline = await loadPublishedTemplateOutline();
-  if (!outline) throw new AppError('Chưa có template nào được xuất bản', 'no_template', 500);
+  if (!outline) throw new AppError(copy.noTemplatePublishedError, 'no_template', 500);
 
   const supabase = await createClient();
   const { data: planTaskStates } = await supabase.from('plan_task_state').select('task_id, status');
@@ -46,6 +48,7 @@ export default async function UpdateProgressPage({
   if (!code) {
     return (
       <main className="mx-auto flex max-w-screen-sm flex-col gap-4 p-4">
+        <BackLink label={copy.updateProgressBackLink} />
         <h1 className="text-xl font-semibold text-ink">{copy.updateProgressTitle}</h1>
         <form method="get" className="flex flex-col gap-3">
           <label className="flex flex-col gap-1 text-sm text-ink">
@@ -74,8 +77,9 @@ export default async function UpdateProgressPage({
   if (!target) {
     return (
       <main className="mx-auto flex max-w-screen-sm flex-col gap-4 p-4">
+        <BackLink label={copy.updateProgressBackLink} />
         <h1 className="text-xl font-semibold text-ink">{copy.updateProgressTitle}</h1>
-        <p className="text-sm text-red-600">Mã task không hợp lệ.</p>
+        <p className="text-sm text-red-600">{copy.invalidTaskCodeError}</p>
         <Link href="/settings/update-progress" className="text-sm text-accent underline">
           {copy.updateProgressChooseAgain}
         </Link>
@@ -89,6 +93,7 @@ export default async function UpdateProgressPage({
 
   return (
     <main className="mx-auto flex max-w-screen-sm flex-col gap-4 p-4">
+      <BackLink label={copy.updateProgressBackLink} />
       <h1 className="text-xl font-semibold text-ink">{copy.updateProgressTitle}</h1>
 
       {idsToMark.length === 0 ? (
