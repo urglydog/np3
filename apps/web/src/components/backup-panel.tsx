@@ -3,7 +3,6 @@
 import { useRef, useState, useCallback } from 'react';
 import { Download, Upload, AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
 import { exportPlanAction, importPlanAction } from '@/app/(app)/settings/actions';
-import { copy } from '@/lib/copy';
 
 type Status = 'idle' | 'loading' | 'ok' | 'error';
 
@@ -63,7 +62,7 @@ export function BackupPanel() {
     setPendingJson(null);
     if (result.ok) {
       setImportStatus('ok');
-      setImportMsg(copy.backupImportSuccess);
+      setImportMsg('Khôi phục thành công! Tải lại trang để thấy dữ liệu mới.');
     } else {
       setImportStatus('error');
       setImportMsg(result.error);
@@ -89,12 +88,12 @@ export function BackupPanel() {
             <AlertTriangle size={18} className="mt-0.5 shrink-0 text-red-500" />
             <div>
               <p id="import-confirm-title" className="text-sm font-medium text-ink">
-                {copy.backupConfirmTitle}
+                Xác nhận khôi phục
               </p>
               <p className="mt-1 text-xs text-ink-muted">
-                {copy.backupConfirmBodyPrefix}
-                <strong className="text-red-500">{copy.backupConfirmBodyBold}</strong>
-                {copy.backupConfirmBodySuffix}
+                Việc này sẽ{' '}
+                <strong className="text-red-500">xóa toàn bộ tiến độ hiện tại</strong> và thay bằng dữ liệu
+                trong file. Không thể hoàn tác.
               </p>
             </div>
           </div>
@@ -104,14 +103,14 @@ export function BackupPanel() {
               onClick={handleConfirmImport}
               className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white"
             >
-              {copy.backupConfirmButton}
+              Xác nhận khôi phục
             </button>
             <button
               id="import-cancel-btn"
               onClick={handleCancelImport}
               className="rounded-md border border-line px-4 py-2 text-sm text-ink"
             >
-              {copy.backupCancelButton}
+              Hủy
             </button>
           </div>
         </div>
@@ -123,7 +122,7 @@ export function BackupPanel() {
           id="backup-export-btn"
           onClick={handleExport}
           disabled={exportStatus === 'loading'}
-          title={copy.backupExportTitle}
+          title="Tải về file JSON chứa toàn bộ tiến độ hiện tại"
           className="flex items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-ink disabled:opacity-60"
         >
           {exportStatus === 'loading' ? (
@@ -133,7 +132,7 @@ export function BackupPanel() {
           ) : (
             <Download size={16} />
           )}
-          {copy.backupExportButton}
+          Xuất dữ liệu (.json)
         </button>
 
         {/* Nút Import — trigger hidden file input */}
@@ -141,7 +140,7 @@ export function BackupPanel() {
           id="backup-import-btn"
           onClick={() => fileInputRef.current?.click()}
           disabled={importStatus === 'loading' || showConfirm}
-          title={copy.backupImportTitle}
+          title="Chọn file JSON để khôi phục tiến độ"
           className="flex items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-ink disabled:opacity-60"
         >
           {importStatus === 'loading' ? (
@@ -151,7 +150,7 @@ export function BackupPanel() {
           ) : (
             <Upload size={16} />
           )}
-          {copy.backupImportButton}
+          Khôi phục từ file…
         </button>
 
         {/* Input ẩn để chọn file */}
@@ -174,7 +173,10 @@ export function BackupPanel() {
         </p>
       )}
 
-      <p className="text-xs text-ink-faint">{copy.backupFooterNote}</p>
+      <p className="text-xs text-ink-faint">
+        File sao lưu chứa: lộ trình, tiến độ từng task, trạng thái tài nguyên (sách/phần mềm).
+        Không chứa thông tin đăng nhập.
+      </p>
     </div>
   );
 }

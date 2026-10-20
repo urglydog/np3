@@ -229,10 +229,10 @@ export default async function BuyPage({
             ))}
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm mt-2 border-t border-line/50 pt-4">
-          <p className="flex flex-col"><span className="text-xs text-ink-muted uppercase font-semibold tracking-wider">{copy.buyLabelCore}</span> <span className="font-medium text-ink">{totalCore.toLocaleString('vi-VN')}đ</span></p>
-          <p className="flex flex-col"><span className="text-xs text-ink-muted uppercase font-semibold tracking-wider">{copy.buyLabelOptional}</span> <span className="font-medium text-ink">{totalOptional.toLocaleString('vi-VN')}đ</span></p>
-          <p className="flex flex-col"><span className="text-xs text-ink-muted uppercase font-semibold tracking-wider">{copy.buyLabelSpent}</span> <span className="font-bold text-success">{spent.toLocaleString('vi-VN')}đ</span></p>
-          <p className="flex flex-col"><span className="text-xs text-ink-muted uppercase font-semibold tracking-wider">{copy.buyLabelRemaining}</span> <span className="font-bold text-brand">{remaining.toLocaleString('vi-VN')}đ</span></p>
+          <p className="flex flex-col"><span className="text-xs text-ink-muted uppercase font-semibold tracking-wider">Cốt lõi</span> <span className="font-medium text-ink">{totalCore.toLocaleString('vi-VN')}đ</span></p>
+          <p className="flex flex-col"><span className="text-xs text-ink-muted uppercase font-semibold tracking-wider">Tùy chọn</span> <span className="font-medium text-ink">{totalOptional.toLocaleString('vi-VN')}đ</span></p>
+          <p className="flex flex-col"><span className="text-xs text-ink-muted uppercase font-semibold tracking-wider">Đã chi</span> <span className="font-bold text-success">{spent.toLocaleString('vi-VN')}đ</span></p>
+          <p className="flex flex-col"><span className="text-xs text-ink-muted uppercase font-semibold tracking-wider">Còn lại</span> <span className="font-bold text-brand">{remaining.toLocaleString('vi-VN')}đ</span></p>
         </div>
       </section>
 

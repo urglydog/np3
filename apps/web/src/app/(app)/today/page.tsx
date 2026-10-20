@@ -52,7 +52,7 @@ export default async function TodayPage() {
           <div className="rounded-full bg-success/20 p-4">
             <svg className="w-12 h-12 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
           </div>
-          <h2 className="text-xl font-bold text-ink">{copy.todayAllDoneTitle}</h2>
+          <h2 className="text-xl font-bold text-ink">Hoàn thành xuất sắc!</h2>
           <p className="text-sm text-ink-muted">{copy.todayEmptyState}</p>
         </div>
       )}
