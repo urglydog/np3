@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { CheckCircle2, Eye, Eraser, Loader2, Pencil, XCircle } from 'lucide-react';
-import { scoreHandwriting, type QuestionType, type StrokePath } from '@roadmap/core';
+import { CheckCircle2, Eraser, Loader2, Pencil, Send, XCircle } from 'lucide-react';
+import { scoreHandwriting, type HandwritingScore, type QuestionType, type StrokePath } from '@roadmap/core';
 import { revealAnswerAction, strokeReferenceAction, submitAnswerAction } from '@/app/(app)/review/actions';
 import { HandwritingCanvas, type HandwritingCanvasHandle, type NormalizedPoint } from './handwriting-canvas';
 import type { QuizQuestion } from '@/lib/review-data';
@@ -104,11 +104,13 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
   const [strokeReference, setStrokeReference] = useState<StrokePath[] | null>(null);
   const [drawnStrokes, setDrawnStrokes] = useState<NormalizedPoint[][]>([]);
   const [manualOverride, setManualOverride] = useState(false);
+  // K2: chỉ chấm SAU khi bấm "Nộp bài" (không chấm liên tục khi đang vẽ) — score đóng băng tại lúc nộp,
+  // đồng thời `submitted` khoá canvas NGAY (đồng bộ, trước khi await network) để không vẽ thêm được trong
+  // lúc chờ, tránh nét thừa bị tính sai số nét.
+  const [submitted, setSubmitted] = useState(false);
+  const [frozenAutoScore, setFrozenAutoScore] = useState<HandwritingScore | null>(null);
   // Trắc nghiệm ví dụ (E1): từ đã bấm chọn, để tô màu đúng/sai sau khi có kết quả.
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
-  // K2: khoá canvas NGAY khi bấm "Nộp"/"Giữ kết quả" (đồng bộ, trước khi await network) — không để vẽ
-  // thêm trong lúc chờ, tránh nét thừa bị tính sai số nét (phản hồi #3 của người dùng).
-  const [submitted, setSubmitted] = useState(false);
 
   const q = questions[idx];
 
@@ -142,7 +144,7 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
   }, [q?.item_id, q?.question_type]);
 
   // Dùng cho nút "Câu tiếp" — người dùng LUÔN tự bấm để qua câu, dù trả lời đúng hay sai, để có thời gian
-  // xem lại đáp án đúng trước khi qua câu khác (phản hồi #2 của người dùng — bỏ tự động nhảy câu cũ).
+  // xem lại đáp án đúng trước khi qua câu khác (phản hồi #2 của người dùng — không tự động nhảy câu).
   // Phải reset y hệt mọi state của câu cũ trước khi sang câu mới, không phân biệt K1/E1/K2.
   const goNext = () => {
     if (idx + 1 >= questions.length) {
@@ -159,8 +161,9 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
     setError(null);
     setDrawnStrokes([]);
     setManualOverride(false);
-    setSelectedChoice(null);
     setSubmitted(false);
+    setFrozenAutoScore(null);
+    setSelectedChoice(null);
     canvas.current?.clear();
   };
 
@@ -172,11 +175,11 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
 
   if (!q) return null;
 
-  const autoScore =
-    strokeReference && drawnStrokes.length > 0 ? scoreHandwriting(drawnStrokes, strokeReference) : null;
-  const autoSuggested = !manualOverride && !!autoScore?.autoCorrect;
-  // Khoá canvas K2: ngay khi bấm Nộp/Giữ kết quả (submitted, đồng bộ), hoặc máy đã tự gợi ý/đã có đáp án/kết quả.
-  const k2Locked = submitted || !!reveal || !!result || autoSuggested;
+  // Banner "Tự chấm ĐÚNG" chỉ được xét SAU khi đã bấm "Nộp bài" (submitted), dùng frozenAutoScore (đóng
+  // băng tại lúc nộp), không phải tính sống theo drawnStrokes — tránh hiện banner giữa chừng khi đang vẽ.
+  const autoSuggested = submitted && !manualOverride && !!frozenAutoScore?.autoCorrect;
+  // Khoá canvas K2: ngay khi bấm "Nộp bài" (submitted, đồng bộ), hoặc đã có đáp án/kết quả.
+  const k2Locked = submitted || !!reveal || !!result;
 
   const submit = (answerText: string | null, selfCorrect: boolean | null, autoGraded = false) => {
     setError(null);
@@ -289,7 +292,7 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
 
       {/* Trả lời */}
       {isExampleMC ? (
-        <div className="flex flex-col gap-2">
+        <div className="grid grid-cols-2 gap-2">
           {(q.prompt.choices ?? []).map((choice) => {
             const isChosen = selectedChoice === choice;
             // Chỉ biết đâu là đáp án đúng sau khi có result (server trả result.answer.term) — không lộ trước.
@@ -384,9 +387,42 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
             overlayImageSrc={reveal?.svg_path ?? null}
           />
           {reveal?.stroke_count ? <p className="text-center text-sm text-ink-muted">{copy.reviewQuizStrokeCompare(strokes, reveal.stroke_count)}</p> : null}
-          {autoSuggested && !reveal && !result ? (
+          {!submitted ? (
+            // Chưa bấm "Nộp bài": chỉ Xoá/Nộp bài, KHÔNG tính/hiện autoScore — tránh chấm giữa chừng khi
+            // mới vẽ xong đúng-số-nét nhưng chưa báo "xong". Bấm Nộp bài khoá canvas ngay (k2Locked ở trên).
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  canvas.current?.clear();
+                  setManualOverride(false);
+                }}
+                className="flex items-center gap-1 rounded-xl border border-line px-4 py-3 text-sm text-ink active:scale-95"
+              >
+                <Eraser className="h-4 w-4" aria-hidden="true" />
+                {copy.reviewQuizClear}
+              </button>
+              <button
+                type="button"
+                disabled={pending}
+                onClick={() => {
+                  // Đóng băng score tại đúng lúc nộp — không tính lại theo drawnStrokes sống sau đó.
+                  const score =
+                    strokeReference && drawnStrokes.length > 0 ? scoreHandwriting(drawnStrokes, strokeReference) : null;
+                  setFrozenAutoScore(score);
+                  setSubmitted(true);
+                  // Không tự tin (không autoCorrect) → gộp luôn bước xem đáp án, không cần bấm thêm.
+                  if (!score?.autoCorrect) doReveal();
+                }}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white active:scale-95 disabled:opacity-50"
+              >
+                {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
+                {copy.reviewQuizSubmitHandwriting}
+              </button>
+            </div>
+          ) : autoSuggested && !result ? (
             // Tự chấm ĐÚNG (score cao + đúng số nét) — không bao giờ tự chấm SAI bằng máy (CLAUDE.md #4c).
-            // Người dùng vẫn có quyền quyết định cuối: giữ kết quả hoặc tự sửa qua luồng xem đáp án cũ.
+            // Người dùng vẫn có quyền quyết định cuối: giữ kết quả hoặc tự sửa (chuyển sang luồng reveal).
             <div className="flex flex-col items-center gap-2 rounded-2xl border border-success/40 bg-success/5 p-3">
               <p className="flex items-center gap-2 font-semibold text-success">
                 <CheckCircle2 className="h-5 w-5" aria-hidden="true" />
@@ -396,7 +432,10 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
                 <button
                   type="button"
                   disabled={pending}
-                  onClick={() => setManualOverride(true)}
+                  onClick={() => {
+                    setManualOverride(true);
+                    doReveal();
+                  }}
                   className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-line px-3 py-3 text-sm font-semibold text-ink active:scale-95 disabled:opacity-50"
                 >
                   <Pencil className="h-4 w-4" aria-hidden="true" />
@@ -405,10 +444,7 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
                 <button
                   type="button"
                   disabled={pending}
-                  onClick={() => {
-                    setSubmitted(true);
-                    submit(null, true, true);
-                  }}
+                  onClick={() => submit(null, true, true)}
                   className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-success px-3 py-3 text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
                 >
                   {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <CheckCircle2 className="h-4 w-4" aria-hidden="true" />}
@@ -416,57 +452,40 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
                 </button>
               </div>
             </div>
-          ) : !reveal ? (
-            <div className="flex gap-2">
-              <button
-                type="button"
-                disabled={submitted || pending}
-                onClick={() => {
-                  canvas.current?.clear();
-                  setManualOverride(false);
-                }}
-                className="flex items-center gap-1 rounded-xl border border-line px-4 py-3 text-sm text-ink active:scale-95 disabled:opacity-50"
-              >
-                <Eraser className="h-4 w-4" aria-hidden="true" />
-                {copy.reviewQuizClear}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setSubmitted(true);
-                  doReveal();
-                }}
-                disabled={submitted || pending}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white active:scale-95 disabled:opacity-50"
-              >
-                {submitted ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
-                {copy.reviewQuizReveal}
-              </button>
+          ) : reveal ? (
+            <div className="flex flex-col items-center gap-2 rounded-2xl border border-line bg-surface-raised p-3">
+              {!result ? (
+                <div className="flex w-full gap-2">
+                  <button
+                    type="button"
+                    disabled={pending}
+                    onClick={() => submit(null, false)}
+                    title={copy.reviewQuizSelfWrong}
+                    aria-label={copy.reviewQuizSelfWrong}
+                    className="flex flex-1 items-center justify-center rounded-xl border border-danger/40 px-3 py-3 text-danger active:scale-95 disabled:opacity-50"
+                  >
+                    <XCircle className="h-7 w-7" aria-hidden="true" />
+                  </button>
+                  <button
+                    type="button"
+                    disabled={pending}
+                    onClick={() => submit(null, true)}
+                    title={copy.reviewQuizSelfCorrect}
+                    aria-label={copy.reviewQuizSelfCorrect}
+                    className="flex flex-1 items-center justify-center rounded-xl bg-success px-3 py-3 text-white active:scale-95 disabled:opacity-50"
+                  >
+                    <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
+                  </button>
+                </div>
+              ) : null}
             </div>
-          ) : !result ? (
-            <div className="flex w-full gap-2">
-              <button
-                type="button"
-                disabled={pending}
-                onClick={() => submit(null, false)}
-                title={copy.reviewQuizSelfWrong}
-                aria-label={copy.reviewQuizSelfWrong}
-                className="flex flex-1 items-center justify-center rounded-xl border border-danger/40 px-3 py-3 text-danger active:scale-95 disabled:opacity-50"
-              >
-                <XCircle className="h-7 w-7" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                disabled={pending}
-                onClick={() => submit(null, true)}
-                title={copy.reviewQuizSelfCorrect}
-                aria-label={copy.reviewQuizSelfCorrect}
-                className="flex flex-1 items-center justify-center rounded-xl bg-success px-3 py-3 text-white active:scale-95 disabled:opacity-50"
-              >
-                <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
-              </button>
+          ) : (
+            // Đã bấm Nộp bài, đang chờ doReveal() trả svg thứ tự nét (Server Action).
+            <div className="flex items-center justify-center gap-2 rounded-2xl border border-line bg-surface-raised p-3 text-sm text-ink-muted">
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+              {copy.reviewQuizCheckingAnswer}
             </div>
-          ) : null}
+          )}
         </div>
       )}
 

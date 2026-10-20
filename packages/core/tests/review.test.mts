@@ -167,6 +167,23 @@ eq('ratio 1/4', masteredRatio(1, 4), 0.25);
   const scaledShifted: StrokePath = [{ x: 100, y: 200 }, { x: 150, y: 200 }];
   const r5 = scoreHandwriting([scaledShifted], [line]);
   eq('bất biến theo vị trí/kích thước (chuẩn hoá bounding box)', r5.autoCorrect, true);
+
+  // Case nhiều nét — chốt lại rằng chuẩn hoá bbox là MỘT bbox CHUNG cho mọi nét của cả `strokes` lẫn
+  // `reference` (không chuẩn hoá từng nét riêng lẻ), nên vẽ đúng SỐ LƯỢNG nét nhưng SAI hình dạng/vị trí
+  // tương đối giữa các nét vẫn phải bị từ chối autoCorrect. Đọc lại `normalizeBounds` trong review.ts xác
+  // nhận hàm đã gộp toạ độ của TẤT CẢ nét trong `paths` để tính một bbox chung trước khi co giãn — đúng như
+  // mong đợi, không phải lỗi "mỗi nét tự co giãn độc lập" (nếu có brief nào mô tả lỗi đó thì đã lỗi thời).
+  const crossRef: StrokePath[] = [
+    [{ x: 0, y: 50 }, { x: 100, y: 50 }], // nét ngang
+    [{ x: 50, y: 0 }, { x: 50, y: 100 }], // nét dọc, giao nhau ở giữa → hình chữ thập
+  ];
+  const wrongShapeSameCount: StrokePath[] = [
+    [{ x: 0, y: 0 }, { x: 30, y: 30 }], // 2 nét chéo song song, không giao nhau, lệch hẳn góc so với chữ thập
+    [{ x: 70, y: 70 }, { x: 100, y: 100 }],
+  ];
+  const r6 = scoreHandwriting(wrongShapeSameCount, crossRef);
+  eq('đúng số nét nhưng hình dạng/vị trí tương đối sai hẳn → strokeCountMatch true', r6.strokeCountMatch, true);
+  eq('đúng số nét nhưng hình dạng/vị trí tương đối sai hẳn → vẫn KHÔNG autoCorrect', r6.autoCorrect, false);
 }
 
 {
