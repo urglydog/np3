@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BookOpen, ChevronRight, Dumbbell, ListChecks, Lock } from 'lucide-react';
+import { ChevronRight, Dumbbell, Lock } from 'lucide-react';
 import { masteredRatio, TOTAL_BOOK_LESSONS } from '@roadmap/core';
 import { createClient } from '@/lib/supabase/server';
 import { loadHomeStats, loadReadWriteStats } from '@/lib/review-data';
@@ -19,11 +19,7 @@ export default async function ReviewHomePage() {
   const k1Pct = Math.round(masteredRatio(readWrite.k1.mastered, readWrite.k1.total) * 100);
   const k2Pct = Math.round(masteredRatio(readWrite.k2.mastered, readWrite.k2.total) * 100);
 
-  const entries = [
-    { href: '/review/browse', icon: BookOpen, label: copy.reviewEntryBrowse, hint: copy.reviewEntryBrowseHint },
-    { href: '/review/lists', icon: ListChecks, label: copy.reviewEntryLists, hint: copy.reviewEntryListsHint },
-    { href: '/review/quiz/new', icon: Dumbbell, label: copy.reviewEntryPractice, hint: copy.reviewEntryPracticeHint },
-  ];
+  const entries = [{ href: '/review/practice', icon: Dumbbell, label: copy.reviewEntryPractice, hint: copy.reviewEntryPracticeHint }];
 
   return (
     <main className="mx-auto flex w-full max-w-screen-md flex-col gap-6 p-4 pb-24 md:p-6">
@@ -123,7 +119,7 @@ export default async function ReviewHomePage() {
             return (
               <li key={lesson}>
                 <Link
-                  href={`/review/browse?lesson=${lesson}`}
+                  href={`/review/practice?lesson=${lesson}`}
                   title={`${copy.reviewLessonLabel(lesson)}: ${p}% ${copy.reviewMasteredPercent}`}
                   className="relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl border border-line bg-surface-raised active:bg-brand/5"
                 >

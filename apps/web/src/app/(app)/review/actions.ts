@@ -98,30 +98,31 @@ const listName = z.string().trim().min(1, 'Tên danh sách không được để
 
 export async function createListAction(formData: FormData): Promise<void> {
   const { supabase, user } = await getSupabaseAndUser();
-  let url: string;
+  // Quay về /review/practice (không phải trang chi tiết list mới) để danh sách mới hiện ngay trong
+  // trang vừa đang chọn — thay cho luồng cũ nhảy tab (CLAUDE.md phản hồi #4/#6).
+  let url = '/review/practice?ok=1';
   try {
     const name = listName.safeParse(formData.get('name'));
     if (!name.success) throw new AppError(name.error.issues[0]!.message, 'invalid_input', 400);
-    const id = await createReviewList(supabase, user.id, name.data);
-    url = `/review/lists/${id}?ok=1`;
+    await createReviewList(supabase, user.id, name.data);
   } catch (err) {
-    url = withParam('/review/lists', 'error', toUserMessage(err));
+    url = withParam('/review/practice', 'error', toUserMessage(err));
   }
-  revalidatePath('/review/lists');
+  revalidatePath('/review/practice');
   redirect(url);
 }
 
 export async function deleteListAction(formData: FormData): Promise<void> {
   const { supabase } = await getSupabaseAndUser();
-  let url = '/review/lists?ok=1';
+  let url = '/review/practice?ok=1';
   try {
     const id = uuid.safeParse(formData.get('listId'));
     if (!id.success) throw new AppError('Mã danh sách không hợp lệ', 'invalid_input', 400);
     await deleteReviewList(supabase, id.data);
   } catch (err) {
-    url = withParam('/review/lists', 'error', toUserMessage(err));
+    url = withParam('/review/practice', 'error', toUserMessage(err));
   }
-  revalidatePath('/review/lists');
+  revalidatePath('/review/practice');
   redirect(url);
 }
 
@@ -148,7 +149,7 @@ export async function removeListItemAction(formData: FormData): Promise<void> {
  */
 export async function addToListAction(formData: FormData): Promise<void> {
   const { supabase, user } = await getSupabaseAndUser();
-  const returnTo = safeReturnTo(formData.get('returnTo'), '/review/browse');
+  const returnTo = safeReturnTo(formData.get('returnTo'), '/review/practice');
   let url: string;
   try {
     const raw = formData.getAll('item').map(String);
@@ -177,6 +178,6 @@ export async function addToListAction(formData: FormData): Promise<void> {
   } catch (err) {
     url = withParam(returnTo, 'error', toUserMessage(err));
   }
-  revalidatePath('/review/lists');
+  revalidatePath('/review/practice');
   redirect(url);
 }

@@ -14,7 +14,7 @@ export interface PickerList {
 /**
  * Danh sách "Danh sách của tôi" cho phép chọn nhiều (checkbox) rồi luyện gộp — bấm vào tên vẫn
  * đi tới trang chi tiết như trước; bấm ô chọn (hoặc bật chế độ chọn) để tích nhiều danh sách.
- * Theo đúng pattern của KanjiPicker (apps/web/src/components/review/kanji-picker.tsx).
+ * Theo đúng pattern của LessonKanjiPicker (apps/web/src/components/review/lesson-kanji-picker.tsx).
  */
 export function ListsMultiSelect({ lists }: { lists: PickerList[] }) {
   const [selected, setSelected] = useState<string[]>([]);
@@ -54,19 +54,17 @@ export function ListsMultiSelect({ lists }: { lists: PickerList[] }) {
         })}
       </ul>
 
-      <div className="fixed inset-x-0 bottom-0 z-30 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-        <Link
-          href={selected.length > 0 ? `/review/quiz/new?scope=${encodeURIComponent(`list:${selected.join(',')}`)}` : '#'}
-          aria-disabled={selected.length === 0}
-          tabIndex={selected.length === 0 ? -1 : undefined}
-          className={`mx-auto flex w-full max-w-screen-md items-center justify-center gap-2 rounded-xl px-4 py-3 text-base font-semibold shadow-lg ${
-            selected.length === 0 ? 'pointer-events-none bg-line text-ink-muted' : 'bg-brand text-white'
-          }`}
-        >
-          <Dumbbell className="h-5 w-5" aria-hidden="true" />
-          {copy.reviewListsPracticeSelected(selected.length)}
-        </Link>
-      </div>
+      {selected.length > 0 ? (
+        <div className="sticky bottom-2 z-30 rounded-2xl border border-line bg-surface p-2 shadow-lg">
+          <Link
+            href={`/review/quiz/new?scope=${encodeURIComponent(`list:${selected.join(',')}`)}`}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 text-base font-semibold text-white"
+          >
+            <Dumbbell className="h-5 w-5" aria-hidden="true" />
+            {copy.reviewListsPracticeSelected(selected.length)}
+          </Link>
+        </div>
+      ) : null}
     </div>
   );
 }

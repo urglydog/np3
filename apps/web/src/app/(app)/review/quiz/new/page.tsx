@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
-import { loadLists, loadLoadedLessons, loadScopeCandidates } from '@/lib/review-data';
+import { loadLists, loadScopeCandidates } from '@/lib/review-data';
 import { countByType, MAX_QUIZ_QUESTIONS, parseScope, scopeToParam, type ReviewScope } from '@/lib/review-scope';
 import { QuizSetupForm } from '@/components/review/quiz-setup-form';
 import { copy } from '@/lib/copy';
@@ -28,7 +28,8 @@ export default async function QuizNewPage({ searchParams }: { searchParams: Prom
   const supabase = await createClient();
 
   if (!scope) {
-    const [lessons, lists] = await Promise.all([loadLoadedLessons(supabase), loadLists(supabase)]);
+    // Chọn phạm vi (theo bài/theo chữ/theo danh sách) đã dời sang /review/practice — trang này chỉ còn
+    // nhận scope đã có sẵn và xử lý bước chọn loại câu + số câu (CLAUDE.md phản hồi #4/#6).
     return (
       <main className="mx-auto flex w-full max-w-screen-md flex-col gap-5 p-4 pb-24 md:p-6">
         <div className="flex flex-col gap-1 border-b border-line pb-3">
@@ -36,31 +37,11 @@ export default async function QuizNewPage({ searchParams }: { searchParams: Prom
             {copy.reviewBack}
           </Link>
           <h1 className="text-2xl font-bold tracking-tight text-ink">{copy.reviewQuizNewTitle}</h1>
-          <p className="text-sm text-ink-muted">{copy.reviewQuizChooseScope}</p>
         </div>
-
-        <section className="flex flex-col gap-2">
-          <h2 className="text-sm font-semibold text-ink">{copy.reviewQuizScopeLessons}</h2>
-          <div className="grid grid-cols-4 gap-2">
-            {lessons.map((l) => (
-              <Link key={l} href={`/review/quiz/new?scope=lesson:${l}`} className={`${chip} justify-center font-semibold`}>
-                {l}
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        {lists.length > 0 ? (
-          <section className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold text-ink">{copy.reviewQuizScopeLists}</h2>
-            {lists.map((l) => (
-              <Link key={l.id} href={`/review/quiz/new?scope=list:${l.id}`} className={chip}>
-                <span className="truncate">{l.name}</span>
-                <span className="shrink-0 text-xs text-ink-muted">{copy.reviewListItemCount(l.item_count)}</span>
-              </Link>
-            ))}
-          </section>
-        ) : null}
+        <p className="rounded-xl border border-dashed border-line p-6 text-center text-sm text-ink-muted">{copy.reviewQuizChooseScope}</p>
+        <Link href="/review/practice" className={`${chip} justify-center font-semibold`}>
+          {copy.reviewPracticeTitle}
+        </Link>
       </main>
     );
   }
