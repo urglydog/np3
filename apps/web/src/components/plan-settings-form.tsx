@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { updateSettingsAction } from '@/app/(app)/settings/actions';
 import { Loader2, CheckCircle } from 'lucide-react';
+import { copy } from '@/lib/copy';
 
 interface PlanSettingsFormProps {
   initialReminderTime: string;
@@ -11,15 +12,7 @@ interface PlanSettingsFormProps {
   initialRestDays: number[];
 }
 
-const DAYS_OF_WEEK = [
-  { id: 0, label: 'CN' },
-  { id: 1, label: 'T2' },
-  { id: 2, label: 'T3' },
-  { id: 3, label: 'T4' },
-  { id: 4, label: 'T5' },
-  { id: 5, label: 'T6' },
-  { id: 6, label: 'T7' },
-];
+const DAYS_OF_WEEK = copy.planSettingsDayLabels.map((label, id) => ({ id, label }));
 
 export function PlanSettingsForm({
   initialReminderTime,
@@ -55,7 +48,7 @@ export function PlanSettingsForm({
       {/* Giờ nhắc & Yên tĩnh */}
       <div className="grid grid-cols-2 gap-4">
         <label className="flex flex-col gap-1">
-          <span className="text-sm text-ink-muted">Giờ nhắc hằng ngày</span>
+          <span className="text-sm text-ink-muted">{copy.planSettingsReminderTimeLabel}</span>
           <input
             name="reminderTime"
             type="time"
@@ -68,7 +61,7 @@ export function PlanSettingsForm({
 
       <div className="grid grid-cols-2 gap-4">
         <label className="flex flex-col gap-1">
-          <span className="text-sm text-ink-muted">Bắt đầu giờ yên tĩnh</span>
+          <span className="text-sm text-ink-muted">{copy.planSettingsQuietStartLabel}</span>
           <input
             name="quietStart"
             type="time"
@@ -78,7 +71,7 @@ export function PlanSettingsForm({
           />
         </label>
         <label className="flex flex-col gap-1">
-          <span className="text-sm text-ink-muted">Kết thúc giờ yên tĩnh</span>
+          <span className="text-sm text-ink-muted">{copy.planSettingsQuietEndLabel}</span>
           <input
             name="quietEnd"
             type="time"
@@ -88,13 +81,11 @@ export function PlanSettingsForm({
           />
         </label>
       </div>
-      <p className="text-xs text-ink-faint -mt-2">
-        Hệ thống sẽ không gửi push notification trong khung giờ yên tĩnh.
-      </p>
+      <p className="text-xs text-ink-faint -mt-2">{copy.planSettingsQuietHint}</p>
 
       {/* Ngày nghỉ cố định */}
       <div className="flex flex-col gap-1">
-        <span className="text-sm text-ink-muted">Ngày nghỉ cố định trong tuần</span>
+        <span className="text-sm text-ink-muted">{copy.planSettingsRestDaysLabel}</span>
         <div className="flex flex-wrap gap-3">
           {DAYS_OF_WEEK.map((day) => (
             <label key={day.id} className="flex items-center gap-1.5 text-sm text-ink">
@@ -116,16 +107,12 @@ export function PlanSettingsForm({
           disabled={status === 'loading'}
           className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
         >
-          {status === 'loading' ? (
-            <Loader2 size={16} className="animate-spin" />
-          ) : (
-            'Lưu cài đặt'
-          )}
+          {status === 'loading' ? <Loader2 size={16} className="animate-spin" /> : copy.planSettingsSaveButton}
         </button>
 
         {status === 'ok' && (
           <span className="flex items-center gap-1 text-sm text-green-500">
-            <CheckCircle size={14} /> Đã lưu
+            <CheckCircle size={14} /> {copy.planSettingsSaved}
           </span>
         )}
         {status === 'error' && <span className="text-sm text-red-500">{errorMsg}</span>}

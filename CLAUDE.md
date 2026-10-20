@@ -14,7 +14,7 @@
 - **Thay đổi nhỏ trong task đang làm:** không cần confirm.
 - **Khi có lỗi:** KHÔNG xin lỗi, KHÔNG giải thích dài dòng → tạo systemic change (test, lint rule, ràng buộc) để không tái phát.
 - **Workflow:** Plan → đợi user gõ OK/Approve → implement → lint + typecheck + test (xem 8a) → commit (xem 8a) → báo cáo cuối task (1a).
-- **Ngôn ngữ:** trao đổi với user bằng tiếng Việt; identifier/tên file bằng tiếng Anh; chuỗi hiển thị cho người dùng và comment nghiệp vụ bằng tiếng Việt.
+- **Ngôn ngữ:** trao đổi với user (chat) bằng tiếng Việt; identifier/tên file bằng tiếng Anh; comment nghiệp vụ bằng tiếng Việt; **chuỗi hiển thị cho người dùng trong UI (toàn bộ `lib/copy.ts` và mọi text hiện trên màn hình) bằng tiếng Anh** (đổi từ 2026-10-20 — trước đó là tiếng Việt). Ký tự kanji/kana/Hán Việt hiển thị trong nội dung (vd `lang="ja"`) không đổi, chỉ đổi phần "chrome" của giao diện.
 
 ### 1a. BÁO CÁO CUỐI MỖI TASK (bắt buộc, kể cả khi không hỏi lại)
 Tóm tắt ngắn theo đúng khung, không lặp lại chi tiết đã nói trong lúc làm:

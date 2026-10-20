@@ -19,13 +19,13 @@ export default async function SettingsPage() {
 
   return (
     <main className="mx-auto flex max-w-screen-sm flex-col gap-6 p-4">
-      <h1 className="text-xl font-semibold text-ink">Cài đặt</h1>
+      <h1 className="text-xl font-semibold text-ink">{copy.settingsPageTitle}</h1>
 
       {/* Cấu hình lịch & nhắc nhở — T-009 */}
       <section className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <Settings size={16} className="text-ink-muted" />
-          <h2 className="text-sm font-medium text-ink">Cấu hình chung</h2>
+          <h2 className="text-sm font-medium text-ink">{copy.settingsGeneralSection}</h2>
         </div>
         {plan && (
           <PlanSettingsForm
@@ -43,11 +43,9 @@ export default async function SettingsPage() {
       <section className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <Bell size={16} className="text-ink-muted" />
-          <h2 className="text-sm font-medium text-ink">Thông báo đẩy</h2>
+          <h2 className="text-sm font-medium text-ink">{copy.settingsPushSection}</h2>
         </div>
-        <p className="text-xs text-ink-muted">
-          Nhắc học hàng ngày và nhắc mua sách đúng hạn. Không cần mở trình duyệt, thông báo hiện thẳng trên màn hình.
-        </p>
+        <p className="text-xs text-ink-muted">{copy.settingsPushHint}</p>
         <PushToggle />
       </section>
 
@@ -57,7 +55,7 @@ export default async function SettingsPage() {
       <section className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <Database size={16} className="text-ink-muted" />
-          <h2 className="text-sm font-medium text-ink">Sao lưu dữ liệu</h2>
+          <h2 className="text-sm font-medium text-ink">{copy.settingsBackupSection}</h2>
         </div>
         <BackupPanel />
       </section>
@@ -66,7 +64,7 @@ export default async function SettingsPage() {
 
       {/* Tiến độ */}
       <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-medium text-ink">Tiến độ học tập</h2>
+        <h2 className="text-sm font-medium text-ink">{copy.settingsProgressSection}</h2>
         <Link href="/settings/update-progress" className="text-sm text-accent underline">
           {copy.updateProgressLink}
         </Link>

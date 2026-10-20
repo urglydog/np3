@@ -19,7 +19,7 @@ export default async function CreatePlanPage() {
   if (existingPlan) redirect('/today');
 
   const outline = await loadPublishedTemplateOutline();
-  if (!outline) throw new AppError('Chưa có template nào được xuất bản', 'no_template', 500);
+  if (!outline) throw new AppError(copy.noTemplatePublishedError, 'no_template', 500);
 
   return (
     <main className="mx-auto flex max-w-screen-sm flex-col gap-4 p-4">

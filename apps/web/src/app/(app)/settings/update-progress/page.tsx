@@ -31,7 +31,7 @@ export default async function UpdateProgressPage({
   }
 
   const outline = await loadPublishedTemplateOutline();
-  if (!outline) throw new AppError('Chưa có template nào được xuất bản', 'no_template', 500);
+  if (!outline) throw new AppError(copy.noTemplatePublishedError, 'no_template', 500);
 
   const supabase = await createClient();
   const { data: planTaskStates } = await supabase.from('plan_task_state').select('task_id, status');
@@ -79,7 +79,7 @@ export default async function UpdateProgressPage({
       <main className="mx-auto flex max-w-screen-sm flex-col gap-4 p-4">
         <BackLink label={copy.updateProgressBackLink} />
         <h1 className="text-xl font-semibold text-ink">{copy.updateProgressTitle}</h1>
-        <p className="text-sm text-red-600">Mã task không hợp lệ.</p>
+        <p className="text-sm text-red-600">{copy.invalidTaskCodeError}</p>
         <Link href="/settings/update-progress" className="text-sm text-accent underline">
           {copy.updateProgressChooseAgain}
         </Link>

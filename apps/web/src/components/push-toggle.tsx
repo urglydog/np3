@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Bell, BellOff, AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
+import { copy } from '@/lib/copy';
 
 // VAPID public key từ env — an toàn để bundle xuống trình duyệt
 const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? '';
@@ -40,6 +41,7 @@ export function PushToggle() {
   const [support, setSupport] = useState<PushSupport>(initialSupport);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [isErrorMessage, setIsErrorMessage] = useState(false);
 
   // Kiểm tra async: đã có subscription chưa?
   // Dùng getRegistration() thay vì serviceWorker.ready để không bị treo
@@ -61,7 +63,8 @@ export function PushToggle() {
 
   const subscribe = useCallback(async () => {
     if (!VAPID_PUBLIC_KEY) {
-      setMessage('Thông báo đẩy chưa được thiết lập trên hệ thống. Vui lòng thử lại sau.');
+      setIsErrorMessage(true);
+      setMessage(copy.pushNotConfigured);
       return;
     }
     setLoading(true);
@@ -75,7 +78,8 @@ export function PushToggle() {
       const permission = await Notification.requestPermission();
       if (permission !== 'granted') {
         setSupport(permission === 'denied' ? 'denied' : 'not_subscribed');
-        setMessage('Bạn chưa cho phép thông báo.');
+        setIsErrorMessage(true);
+        setMessage(copy.pushPermissionDenied);
         setLoading(false);
         return;
       }
@@ -93,13 +97,15 @@ export function PushToggle() {
 
       if (!res.ok) {
         const json = (await res.json()) as { error?: string };
-        throw new Error(json.error ?? 'Lỗi không xác định.');
+        throw new Error(json.error ?? copy.pushGenericError);
       }
 
       setSupport('subscribed');
-      setMessage('Đã bật thông báo thành công!');
+      setIsErrorMessage(false);
+      setMessage(copy.pushEnabledSuccess);
     } catch (err) {
-      setMessage(err instanceof Error ? err.message : 'Không thể bật thông báo.');
+      setIsErrorMessage(true);
+      setMessage(err instanceof Error ? err.message : copy.pushEnableError);
     } finally {
       setLoading(false);
     }
@@ -120,9 +126,11 @@ export function PushToggle() {
         await sub.unsubscribe();
       }
       setSupport('not_subscribed');
-      setMessage('Đã tắt thông báo.');
+      setIsErrorMessage(false);
+      setMessage(copy.pushDisabledSuccess);
     } catch (err) {
-      setMessage(err instanceof Error ? err.message : 'Không thể tắt thông báo.');
+      setIsErrorMessage(true);
+      setMessage(err instanceof Error ? err.message : copy.pushDisableError);
     } finally {
       setLoading(false);
     }
@@ -133,7 +141,7 @@ export function PushToggle() {
     return (
       <div className="flex items-center gap-2 text-sm text-ink-muted">
         <Loader2 size={16} className="animate-spin" />
-        <span>Đang kiểm tra hỗ trợ thông báo…</span>
+        <span>{copy.pushCheckingSupport}</span>
       </div>
     );
   }
@@ -143,8 +151,7 @@ export function PushToggle() {
       <div className="flex items-start gap-2 rounded-md border border-line bg-surface-raised p-3 text-sm text-ink-muted">
         <AlertTriangle size={16} className="mt-0.5 shrink-0 text-warning" />
         <span>
-          Trình duyệt này chưa hỗ trợ Push Notification.{' '}
-          <span className="text-ink-faint">(Dùng Chrome/Firefox desktop, hoặc PWA đã cài trên iOS 16.4+)</span>
+          {copy.pushUnsupportedBrowser} <span className="text-ink-faint">{copy.pushUnsupportedHint}</span>
         </span>
       </div>
     );
@@ -154,9 +161,7 @@ export function PushToggle() {
     return (
       <div className="flex items-start gap-2 rounded-md border border-line bg-surface-raised p-3 text-sm text-ink-muted">
         <AlertTriangle size={16} className="mt-0.5 shrink-0 text-danger" />
-        <span>
-          Bạn đã chặn thông báo từ trang này. Hãy vào cài đặt trình duyệt để mở lại quyền, sau đó tải lại trang.
-        </span>
+        <span>{copy.pushDeniedHint}</span>
       </div>
     );
   }
@@ -169,44 +174,34 @@ export function PushToggle() {
             id="push-subscribe-btn"
             onClick={subscribe}
             disabled={loading}
-            title="Bật thông báo để nhắc học hàng ngày"
+            title={copy.pushSubscribeTitle}
             className="btn-primary disabled:opacity-60"
           >
-            {loading ? (
-              <Loader2 size={16} className="animate-spin" />
-            ) : (
-              <Bell size={16} />
-            )}
-            Bật thông báo
+            {loading ? <Loader2 size={16} className="animate-spin" /> : <Bell size={16} />}
+            {copy.pushSubscribeButton}
           </button>
         ) : (
           <>
             <div className="flex items-center gap-2 rounded-md border border-line bg-surface-raised px-3 py-2 text-sm text-ink">
               <CheckCircle size={16} className="text-success" />
-              <span>Thông báo đang bật</span>
+              <span>{copy.pushEnabledStatus}</span>
             </div>
             <button
               id="push-unsubscribe-btn"
               onClick={unsubscribe}
               disabled={loading}
-              title="Tắt thông báo từ trang này"
+              title={copy.pushUnsubscribeTitle}
               className="flex items-center gap-2 rounded-md border border-line px-4 py-2 text-sm text-ink-muted disabled:opacity-60"
             >
-              {loading ? (
-                <Loader2 size={16} className="animate-spin" />
-              ) : (
-                <BellOff size={16} />
-              )}
-              Tắt thông báo
+              {loading ? <Loader2 size={16} className="animate-spin" /> : <BellOff size={16} />}
+              {copy.pushUnsubscribeButton}
             </button>
           </>
         )}
       </div>
 
       {message && (
-        <p className={`text-sm ${message.startsWith('Không') ? 'text-danger' : 'text-success'}`}>
-          {message}
-        </p>
+        <p className={`text-sm ${isErrorMessage ? 'text-danger' : 'text-success'}`}>{message}</p>
       )}
     </div>
   );

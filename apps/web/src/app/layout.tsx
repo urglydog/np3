@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Roadmap Planner',
-  description: 'Lộ trình học tự tính lịch, nhắc học và nhắc mua sách.',
+  description: 'A study roadmap that computes its own schedule and reminds you to study and buy books.',
   manifest: '/manifest.webmanifest',
   appleWebApp: {
     capable: true,
@@ -41,7 +41,7 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const upcomingCount = await loadUpcomingBadgeCount();
   return (
-    <html lang="vi" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex h-dvh flex-col overflow-hidden bg-surface text-ink">
         <QueryProvider>
           <div className="flex-1 overflow-y-auto">{children}</div>

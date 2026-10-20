@@ -12,7 +12,7 @@ import type { RevealResult, SubmitAnswerResult } from '@/lib/review-mutations';
 import { newClientId } from '@/lib/client-id';
 import { copy } from '@/lib/copy';
 
-const DONT_KNOW = '(không biết)'; // luôn chấm sai ở cả TS lẫn SQL, vẫn lưu nguyên văn vào attempt_log
+const DONT_KNOW = "(don't know)"; // luôn chấm sai ở cả TS lẫn SQL, vẫn lưu nguyên văn vào attempt_log
 
 interface Answered {
   q: QuizQuestion;
