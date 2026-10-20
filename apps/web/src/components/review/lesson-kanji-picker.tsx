@@ -69,6 +69,14 @@ export function LessonKanjiPicker({
                     {isOpen ? <ChevronDown className="h-4 w-4" aria-hidden="true" /> : <ChevronRight className="h-4 w-4" aria-hidden="true" />}
                   </span>
                 </button>
+                <Link
+                  href={`/review/quiz/new?scope=lesson:${group.lesson}`}
+                  title={copy.reviewBrowsePracticeLesson(group.lesson)}
+                  aria-label={copy.reviewBrowsePracticeLesson(group.lesson)}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-brand text-brand active:scale-95"
+                >
+                  <Dumbbell className="h-4 w-4" aria-hidden="true" />
+                </Link>
               </div>
               {isOpen ? (
                 <ul className="grid grid-cols-4 gap-2 border-t border-line p-3 sm:grid-cols-8">
