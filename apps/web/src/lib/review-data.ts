@@ -321,9 +321,10 @@ export interface QuizQuestion {
     meaning_en?: string | null;
     meaning_vi?: string | null;
     stroke_count?: number | null;
-    /** E1 cho item_type='example': trắc nghiệm — term đúng + tối đa 3 nhiễu, đã trộn. Không đánh dấu đáp án
-     * đúng; có thể NGẮN HƠN 4 phần tử khi phạm vi luyện không đủ ví dụ khác (tối thiểu 1 = đáp án đúng). */
-    choices?: string[];
+    /** E1 cho item_type='example': trắc nghiệm — term đúng + tối đa 3 nhiễu, đã trộn, kèm nghĩa/phát âm
+     * của CHÍNH lựa chọn đó (hiện cho người học sau khi trả lời sai). Không đánh dấu đáp án đúng; có thể
+     * NGẮN HƠN 4 phần tử khi phạm vi luyện không đủ ví dụ khác (tối thiểu 1 = đáp án đúng). */
+    choices?: { term: string; reading_kana: string; meaning_vi: string | null }[];
   };
 }
 

@@ -1,4 +1,7 @@
 import { createClient, getCurrentUser } from '@/lib/supabase/server';
+import { loadCurrentPlanSchedule } from '@/lib/plan';
+import { loadPurchaseData } from '@/lib/resources';
+import { buildUpcomingList } from '@/lib/upcoming';
 
 export type NotificationKind = 'study_daily' | 'buy_book';
 
@@ -38,22 +41,21 @@ export async function loadRecentNotifications(): Promise<NotificationItem[]> {
 }
 
 /**
- * Đếm nhẹ số reminder sắp tới (còn pending, trong 3 ngày tới) — dùng cho badge trên tab Sắp tới
- * ở bottom nav. Chỉ 1 query count, không load lại toàn bộ lịch/mua sắm (tránh chậm ở layout dùng
- * chung mọi trang).
+ * Số mục thật sự "sắp tới" trong 3 ngày tới (task Start + mục cần mua tới hạn) — dùng cho badge trên
+ * tab Sắp tới ở bottom nav. Dùng ĐÚNG cùng nguồn dữ liệu và hàm thuần (buildUpcomingList) với trang
+ * /upcoming (chỉ thu hẹp horizon còn 3 ngày thay vì 30), không còn đếm nhầm bảng outbox `reminders`
+ * (vốn không phản ánh đúng nội dung tab Sắp tới — xem phản hồi người dùng). Đánh đổi: thêm 2 query
+ * (plan + mua sắm) vào layout dùng chung mọi trang, chấp nhận được vì cùng mức chi phí các trang
+ * today/roadmap/buy đã tự tải riêng.
  */
 export async function loadUpcomingBadgeCount(): Promise<number> {
   const user = await getCurrentUser();
   if (!user) return 0;
 
-  const supabase = await createClient();
-  const in3Days = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
-  const { count } = await supabase
-    .from('reminders')
-    .select('id', { count: 'exact', head: true })
-    .eq('user_id', user.id)
-    .eq('status', 'pending')
-    .lte('fire_at', in3Days);
+  const [plan, purchaseData] = await Promise.all([loadCurrentPlanSchedule(), loadPurchaseData()]);
+  if (!plan) return 0;
 
-  return count ?? 0;
+  const taskNameById = new Map([...plan.taskInfoById.entries()].map(([id, info]) => [id, info.name]));
+  const list = buildUpcomingList(plan.schedule.tasks, taskNameById, purchaseData?.rows ?? [], plan.today, 3);
+  return list.length;
 }

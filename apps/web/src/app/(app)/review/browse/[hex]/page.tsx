@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Dumbbell } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { loadKanjiDetail, loadLists } from '@/lib/review-data';
 import { AddToListForm } from '@/components/review/add-to-list-form';
@@ -82,38 +81,6 @@ export default async function KanjiDetailPage({
             );
           })}
         </div>
-        {!pending ? (
-          <Link
-            href={`/review/quiz/new?scope=kanji:${k.unicode_hex}`}
-            className="flex w-fit items-center gap-2 rounded-lg border border-brand px-3 py-2 text-sm font-semibold text-brand"
-          >
-            <Dumbbell className="h-4 w-4" aria-hidden="true" />
-            {copy.reviewDetailPractice}
-          </Link>
-        ) : null}
-      </section>
-
-      <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-semibold text-ink">{copy.reviewDetailStrokeOrder}</h2>
-        {/* eslint-disable-next-line @next/next/no-img-element -- SVG tĩnh tự host, không cần tối ưu ảnh; tránh inline SVG */}
-        <img
-          src={k.svg_path}
-          alt={copy.reviewDetailStrokeOrderAlt(k.kanji)}
-          width={220}
-          height={220}
-          className="mx-auto h-[220px] w-[220px] rounded-xl border border-line bg-surface-raised"
-        />
-        <p className="text-center text-[11px] text-ink-muted">
-          {copy.reviewDetailAttribution} ·{' '}
-          <Link href="/review/licenses" className="underline">
-            {copy.reviewLicensesLink}
-          </Link>
-        </p>
-      </section>
-
-      <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-semibold text-ink">{copy.reviewDetailWritingPad}</h2>
-        <WritingPad kanji={k.kanji} />
       </section>
 
       <section className="flex flex-col gap-2">
@@ -149,6 +116,17 @@ export default async function KanjiDetailPage({
           items={[`kanji:${k.unicode_hex}`]}
           returnTo={`/review/browse/${k.unicode_hex}`}
         />
+      </section>
+
+      <section className="flex flex-col gap-2">
+        <h2 className="text-sm font-semibold text-ink">{copy.reviewDetailWritingPad}</h2>
+        <WritingPad kanji={k.kanji} />
+        <p className="text-center text-[11px] text-ink-muted">
+          {copy.reviewDetailAttribution} ·{' '}
+          <Link href="/review/licenses" className="underline">
+            {copy.reviewLicensesLink}
+          </Link>
+        </p>
       </section>
     </main>
   );

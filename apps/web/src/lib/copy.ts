@@ -41,6 +41,7 @@ export const copy = {
   todayRequiredHoursLabel: (hours: number) => `Cần khoảng ${hours} giờ/ngày để xong trong 365 ngày`,
 
   // Cập nhật tiến độ (đã học đến đâu)
+  updateProgressBackLink: '← Quay lại',
   updateProgressTitle: 'Cập nhật tiến độ',
   updateProgressSelectLabel: 'Mình đã học XONG đến hết task…',
   updateProgressPreviewSubmit: 'Xem trước',
@@ -235,7 +236,6 @@ export const copy = {
   reviewDetailExamples: (n: number) => `Ví dụ (${n})`,
   reviewDetailNoExamples: 'Chữ này chưa có ví dụ, đang chờ bổ sung.',
   reviewDetailProgress: 'Tiến độ của bạn',
-  reviewDetailPractice: 'Luyện chữ này',
   reviewDetailWritingPad: 'Bảng tập viết',
   reviewDetailWritingGuide: 'Hiện chữ mờ',
 
