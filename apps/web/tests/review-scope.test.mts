@@ -1,5 +1,15 @@
 // Kiểm tra parse phạm vi/tham số phiên luyện và dựng candidates (module Ôn luyện).
-import { buildCandidates, countByType, parseQuizParams, parseScope, restrictToTypes, scopeToParam, type CardStateRow, type CatalogRow } from '../src/lib/review-scope';
+import {
+  buildCandidates,
+  countByType,
+  MAX_SCOPE_KANJI,
+  parseQuizParams,
+  parseScope,
+  restrictToTypes,
+  scopeToParam,
+  type CardStateRow,
+  type CatalogRow,
+} from '../src/lib/review-scope';
 
 let fails = 0,
   checks = 0;
@@ -24,7 +34,11 @@ eq('list nhiều uuid', parseScope('list:00000000-0000-0000-0000-00000000000a,00
 eq('list rác → null', parseScope("list:1' or 1=1"), null);
 eq('kanji nhiều mã, bỏ trùng, hạ chữ thường', parseScope('kanji:04E00.04e8c.04e00'), { kind: 'kanji', hexes: ['04e00', '04e8c'] });
 eq('kanji mã rác → null', parseScope('kanji:04e00.zz'), null);
-eq('kanji quá 64 mã → null', parseScope(`kanji:${Array.from({ length: 65 }, (_, i) => (0x4e00 + i).toString(16).padStart(5, '0')).join('.')}`), null);
+eq(
+  `kanji quá ${MAX_SCOPE_KANJI} mã → null`,
+  parseScope(`kanji:${Array.from({ length: MAX_SCOPE_KANJI + 1 }, (_, i) => (0x4e00 + i).toString(16).padStart(5, '0')).join('.')}`),
+  null
+);
 eq('smart hợp lệ', parseScope('smart:unseen_first'), { kind: 'smart', strategy: 'unseen_first' });
 eq('smart lạ → null', parseScope('smart:random'), null);
 eq('không có dấu : → null', parseScope('lesson3'), null);

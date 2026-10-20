@@ -22,7 +22,9 @@ export type ReviewScope =
   | { kind: 'smart'; strategy: SmartStrategy };
 
 export const MAX_QUIZ_QUESTIONS = 200; // khớp trần p_limit của RPC review_get_quiz_batch
-export const MAX_SCOPE_KANJI = 64;
+// Đủ cho chọn nhiều bài cùng lúc ở /review/practice (32 bài × ~16 chữ ≈ 512, trần catalog Kanji 512) mà
+// không bắt phải tạo danh sách trung gian — xem CLAUDE.md phản hồi #6.
+export const MAX_SCOPE_KANJI = 600;
 export const MAX_SCOPE_LISTS = 20; // luyện gộp nhiều danh sách cùng lúc — trần hợp lý cho một phiên
 const HEX_RE = /^[0-9a-f]{4,6}$/;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;

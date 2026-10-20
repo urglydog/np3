@@ -73,6 +73,27 @@ export async function loadLoadedLessons(supabase: SupabaseClient): Promise<numbe
   return stats.lessons.map((l) => l.lesson);
 }
 
+export interface LessonGroup {
+  lesson: number;
+  kanji: KanjiSummary[];
+}
+
+/** Toàn bộ kanji đã nạp, gộp theo bài — dùng cho /review/practice để chọn nhiều bài trong 1 lượt (không
+ * còn phải xem từng bài một như màn Duyệt kanji cũ, xem CLAUDE.md phản hồi #4/#6). 1 truy vấn duy nhất. */
+export async function loadAllLessonsKanji(supabase: SupabaseClient): Promise<LessonGroup[]> {
+  const rows = await fetchAll<KanjiSummary>((from, to) =>
+    supabase.from('review_kanji').select(KANJI_SUMMARY_COLS).not('vnjp_lesson', 'is', null).order('vnjp_lesson').order('vnjp_order').range(from, to)
+  );
+  const byLesson = new Map<number, KanjiSummary[]>();
+  for (const k of rows) {
+    const lesson = k.vnjp_lesson!;
+    const arr = byLesson.get(lesson);
+    if (arr) arr.push(k);
+    else byLesson.set(lesson, [k]);
+  }
+  return [...byLesson.entries()].sort((a, b) => a[0] - b[0]).map(([lesson, kanji]) => ({ lesson, kanji }));
+}
+
 export interface KanjiDetail extends KanjiSummary {
   is_kanji: boolean;
   han_viet_accepted: string[];

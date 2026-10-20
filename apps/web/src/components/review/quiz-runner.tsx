@@ -39,9 +39,54 @@ function answerSummary(a: Answered): string {
     : `${r.term ?? ''} (${r.reading_kana ?? ''})${r.han_viet ? ` · ${r.han_viet}` : ''}`;
 }
 
-export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[]; scopeParam: string }) {
+interface QuizSnapshot {
+  questions: QuizQuestion[];
+  idx: number;
+  answered: Answered[];
+}
+
+const snapshotKey = (scopeParam: string) => `np3-review-quiz:${scopeParam}`;
+
+/** F5 giữa phiên không được mất tiến độ (CLAUDE.md phản hồi người dùng) — lưu toàn bộ đề + câu đã làm
+ * vào sessionStorage theo scope, phục hồi lại đúng câu đang làm khi Server Component tải lại batch mới. */
+function loadSnapshot(scopeParam: string): QuizSnapshot | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.sessionStorage.getItem(snapshotKey(scopeParam));
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as QuizSnapshot;
+    if (!Array.isArray(parsed.questions) || parsed.questions.length === 0 || typeof parsed.idx !== 'number' || !Array.isArray(parsed.answered)) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function saveSnapshot(scopeParam: string, snap: QuizSnapshot) {
+  if (typeof window === 'undefined') return;
+  try {
+    window.sessionStorage.setItem(snapshotKey(scopeParam), JSON.stringify(snap));
+  } catch {
+    // Safari riêng tư/storage đầy — bỏ qua, chỉ mất khả năng phục hồi, không chặn làm bài
+  }
+}
+
+function clearSnapshot(scopeParam: string) {
+  if (typeof window === 'undefined') return;
+  try {
+    window.sessionStorage.removeItem(snapshotKey(scopeParam));
+  } catch {
+    // ignore
+  }
+}
+
+export function QuizRunner({ questions: initialQuestions, scopeParam }: { questions: QuizQuestion[]; scopeParam: string }) {
   const router = useRouter();
-  const [idx, setIdx] = useState(0);
+  const [questions] = useState<QuizQuestion[]>(() => loadSnapshot(scopeParam)?.questions ?? initialQuestions);
+  const [idx, setIdx] = useState(() => {
+    const snap = loadSnapshot(scopeParam);
+    return snap && snap.idx < snap.questions.length ? snap.idx : 0;
+  });
   const [attemptId, setAttemptId] = useState(() => newClientId());
   const [input, setInput] = useState('');
   const [composing, setComposing] = useState(false);
@@ -49,7 +94,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
   const [reveal, setReveal] = useState<RevealResult | null>(null);
   const [strokes, setStrokes] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const [answered, setAnswered] = useState<Answered[]>([]);
+  const [answered, setAnswered] = useState<Answered[]>(() => loadSnapshot(scopeParam)?.answered ?? []);
   const [finished, setFinished] = useState(false);
   const [pending, startTransition] = useTransition();
   const canvas = useRef<HandwritingCanvasHandle>(null);
@@ -61,8 +106,18 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
   const [manualOverride, setManualOverride] = useState(false);
   // Trắc nghiệm ví dụ (E1): từ đã bấm chọn, để tô màu đúng/sai sau khi có kết quả.
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
+  // K2: khoá canvas NGAY khi bấm "Nộp"/"Giữ kết quả" (đồng bộ, trước khi await network) — không để vẽ
+  // thêm trong lúc chờ, tránh nét thừa bị tính sai số nét (phản hồi #3 của người dùng).
+  const [submitted, setSubmitted] = useState(false);
 
   const q = questions[idx];
+
+  // Lưu tiến độ vào sessionStorage sau mỗi thay đổi — F5 giữa phiên khôi phục lại đúng câu đang làm
+  // (phản hồi #1 của người dùng). Không lưu khi đã finished (lúc đó đã tự xoá, xem goNext).
+  useEffect(() => {
+    if (finished) return;
+    saveSnapshot(scopeParam, { questions, idx, answered });
+  }, [scopeParam, questions, idx, answered, finished]);
 
   // Đổi câu (item_id/question_type đổi) → reset toạ độ nét tham chiếu NGAY trong lúc render
   // (mẫu "adjusting state during rendering" của React), không setState đồng bộ trong effect body
@@ -86,11 +141,12 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
     // eslint-disable-next-line react-hooks/exhaustive-deps -- chỉ phụ thuộc câu hiện tại, không phải cả object q
   }, [q?.item_id, q?.question_type]);
 
-  // Dùng chung cho nút "Câu tiếp" bấm thủ công VÀ tự động nhảy câu khi trả lời đúng (Việc 3) — phải reset
-  // y hệt mọi state của câu cũ trước khi sang câu mới, không phân biệt K1/E1/K2. Định nghĩa trước early
-  // return `if (!q) return null` để hook useEffect bên dưới (phụ thuộc goNext) không vi phạm rules-of-hooks.
+  // Dùng cho nút "Câu tiếp" — người dùng LUÔN tự bấm để qua câu, dù trả lời đúng hay sai, để có thời gian
+  // xem lại đáp án đúng trước khi qua câu khác (phản hồi #2 của người dùng — bỏ tự động nhảy câu cũ).
+  // Phải reset y hệt mọi state của câu cũ trước khi sang câu mới, không phân biệt K1/E1/K2.
   const goNext = () => {
     if (idx + 1 >= questions.length) {
+      clearSnapshot(scopeParam);
       setFinished(true);
       return;
     }
@@ -104,22 +160,13 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
     setDrawnStrokes([]);
     setManualOverride(false);
     setSelectedChoice(null);
+    setSubmitted(false);
     canvas.current?.clear();
   };
 
-  // Trả lời ĐÚNG → tự động nhảy câu tiếp sau một khoảng trễ ngắn để người dùng kịp thấy kết quả, không cần
-  // tự bấm "Câu tiếp". Trả lời SAI vẫn phải tự bấm (để có thời gian đọc đáp án đúng) — xem CLAUDE.md Việc 3.
-  // Áp dụng cho cả K1/E1 (result có ngay sau submit) lẫn K2 (result chỉ có sau khi người dùng tự đánh giá
-  // hoặc giữ kết quả auto-grade) vì cả hai đều đi qua cùng state `result`.
-  useEffect(() => {
-    if (!result || !result.is_correct) return;
-    const t = setTimeout(goNext, 900);
-    return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- goNext đọc idx/questions mới nhất qua closure mỗi render, không cần liệt kê
-  }, [result, idx]);
-
   const handleExit = () => {
     if (answered.length > 0 && !finished && !window.confirm(copy.reviewQuizExitConfirm)) return;
+    clearSnapshot(scopeParam);
     router.push(`/review/quiz/new?scope=${encodeURIComponent(scopeParam)}`);
   };
 
@@ -128,6 +175,8 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
   const autoScore =
     strokeReference && drawnStrokes.length > 0 ? scoreHandwriting(drawnStrokes, strokeReference) : null;
   const autoSuggested = !manualOverride && !!autoScore?.autoCorrect;
+  // Khoá canvas K2: ngay khi bấm Nộp/Giữ kết quả (submitted, đồng bộ), hoặc máy đã tự gợi ý/đã có đáp án/kết quả.
+  const k2Locked = submitted || !!reveal || !!result || autoSuggested;
 
   const submit = (answerText: string | null, selfCorrect: boolean | null, autoGraded = false) => {
     setError(null);
@@ -246,11 +295,13 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
             // Chỉ biết đâu là đáp án đúng sau khi có result (server trả result.answer.term) — không lộ trước.
             const isCorrectChoice = !!result && result.answer.term === choice;
             const stateClass = !result
-              ? 'border-line bg-surface-raised text-ink active:bg-brand/5'
+              ? isChosen
+                ? 'border-brand bg-brand/10 text-brand' // phản hồi tức thì khi vừa bấm, trước khi có kết quả server
+                : 'border-line bg-surface-raised text-ink active:bg-brand/5'
               : isCorrectChoice
-                ? 'border-success bg-success/10 text-success'
+                ? `border-success bg-success/10 text-success ${isChosen ? 'animate-[result-pulse_0.4s_ease-out]' : ''}`
                 : isChosen
-                  ? 'border-danger bg-danger/10 text-danger'
+                  ? 'border-danger bg-danger/10 text-danger animate-[result-shake_0.4s_ease-in-out]'
                   : 'border-line bg-surface-raised text-ink-muted';
             return (
               <button
@@ -262,7 +313,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
                   setSelectedChoice(choice);
                   submit(choice, null);
                 }}
-                className={`flex items-center justify-center rounded-xl border px-4 py-4 text-xl font-semibold transition-colors disabled:opacity-90 ${stateClass}`}
+                className={`flex items-center justify-center rounded-xl border px-4 py-4 text-xl font-semibold transition-colors active:scale-95 disabled:opacity-90 ${stateClass}`}
               >
                 {choice}
               </button>
@@ -306,7 +357,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
               <button
                 type="submit"
                 disabled={composing || pending || input.trim() === ''}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white disabled:opacity-50"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white active:scale-95 disabled:opacity-50"
               >
                 {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
                 {copy.reviewQuizSubmit}
@@ -315,7 +366,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
                 type="button"
                 disabled={pending}
                 onClick={() => submit(DONT_KNOW, null)}
-                className="rounded-xl border border-line px-4 py-3 text-sm text-ink-muted disabled:opacity-50"
+                className="rounded-xl border border-line px-4 py-3 text-sm text-ink-muted active:scale-95 disabled:opacity-50"
               >
                 {copy.reviewQuizDontKnow}
               </button>
@@ -329,7 +380,10 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
             label={copy.reviewQuestionTypeLabel.K2}
             onStrokeCountChange={setStrokes}
             onStrokesChange={setDrawnStrokes}
+            disabled={k2Locked}
+            overlayImageSrc={reveal?.svg_path ?? null}
           />
+          {reveal?.stroke_count ? <p className="text-center text-sm text-ink-muted">{copy.reviewQuizStrokeCompare(strokes, reveal.stroke_count)}</p> : null}
           {autoSuggested && !reveal && !result ? (
             // Tự chấm ĐÚNG (score cao + đúng số nét) — không bao giờ tự chấm SAI bằng máy (CLAUDE.md #4c).
             // Người dùng vẫn có quyền quyết định cuối: giữ kết quả hoặc tự sửa qua luồng xem đáp án cũ.
@@ -343,7 +397,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
                   type="button"
                   disabled={pending}
                   onClick={() => setManualOverride(true)}
-                  className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-line px-3 py-3 text-sm font-semibold text-ink disabled:opacity-50"
+                  className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-line px-3 py-3 text-sm font-semibold text-ink active:scale-95 disabled:opacity-50"
                 >
                   <Pencil className="h-4 w-4" aria-hidden="true" />
                   {copy.reviewQuizEditResult}
@@ -351,8 +405,11 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
                 <button
                   type="button"
                   disabled={pending}
-                  onClick={() => submit(null, true, true)}
-                  className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-success px-3 py-3 text-sm font-semibold text-white disabled:opacity-50"
+                  onClick={() => {
+                    setSubmitted(true);
+                    submit(null, true, true);
+                  }}
+                  className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-success px-3 py-3 text-sm font-semibold text-white active:scale-95 disabled:opacity-50"
                 >
                   {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <CheckCircle2 className="h-4 w-4" aria-hidden="true" />}
                   {copy.reviewQuizKeepResult}
@@ -363,56 +420,53 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
             <div className="flex gap-2">
               <button
                 type="button"
+                disabled={submitted || pending}
                 onClick={() => {
                   canvas.current?.clear();
                   setManualOverride(false);
                 }}
-                className="flex items-center gap-1 rounded-xl border border-line px-4 py-3 text-sm text-ink"
+                className="flex items-center gap-1 rounded-xl border border-line px-4 py-3 text-sm text-ink active:scale-95 disabled:opacity-50"
               >
                 <Eraser className="h-4 w-4" aria-hidden="true" />
                 {copy.reviewQuizClear}
               </button>
               <button
                 type="button"
-                onClick={doReveal}
-                disabled={pending}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white disabled:opacity-50"
+                onClick={() => {
+                  setSubmitted(true);
+                  doReveal();
+                }}
+                disabled={submitted || pending}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white active:scale-95 disabled:opacity-50"
               >
-                {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
+                {submitted ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
                 {copy.reviewQuizReveal}
               </button>
             </div>
-          ) : (
-            <div className="flex flex-col items-center gap-2 rounded-2xl border border-line bg-surface-raised p-3">
-              {/* eslint-disable-next-line @next/next/no-img-element -- SVG tĩnh tự host */}
-              <img src={reveal.svg_path} alt={copy.reviewDetailStrokeOrderAlt(reveal.kanji)} width={160} height={160} className="h-40 w-40" />
-              {reveal.stroke_count ? <p className="text-sm text-ink-muted">{copy.reviewQuizStrokeCompare(strokes, reveal.stroke_count)}</p> : null}
-              {!result ? (
-                <div className="flex w-full gap-2">
-                  <button
-                    type="button"
-                    disabled={pending}
-                    onClick={() => submit(null, false)}
-                    title={copy.reviewQuizSelfWrong}
-                    aria-label={copy.reviewQuizSelfWrong}
-                    className="flex flex-1 items-center justify-center rounded-xl border border-danger/40 px-3 py-3 text-danger disabled:opacity-50"
-                  >
-                    <XCircle className="h-7 w-7" aria-hidden="true" />
-                  </button>
-                  <button
-                    type="button"
-                    disabled={pending}
-                    onClick={() => submit(null, true)}
-                    title={copy.reviewQuizSelfCorrect}
-                    aria-label={copy.reviewQuizSelfCorrect}
-                    className="flex flex-1 items-center justify-center rounded-xl bg-success px-3 py-3 text-white disabled:opacity-50"
-                  >
-                    <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
-                  </button>
-                </div>
-              ) : null}
+          ) : !result ? (
+            <div className="flex w-full gap-2">
+              <button
+                type="button"
+                disabled={pending}
+                onClick={() => submit(null, false)}
+                title={copy.reviewQuizSelfWrong}
+                aria-label={copy.reviewQuizSelfWrong}
+                className="flex flex-1 items-center justify-center rounded-xl border border-danger/40 px-3 py-3 text-danger active:scale-95 disabled:opacity-50"
+              >
+                <XCircle className="h-7 w-7" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                disabled={pending}
+                onClick={() => submit(null, true)}
+                title={copy.reviewQuizSelfCorrect}
+                aria-label={copy.reviewQuizSelfCorrect}
+                className="flex flex-1 items-center justify-center rounded-xl bg-success px-3 py-3 text-white active:scale-95 disabled:opacity-50"
+              >
+                <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
+              </button>
             </div>
-          )}
+          ) : null}
         </div>
       )}
 
@@ -426,7 +480,9 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
       {result ? (
         <div
           role="status"
-          className={`flex flex-col gap-1 rounded-2xl border p-4 ${result.is_correct ? 'border-success/40 bg-success/5' : 'border-danger/40 bg-danger/5'}`}
+          className={`flex flex-col gap-1 rounded-2xl border p-4 ${
+            result.is_correct ? 'border-success/40 bg-success/5 animate-[result-pulse_0.4s_ease-out]' : 'border-danger/40 bg-danger/5 animate-[result-shake_0.4s_ease-in-out]'
+          }`}
         >
           <p className={`flex items-center gap-2 font-semibold ${result.is_correct ? 'text-success' : 'text-danger'}`}>
             {result.is_correct ? <CheckCircle2 className="h-5 w-5" aria-hidden="true" /> : <XCircle className="h-5 w-5" aria-hidden="true" />}
@@ -455,7 +511,7 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
           )}
           {result.answer.meaning_vi ? <p className="text-sm text-ink">{result.answer.meaning_vi}</p> : null}
           <p className="text-xs text-ink-muted">{copy.reviewQuizMasteryNow(copy.reviewMasteryLabel[result.new_mastery_level])}</p>
-          <button type="button" autoFocus onClick={goNext} className="mt-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white">
+          <button type="button" autoFocus onClick={goNext} className="mt-2 rounded-xl bg-brand px-4 py-3 font-semibold text-white active:scale-95">
             {isLast ? copy.reviewQuizFinish : copy.reviewQuizNext}
           </button>
         </div>

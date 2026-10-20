@@ -22,8 +22,17 @@ export interface NormalizedPoint {
  */
 export const HandwritingCanvas = forwardRef<
   HandwritingCanvasHandle,
-  { guide?: string | null; onStrokeCountChange?: (n: number) => void; onStrokesChange?: (strokes: NormalizedPoint[][]) => void; label: string }
->(function HandwritingCanvas({ guide, onStrokeCountChange, onStrokesChange, label }, ref) {
+  {
+    guide?: string | null;
+    /** Ảnh SVG thứ tự nét (kanjivg) đè lên khung vẽ để đối chiếu trực tiếp — khác `guide` (chữ mờ font hệ thống). */
+    overlayImageSrc?: string | null;
+    onStrokeCountChange?: (n: number) => void;
+    onStrokesChange?: (strokes: NormalizedPoint[][]) => void;
+    label: string;
+    /** Khoá vẽ (sau khi đã nộp) — không tính nét mới, không gọi onStrokesChange nữa. */
+    disabled?: boolean;
+  }
+>(function HandwritingCanvas({ guide, overlayImageSrc, onStrokeCountChange, onStrokesChange, label, disabled = false }, ref) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const drawing = useRef<{ x: number; y: number; dist: number; points: NormalizedPoint[] } | null>(null);
     const [strokes, setStrokes] = useState(0);
@@ -99,12 +108,22 @@ export const HandwritingCanvas = forwardRef<
             {guide}
           </span>
         ) : null}
+        {overlayImageSrc ? (
+          // eslint-disable-next-line @next/next/no-img-element -- SVG tĩnh tự host, chỉ overlay tham khảo
+          <img
+            src={overlayImageSrc}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-70"
+          />
+        ) : null}
         <canvas
           ref={canvasRef}
           aria-label={label}
           role="img"
-          className="absolute inset-0 h-full w-full touch-none"
+          className={`absolute inset-0 h-full w-full touch-none ${disabled ? 'cursor-not-allowed opacity-75' : ''}`}
           onPointerDown={(e) => {
+            if (disabled) return;
             e.currentTarget.setPointerCapture(e.pointerId);
             const p = point(e);
             drawing.current = { ...p, dist: 0, points: [normalized(e, p)] };
@@ -113,6 +132,7 @@ export const HandwritingCanvas = forwardRef<
             ctx?.moveTo(p.x, p.y);
           }}
           onPointerMove={(e) => {
+            if (disabled) return;
             const d = drawing.current;
             if (!d) return;
             const p = point(e);
@@ -125,6 +145,10 @@ export const HandwritingCanvas = forwardRef<
             d.points.push(normalized(e, p));
           }}
           onPointerUp={() => {
+            if (disabled) {
+              drawing.current = null;
+              return;
+            }
             const d = drawing.current;
             if (d && d.dist >= MIN_STROKE_PX) {
               setStrokes((n) => n + 1);
