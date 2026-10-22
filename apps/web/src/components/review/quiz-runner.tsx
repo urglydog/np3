@@ -293,6 +293,11 @@ export function QuizRunner({ questions: initialQuestions, scopeParam }: { questi
       {/* Trả lời */}
       {isExampleMC ? (
         <div className="grid grid-cols-2 gap-2">
+          {(() => {
+            // eslint-disable-next-line no-console -- debug tạm, xoá sau khi tìm ra nguyên nhân lỗi choices rỗng
+            console.log('[QuizRunner debug] q.prompt.choices =', q.prompt.choices, 'q =', q);
+            return null;
+          })()}
           {(q.prompt.choices ?? []).map((choice) => {
             const isChosen = selectedChoice === choice.term;
             // Chỉ biết đâu là đáp án đúng sau khi có result (server trả result.answer.term) — không lộ trước.
