@@ -154,8 +154,26 @@ try {
   eq('loadLists đếm đúng số mục', lists.map((l) => [l.name, l.item_count]), [['Chữ khó', 2]]);
   const listDetail = await loadListDetail(a, listId);
   eq('Chi tiết danh sách', listDetail?.items.map((i) => [i.label, i.hex]), [['一', '04e00'], ['一つ', null]]);
+  // Danh sách chỉ thêm tường minh kanji 一 + ví dụ 一つ, nhưng đề vẫn phải kéo theo TOÀN BỘ ví dụ gắn với
+  // kanji 一 (không chỉ 一つ) — phản hồi người dùng: chọn riêng lẻ/theo danh sách vẫn phải có câu hỏi ví dụ
+  // của đúng những kanji đã chọn, không chỉ khi luyện cả bài qua scope lesson:.
+  const listCandidates = await loadScopeCandidates(a, { kind: 'list', listIds: [listId] });
+  const listK1Count = listCandidates.filter((c) => c.applicableQuestionTypes.includes('K1')).length;
+  const listE1Count = listCandidates.filter((c) => c.applicableQuestionTypes.includes('E1')).length;
+  eq('Danh sách kéo theo toàn bộ ví dụ của kanji đã chọn, không chỉ ví dụ đã thêm tường minh', listE1Count > 1, true);
   const listBatch = await loadQuizBatch(a, { kind: 'list', listIds: [listId] }, ['K1', 'E1'], 10);
-  eq('Đề từ danh sách: đúng 2 câu (K1 一, E1 一つ)', listBatch.map((q) => q.question_type).sort(), ['E1', 'K1']);
+  const listBatchTypes = listBatch.map((q) => q.question_type).sort();
+  if (listK1Count + listE1Count <= 10) {
+    // Tổng candidate không vượt n=10 → RPC random không cắt bớt gì, đề phải chứa ĐÚNG toàn bộ candidate.
+    eq(
+      'Đề từ danh sách: đủ K1 (kanji 一) + E1 (mọi ví dụ của 一, kể cả không thêm tường minh)',
+      listBatchTypes,
+      [...Array(listE1Count).fill('E1'), ...Array(listK1Count).fill('K1')].sort()
+    );
+  } else {
+    // Tổng candidate > n → RPC random bớt, không đoán trước được thành phần — chỉ kiểm tra đủ số câu.
+    eq('Đề từ danh sách: đủ 10 câu khi pool > 10', listBatchTypes.length, 10);
+  }
 
   // B không thấy / không thêm được vào danh sách của A
   const b = userB.client;

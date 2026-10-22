@@ -73,6 +73,27 @@ export async function loadLoadedLessons(supabase: SupabaseClient): Promise<numbe
   return stats.lessons.map((l) => l.lesson);
 }
 
+export interface LessonGroup {
+  lesson: number;
+  kanji: KanjiSummary[];
+}
+
+/** Toàn bộ kanji đã nạp, gộp theo bài — dùng cho /review/practice để chọn nhiều bài trong 1 lượt (không
+ * còn phải xem từng bài một như màn Duyệt kanji cũ, xem CLAUDE.md phản hồi #4/#6). 1 truy vấn duy nhất. */
+export async function loadAllLessonsKanji(supabase: SupabaseClient): Promise<LessonGroup[]> {
+  const rows = await fetchAll<KanjiSummary>((from, to) =>
+    supabase.from('review_kanji').select(KANJI_SUMMARY_COLS).not('vnjp_lesson', 'is', null).order('vnjp_lesson').order('vnjp_order').range(from, to)
+  );
+  const byLesson = new Map<number, KanjiSummary[]>();
+  for (const k of rows) {
+    const lesson = k.vnjp_lesson!;
+    const arr = byLesson.get(lesson);
+    if (arr) arr.push(k);
+    else byLesson.set(lesson, [k]);
+  }
+  return [...byLesson.entries()].sort((a, b) => a[0] - b[0]).map(([lesson, kanji]) => ({ lesson, kanji }));
+}
+
 export interface KanjiDetail extends KanjiSummary {
   is_kanji: boolean;
   han_viet_accepted: string[];
@@ -210,17 +231,34 @@ async function statesForItems(supabase: SupabaseClient, itemType: ItemType, ids:
   return out;
 }
 
+/** Ví dụ (review_example) gắn với từng kanji, qua bảng nối review_example_kanji — dùng để kanji chọn riêng
+ * lẻ (không qua lesson:) vẫn kéo theo câu hỏi ví dụ (E1) của chính nó, không chỉ khi luyện trọn bài. */
+async function examplesForKanji(supabase: SupabaseClient, kanjiIds: readonly string[]): Promise<string[]> {
+  const out = new Set<string>();
+  for (const part of chunks(kanjiIds, IN_CHUNK)) {
+    const { data, error } = await supabase.from('review_example_kanji').select('example_id').in('kanji_id', part);
+    if (error) throw new AppError(`Không đọc được ví dụ liên quan: ${error.message}`, 'review_read_failed');
+    for (const r of (data ?? []) as { example_id: string }[]) out.add(r.example_id);
+  }
+  return [...out];
+}
+
 async function candidatesForRefs(supabase: SupabaseClient, refs: { item_type: ItemType; item_id: string }[]): Promise<QuizCandidate[]> {
   const kanjiIds = refs.filter((r) => r.item_type === 'kanji').map((r) => r.item_id);
-  const exampleIds = refs.filter((r) => r.item_type === 'example').map((r) => r.item_id);
+  const explicitExampleIds = new Set(refs.filter((r) => r.item_type === 'example').map((r) => r.item_id));
+  // Mỗi kanji được chọn (chọn riêng lẻ hay qua danh sách) kéo theo ví dụ của chính nó — đảm bảo luôn có câu
+  // hỏi E1 chứ không chỉ khi luyện trọn bài qua scope lesson: (phản hồi người dùng).
+  const linkedExampleIds = (kanjiIds.length > 0 ? await examplesForKanji(supabase, kanjiIds) : []).filter((id) => !explicitExampleIds.has(id));
+  const allRefs = [...refs, ...linkedExampleIds.map((id) => ({ item_type: 'example' as const, item_id: id }))];
+  const exampleIds = [...explicitExampleIds, ...linkedExampleIds];
   const [kc, ec, ks, es] = await Promise.all([
     catalogForItems(supabase, 'kanji', kanjiIds),
     catalogForItems(supabase, 'example', exampleIds),
     statesForItems(supabase, 'kanji', kanjiIds),
     statesForItems(supabase, 'example', exampleIds),
   ]);
-  // Giữ thứ tự của refs (thứ tự bài/danh sách)
-  const order = new Map(refs.map((r, i) => [`${r.item_type}:${r.item_id}`, i]));
+  // Giữ thứ tự của refs (thứ tự bài/danh sách), ví dụ kéo thêm xếp sau cùng
+  const order = new Map(allRefs.map((r, i) => [`${r.item_type}:${r.item_id}`, i]));
   const catalog = [...kc, ...ec].sort(
     (a, b) => (order.get(`${a.item_type}:${a.item_id}`) ?? 0) - (order.get(`${b.item_type}:${b.item_id}`) ?? 0)
   );
@@ -283,9 +321,10 @@ export interface QuizQuestion {
     meaning_en?: string | null;
     meaning_vi?: string | null;
     stroke_count?: number | null;
-    /** E1 cho item_type='example': trắc nghiệm — term đúng + tối đa 3 nhiễu, đã trộn. Không đánh dấu đáp án
-     * đúng; có thể NGẮN HƠN 4 phần tử khi phạm vi luyện không đủ ví dụ khác (tối thiểu 1 = đáp án đúng). */
-    choices?: string[];
+    /** E1 cho item_type='example': trắc nghiệm — term đúng + tối đa 3 nhiễu, đã trộn, kèm nghĩa/phát âm
+     * của CHÍNH lựa chọn đó (hiện cho người học sau khi trả lời sai). Không đánh dấu đáp án đúng; có thể
+     * NGẮN HƠN 4 phần tử khi phạm vi luyện không đủ ví dụ khác (tối thiểu 1 = đáp án đúng). */
+    choices?: { term: string; reading_kana: string; meaning_vi: string | null }[];
   };
 }
 

@@ -47,6 +47,7 @@ export const copy = {
   todayReviewStart: 'Bắt đầu ôn luyện',
 
   // Cập nhật tiến độ (đã học đến đâu)
+  updateProgressBackLink: '← Quay lại',
   updateProgressTitle: 'Cập nhật tiến độ',
   updateProgressSelectLabel: 'Mình đã học XONG đến hết task…',
   updateProgressPreviewSubmit: 'Xem trước',
@@ -184,12 +185,8 @@ export const copy = {
   reviewLessonLabel: (lesson: number) => `Bài ${lesson}`,
   reviewLessonNoData: 'Chưa có dữ liệu',
   reviewLessonsTitle: 'Theo bài',
-  reviewEntryBrowse: 'Duyệt kanji',
-  reviewEntryBrowseHint: 'Xem từng chữ, nét viết, ví dụ',
-  reviewEntryLists: 'Danh sách của tôi',
-  reviewEntryListsHint: 'Gom chữ khó để ôn riêng',
   reviewEntryPractice: 'Luyện tập',
-  reviewEntryPracticeHint: 'Gõ Hán Việt, viết kanji, gõ tiếng Nhật',
+  reviewEntryPracticeHint: 'Chọn bài, chọn chữ, chọn danh sách rồi luyện',
   reviewPendingNote: (kanji: number, examples: number) =>
     `${kanji} chữ và ${examples} ví dụ đang chờ xác nhận lại nên chưa đưa vào bài luyện.`,
   reviewLicensesLink: 'Nguồn dữ liệu và giấy phép',
@@ -223,6 +220,15 @@ export const copy = {
   reviewPendingBadge: 'Chờ xác nhận',
   reviewPendingBadgeTitle: 'Âm Hán Việt/nghĩa của mục này đang chờ xác nhận lại, chưa dùng trong bài luyện.',
 
+  reviewPracticeTitle: 'Luyện tập',
+  reviewPracticeListsSection: 'Danh sách của tôi',
+  reviewPracticeLessonsSection: 'Theo bài',
+  reviewPracticeSelectAllLesson: 'Chọn cả bài',
+  reviewPracticeSelectedCount: (n: number) => (n > 0 ? `Đã chọn ${n} chữ` : 'Chưa chọn chữ nào'),
+  reviewPracticeStart: (n: number) => `Bắt đầu luyện (${n} chữ)`,
+  reviewPracticeSaveAsList: 'Lưu thành danh sách',
+  reviewPracticeDetailLink: 'Chi tiết',
+
   reviewDetailHanViet: 'Hán Việt',
   reviewDetailHanVietAccepted: (forms: string) => `Cũng chấp nhận: ${forms}`,
   reviewDetailMeaningVi: 'Nghĩa',
@@ -236,7 +242,6 @@ export const copy = {
   reviewDetailExamples: (n: number) => `Ví dụ (${n})`,
   reviewDetailNoExamples: 'Chữ này chưa có ví dụ, đang chờ bổ sung.',
   reviewDetailProgress: 'Tiến độ của bạn',
-  reviewDetailPractice: 'Luyện chữ này',
   reviewDetailWritingPad: 'Bảng tập viết',
   reviewDetailWritingGuide: 'Hiện chữ mờ',
 
@@ -318,7 +323,6 @@ export const copy = {
   reviewQuizYourAnswer: (a: string) => `Bạn trả lời: ${a}`,
   reviewQuizNext: 'Câu tiếp',
   reviewQuizFinish: 'Xem kết quả',
-  reviewQuizAutoAdvancing: 'Đang chuyển sang câu tiếp…',
   reviewQuizClear: 'Xoá',
   reviewQuizSubmitHandwriting: 'Nộp bài',
   reviewQuizCheckingAnswer: 'Đang kiểm tra nét vẽ…',

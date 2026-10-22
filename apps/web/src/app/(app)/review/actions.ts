@@ -60,14 +60,7 @@ const submitSchema = z.object({
 export async function submitAnswerAction(input: z.input<typeof submitSchema>): Promise<ActionResult<SubmitAnswerResult>> {
   try {
     const parsed = submitSchema.safeParse(input);
-    if (!parsed.success) {
-      // TODO(debug tạm, xoá sau khi tìm ra nguyên nhân lỗi "ôn toàn bộ danh sách"): hiện luôn field/giá trị sai
-      // lên banner lỗi (không có gì nhạy cảm — chỉ tên field + giá trị người dùng vừa gửi) vì môi trường test là
-      // Vercel, không xem được console.error ở terminal máy local.
-      const detail = parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
-      console.error('[submitAnswerAction] safeParse fail', JSON.stringify(input), JSON.stringify(parsed.error.issues));
-      throw new AppError(`Dữ liệu câu trả lời không hợp lệ (debug: ${detail} | input=${JSON.stringify(input)})`, 'invalid_input', 400);
-    }
+    if (!parsed.success) throw new AppError('Dữ liệu câu trả lời không hợp lệ', 'invalid_input', 400);
     const { supabase } = await getSupabaseAndUser();
     const data = await submitReviewAnswer(supabase, parsed.data);
     return { ok: true, data };
@@ -105,30 +98,31 @@ const listName = z.string().trim().min(1, 'Tên danh sách không được để
 
 export async function createListAction(formData: FormData): Promise<void> {
   const { supabase, user } = await getSupabaseAndUser();
-  let url: string;
+  // Quay về /review/practice (không phải trang chi tiết list mới) để danh sách mới hiện ngay trong
+  // trang vừa đang chọn — thay cho luồng cũ nhảy tab (CLAUDE.md phản hồi #4/#6).
+  let url = '/review/practice?ok=1';
   try {
     const name = listName.safeParse(formData.get('name'));
     if (!name.success) throw new AppError(name.error.issues[0]!.message, 'invalid_input', 400);
-    const id = await createReviewList(supabase, user.id, name.data);
-    url = `/review/lists/${id}?ok=1`;
+    await createReviewList(supabase, user.id, name.data);
   } catch (err) {
-    url = withParam('/review/lists', 'error', toUserMessage(err));
+    url = withParam('/review/practice', 'error', toUserMessage(err));
   }
-  revalidatePath('/review/lists');
+  revalidatePath('/review/practice');
   redirect(url);
 }
 
 export async function deleteListAction(formData: FormData): Promise<void> {
   const { supabase } = await getSupabaseAndUser();
-  let url = '/review/lists?ok=1';
+  let url = '/review/practice?ok=1';
   try {
     const id = uuid.safeParse(formData.get('listId'));
     if (!id.success) throw new AppError('Mã danh sách không hợp lệ', 'invalid_input', 400);
     await deleteReviewList(supabase, id.data);
   } catch (err) {
-    url = withParam('/review/lists', 'error', toUserMessage(err));
+    url = withParam('/review/practice', 'error', toUserMessage(err));
   }
-  revalidatePath('/review/lists');
+  revalidatePath('/review/practice');
   redirect(url);
 }
 
@@ -155,7 +149,7 @@ export async function removeListItemAction(formData: FormData): Promise<void> {
  */
 export async function addToListAction(formData: FormData): Promise<void> {
   const { supabase, user } = await getSupabaseAndUser();
-  const returnTo = safeReturnTo(formData.get('returnTo'), '/review/browse');
+  const returnTo = safeReturnTo(formData.get('returnTo'), '/review/practice');
   let url: string;
   try {
     const raw = formData.getAll('item').map(String);
@@ -184,6 +178,6 @@ export async function addToListAction(formData: FormData): Promise<void> {
   } catch (err) {
     url = withParam(returnTo, 'error', toUserMessage(err));
   }
-  revalidatePath('/review/lists');
+  revalidatePath('/review/practice');
   redirect(url);
 }
