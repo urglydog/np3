@@ -60,7 +60,11 @@ const submitSchema = z.object({
 export async function submitAnswerAction(input: z.input<typeof submitSchema>): Promise<ActionResult<SubmitAnswerResult>> {
   try {
     const parsed = submitSchema.safeParse(input);
-    if (!parsed.success) throw new AppError('Dữ liệu câu trả lời không hợp lệ', 'invalid_input', 400);
+    if (!parsed.success) {
+      // TODO(debug tạm, xoá sau khi tìm ra nguyên nhân lỗi "ôn toàn bộ danh sách"): in ra field/giá trị sai.
+      console.error('[submitAnswerAction] safeParse fail', JSON.stringify(input), JSON.stringify(parsed.error.issues));
+      throw new AppError('Dữ liệu câu trả lời không hợp lệ', 'invalid_input', 400);
+    }
     const { supabase } = await getSupabaseAndUser();
     const data = await submitReviewAnswer(supabase, parsed.data);
     return { ok: true, data };
