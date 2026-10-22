@@ -61,9 +61,12 @@ export async function submitAnswerAction(input: z.input<typeof submitSchema>): P
   try {
     const parsed = submitSchema.safeParse(input);
     if (!parsed.success) {
-      // TODO(debug tạm, xoá sau khi tìm ra nguyên nhân lỗi "ôn toàn bộ danh sách"): in ra field/giá trị sai.
+      // TODO(debug tạm, xoá sau khi tìm ra nguyên nhân lỗi "ôn toàn bộ danh sách"): hiện luôn field/giá trị sai
+      // lên banner lỗi (không có gì nhạy cảm — chỉ tên field + giá trị người dùng vừa gửi) vì môi trường test là
+      // Vercel, không xem được console.error ở terminal máy local.
+      const detail = parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
       console.error('[submitAnswerAction] safeParse fail', JSON.stringify(input), JSON.stringify(parsed.error.issues));
-      throw new AppError('Dữ liệu câu trả lời không hợp lệ', 'invalid_input', 400);
+      throw new AppError(`Dữ liệu câu trả lời không hợp lệ (debug: ${detail} | input=${JSON.stringify(input)})`, 'invalid_input', 400);
     }
     const { supabase } = await getSupabaseAndUser();
     const data = await submitReviewAnswer(supabase, parsed.data);
