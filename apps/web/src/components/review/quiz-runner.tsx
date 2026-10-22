@@ -270,6 +270,8 @@ export function QuizRunner({ questions, scopeParam }: { questions: QuizQuestion[
                 lang="ja"
                 disabled={!!result || pending}
                 onClick={() => {
+                  // eslint-disable-next-line no-console -- debug tạm
+                  console.log('[QuizRunner debug] onClick choice =', choice, typeof choice, 'JSON =', JSON.stringify({ choice }));
                   setSelectedChoice(choice);
                   submit(choice, null);
                 }}
